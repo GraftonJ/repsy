@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'native-base'
+import { Container, Header, Left, Button, Body, Right, Footer, Content, Form, Item, Input } from 'native-base'
 
 export default class Loginpage extends Component {
 
@@ -23,6 +23,17 @@ export default class Loginpage extends Component {
           </Right>
         </Header>
         <Content>
+          <Form>
+            <Item>
+              <Input placeholder="Username" />
+            </Item>
+            <Item last>
+              <Input placeholder="Password" />
+            </Item>
+            <Button>
+              <Text>Sign In</Text>
+            </Button>
+          </Form>
         </Content>
         <Footer>
         </Footer>
