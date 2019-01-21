@@ -19,10 +19,12 @@ export default class Homepage extends Component {
           </Right>
         </Header>
         <Content>
+          <Text style={{fontSize:30, textAlign:'center'}}>Welcome to Repsy!</Text>
         </Content>
         <Footer>
         </Footer>
       </Container>
+
     ) // End of return
   } // End of render
 
