@@ -7,7 +7,7 @@ import { Container, Header, Content, Footer } from 'native-base'
 import Homepage from './components/pages/homepage'
 
 // type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
 
   constructor(props){
     super(props)
