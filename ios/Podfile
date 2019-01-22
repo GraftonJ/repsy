@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+# platform :ios, '9.0'
 
 target 'repsy' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -8,10 +8,6 @@ target 'repsy' do
   # Pods for repsy
 
   pod 'Firebase/Core'
-  pod 'FirebaseUI'
-  pod 'FirebaseUI/Auth'
-  pod 'FirebaseUI/Google'
-  pod 'FirebaseUI/Phone'
-  pod 'GoogleSignIn'
+
 
 end
