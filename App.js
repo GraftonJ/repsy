@@ -33,6 +33,7 @@ export default class App extends React.Component {
   componentWillUnmount() {
     this.authSubscription();
   }
+
   render() {
     // The application is initialising
     if (this.state.loading) return <LoadingIndicator />;
