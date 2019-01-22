@@ -6,6 +6,7 @@ import { Container, Header, Left, Button, Body, Right, Footer, Content, Form, It
 export default class Loginpage extends Component {
 
   render() {
+
     return (
       <Container>
         <Header>
@@ -22,6 +23,17 @@ export default class Loginpage extends Component {
           </Right>
         </Header>
         <Content>
+          <Form>
+            <Item>
+              <Input placeholder="Username" />
+            </Item>
+            <Item last>
+              <Input placeholder="Password" />
+            </Item>
+            <Button>
+              <Text>Sign In</Text>
+            </Button>
+          </Form>
         </Content>
         <Footer>
         </Footer>

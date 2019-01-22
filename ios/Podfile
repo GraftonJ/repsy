@@ -12,6 +12,6 @@ target 'repsy' do
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
   pod 'FirebaseUI/Phone'
-
+  pod 'GoogleSignIn'
 
 end
