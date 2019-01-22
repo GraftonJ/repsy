@@ -27,7 +27,6 @@ export default class Homepage extends Component {
 }
 
   render() {
-
     return (
       <Container>
         <Header>
@@ -45,6 +44,7 @@ export default class Homepage extends Component {
           </Right>
         </Header>
         <Content>
+          <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
             <Button key={idx} rounded style={styles.button}>
               <Text>{condition}</Text>
@@ -70,4 +70,8 @@ const styles = StyleSheet.create({
       margin: 15,
       width: '80%',
     },
+    title: {
+      fontSize: 40,
+      margin: 10,
+    }
 });
