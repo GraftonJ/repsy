@@ -10,13 +10,13 @@ export default class Loginpage extends Component {
     this.state = {
       user: null,
       username: '',
-      password: '',
+      password: ''
     }
   }
   onRegister = () => {
   firebase.auth().createUserWithEmailAndPassword(this.state.username, this.state.password)
     .then((user) => {
-      
+
       // If you need to do anything with the user, do it here
       // The user will be logged in automatically by the
       // `onAuthStateChanged` listener we set up in App.js earlier

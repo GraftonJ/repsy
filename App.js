@@ -37,7 +37,7 @@ export default class App extends React.Component {
     // The application is initialising
     if (this.state.loading) return <LoadingIndicator />;
     // The user exists, so they're logged in
-    if (this.state.user) return <Homepage />;
+    if (this.state.user) return <Loginpage />;
     // The user is null, so they're logged out
     return <Loginpage />;
   }
