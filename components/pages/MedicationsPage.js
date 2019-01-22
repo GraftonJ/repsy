@@ -3,9 +3,7 @@ import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'native-base'
 
-import Registrationform from '../elements/RegistrationForm'
-
-export default class Loginpage extends Component {
+export default class MedicationsPage extends Component {
 
   render() {
 
@@ -14,18 +12,17 @@ export default class Loginpage extends Component {
         <Header>
           <Left>
             <Button
-              onPress={() => {Actions.Homepage()}}>
-              <Text>Homepage</Text>
+              onPress={() => {Actions.Loginpage()}}>
+              <Text>Login</Text>
             </Button>
           </Left>
           <Body>
-            <Text>Loginpage</Text>
+            <Text>Medications</Text>
           </Body>
           <Right>
           </Right>
         </Header>
         <Content>
-          <Registrationform />
         </Content>
         <Footer>
         </Footer>

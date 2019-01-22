@@ -20,6 +20,10 @@ export default class Homepage extends Component {
             <Text>Homepage</Text>
           </Body>
           <Right>
+            <Button
+              onPress={() => { Actions.ConditionsPage() }}>
+              <Text>Conditions</Text>
+            </Button>
           </Right>
         </Header>
         <Content>
