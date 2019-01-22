@@ -15,6 +15,8 @@ import {
   Body
 } from 'native-base'
 
+import Footermenu from '../elements/footermenu'
+
 export default class Homepage extends Component {
 
   render() {
@@ -29,7 +31,8 @@ export default class Homepage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { Actions.ConditionsPage() }}>
+              onPress={() => { Actions.ConditionsPage() }}
+            >
               <Text>Conditions</Text>
             </Button>
           </Right>
@@ -37,24 +40,7 @@ export default class Homepage extends Component {
         <Content>
         </Content>
         <Footer>
-          <FooterTab>
-            <Button vertical>
-              <Icon name="clipboard" />
-              <Text style={{fontSize: 11}} >Conditions</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="medkit" />
-              <Text style={{fontSize: 11}} >Treatments</Text>
-            </Button>
-            <Button vertical>
-              <Icon active name="text" />
-              <Text style={{fontSize: 9.5}} >What's New?</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="send" />
-              <Text style={{fontSize: 11}} >Requests</Text>
-            </Button>
-          </FooterTab>
+          <Footermenu/>
         </Footer>
       </Container>
     ) // End of return
