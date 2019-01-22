@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
 
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
@@ -41,19 +41,47 @@ async componentDidMount(){
 
         <Content>
           <Form>
-         <Picker
-           mode="dropdown"
-           placeholder="Select One"
-           placeholderStyle={{ color: "#2874F0" }}
-           note={false}
-           selectedValue={this.state.selected}
-           onValueChange={this.onValueChange.bind(this)}>
-
-           {this.state.specialties.map((specialty, idx) => (
-             <Picker.Item key={idx} label={specialty.name} value={specialty.name}/>
-           ))}
-
-         </Picker>
+            <Item>
+              <Input placeholder="First Name" />
+            </Item>
+            <Item>
+              <Input placeholder="Last Name" />
+            </Item>
+           <Picker
+             mode="dropdown"
+             placeholder="Select a Specialty"
+             placeholderStyle={{ color: "#2874F0" }}
+             note={false}
+             selectedValue={this.state.selected}
+             onValueChange={this.onValueChange.bind(this)}
+             headerStyle={{ backgroundColor: "#2874F0" }}
+             headerBackButtonTextStyle={{ color: "#fff" }}
+             headerTitleStyle={{ color: "#fff" }}>
+             {this.state.specialties.map((specialty, idx) => (
+               <Picker.Item key={idx} label={specialty.name} value={specialty.name}/>
+             ))}
+           </Picker>
+           <Item>
+             <Input placeholder="NPI #" />
+           </Item>
+           <Item>
+             <Input placeholder="Clinic Name" />
+           </Item>
+           <Item>
+             <Input placeholder="Clinic Address" />
+           </Item>
+           <Item>
+             <Input placeholder="City" />
+           </Item>
+           <Item>
+             <Input placeholder="State" />
+           </Item>
+           <Item>
+             <Input placeholder="Zip" />
+           </Item>
+           <Button block>
+          <Text>Submit</Text>
+        </Button>
        </Form>
         </Content>
         <Footer>
