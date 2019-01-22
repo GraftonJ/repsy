@@ -181,7 +181,6 @@ DEPENDENCIES:
   - FirebaseUI/Auth
   - FirebaseUI/Google
   - FirebaseUI/Phone
-  - GoogleSignIn
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -242,6 +241,6 @@ SPEC CHECKSUMS:
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: 50c000c6e7a3b27322555e4423a736e26da67975
+PODFILE CHECKSUM: fb9be6fe222244c42ff6eef3cd4806d60958cbab
 
 COCOAPODS: 1.5.3
