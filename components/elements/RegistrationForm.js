@@ -5,6 +5,7 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, It
 
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
+const PickerItem = Picker.Item
 
 export default class Registrationform extends Component {
 
@@ -22,10 +23,8 @@ export default class Registrationform extends Component {
     const json = await getSpecialties()
     console.log(json)
     this.setState({specialties: json})
+    console.log(json[0])
   }
-
-
-
 
 
 
@@ -42,7 +41,9 @@ export default class Registrationform extends Component {
                   <Input placeholder="Last Name" />
                 </Item>
                 <Picker>
-
+                  {this.state.specialties.map((specialty, idx) => (
+                    <PickerItem key={idx} label={specialty.name} value={specialty.name}/>
+                  ))}
                 </Picker>
                 <Item>
                   <Input placeholder="NPI #" />
