@@ -36,9 +36,6 @@ async componentDidMount(){
   render() {
 
     return (
-      <Container>
-        <Header />
-
         <Content>
           <Form>
             <Item>
@@ -49,8 +46,10 @@ async componentDidMount(){
             </Item>
            <Picker
              mode="dropdown"
+             iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+             style={{ width: undefined }}
              placeholder="Select a Specialty"
-             placeholderStyle={{ color: "#2874F0" }}
+             placeholderStyle={{ color: "rgb(79, 79, 78)" }}
              note={false}
              selectedValue={this.state.selected}
              onValueChange={this.onValueChange.bind(this)}
@@ -84,9 +83,6 @@ async componentDidMount(){
           </Button>
         </Form>
         </Content>
-        <Footer>
-        </Footer>
-      </Container>
     ) // End of return
   } // End of render
 
