@@ -23,6 +23,7 @@ export default class Loginpage extends Component {
           </Right>
         </Header>
         <Content>
+
         </Content>
         <Footer>
         </Footer>
