@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
+import { Platform, StyleSheet, View, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'native-base'
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Icon,
+  Text,
+  Left,
+  Right,
+  Body
+} from 'native-base'
 
 export default class Homepage extends Component {
 
@@ -11,13 +23,9 @@ export default class Homepage extends Component {
       <Container>
         <Header>
           <Left>
-            <Button
-              onPress={() => {Actions.Loginpage()}}>
-              <Text>Login</Text>
-            </Button>
+            <Text>Hello Bejan</Text>
           </Left>
           <Body>
-            <Text>Homepage</Text>
           </Body>
           <Right>
             <Button
@@ -29,6 +37,24 @@ export default class Homepage extends Component {
         <Content>
         </Content>
         <Footer>
+          <FooterTab>
+            <Button vertical>
+              <Icon name="clipboard" />
+              <Text style={{fontSize: 11}} >Conditions</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="medkit" />
+              <Text style={{fontSize: 11}} >Treatments</Text>
+            </Button>
+            <Button vertical>
+              <Icon active name="text" />
+              <Text style={{fontSize: 9.5}} >What's New?</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="send" />
+              <Text style={{fontSize: 11}} >Requests</Text>
+            </Button>
+          </FooterTab>
         </Footer>
       </Container>
     ) // End of return
