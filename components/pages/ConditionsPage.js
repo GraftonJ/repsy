@@ -5,6 +5,8 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'n
 
 export default class ConditionsPage extends Component {
 
+
+
   render() {
 
     return (

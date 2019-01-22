@@ -3,6 +3,23 @@ import store from '../store';
 const API = `https://repsy.herokuapp.com`
 
 
+/*On the page you want to make API call
+need to import the function (ex: import { getSpecialties } from '../../utils/api')
+then will want to do a ComponentDidMount utilizing the function
+
+ex:
+async componentDidMount(){
+  console.log('******************component mounted')
+  //get data from the API
+  const response = await fetch(`${URI}/specialties`)
+  const json = await getSpecialties()
+  console.log(json)
+  this.setState({specialties: json})
+  console.log(json[0])
+}
+See RegistrationForm element for a working example
+*/
+
 //GET ALL SPECIALTIES
 export const getSpecialties = async () => {
   const response = await fetch(`${API}/specialties`)

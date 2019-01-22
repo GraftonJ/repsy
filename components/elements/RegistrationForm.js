@@ -1,81 +1,66 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, Picker } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker } from 'native-base'
 
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
-const PickerItem = Picker.Item
-
-export default class Registrationform extends Component {
-
-  constructor(props){
-    super(props)
-      this.state = {
-        specialties: []
-      }
-  }
-
-  async componentDidMount(){
-    console.log('******************component mounted')
-    //get data from the API
-    const response = await fetch(`${URI}/specialties`)
-    const json = await getSpecialties()
-    console.log(json)
-    this.setState({specialties: json})
-    console.log(json[0])
-  }
 
 
+export default class ConditionsPage extends Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    selected: undefined,
+    specialties: [],
+  };
+}
+onValueChange(value: string) {
+  this.setState({
+    selected: value,
+    specialties: this.state.specialties
+  });
+}
 
-    render() {
+async componentDidMount(){
+  console.log('******************component mounted')
+  //get data from the API
+  const response = await fetch(`${URI}/specialties`)
+  const json = await getSpecialties()
+  console.log(json)
+  this.setState({specialties: json})
+  console.log(json[0])
+}
 
-        return (
-            <Content>
-                <Text>Register with Repsy!</Text>
-                <Form>
-                <Item>
-                  <Input placeholder="First Name" />
-                </Item>
-                <Item>
-                  <Input placeholder="Last Name" />
-                </Item>
-                <Picker>
-                  {this.state.specialties.map((specialty, idx) => (
-                    <PickerItem key={idx} label={specialty.name} value={specialty.name}/>
-                  ))}
-                </Picker>
-                <Item>
-                  <Input placeholder="NPI #" />
-                </Item>
-                <Item>
-                  <Input placeholder="Clinic Name" />
-                </Item>
-                <Item>
-                  <Input placeholder="Clinic Address" />
-                </Item>
-                <Item>
-                  <Input placeholder="City" />
-                </Item>
-                <Item>
-                  <Input placeholder="State" />
-                </Item>
-                <Item>
-                  <Input placeholder="Zip" />
-                </Item>
-                <Item>
-                  <Input placeholder="email" />
-                </Item>
-                <Item>
-                  <Input placeholder="Password" />
-                </Item>
-                <Item>
-                  <Input placeholder="Photo URL" />
-                </Item>
-              </Form>
-            </Content>
-        ) // End of return
-    } // End of render
+
+  render() {
+
+    return (
+      <Container>
+        <Header />
+
+        <Content>
+          <Form>
+         <Picker
+           mode="dropdown"
+           placeholder="Select One"
+           placeholderStyle={{ color: "#2874F0" }}
+           note={false}
+           selectedValue={this.state.selected}
+           onValueChange={this.onValueChange.bind(this)}>
+
+           {this.state.specialties.map((specialty, idx) => (
+             <Picker.Item key={idx} label={specialty.name} value={specialty.name}/>
+           ))}
+
+         </Picker>
+       </Form>
+        </Content>
+        <Footer>
+        </Footer>
+      </Container>
+    ) // End of return
+  } // End of render
 
 } // End of componenet
 
