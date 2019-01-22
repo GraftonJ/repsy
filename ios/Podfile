@@ -8,6 +8,7 @@ target 'repsy' do
   # Pods for repsy
 
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 
 
 end
