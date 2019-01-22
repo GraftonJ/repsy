@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Button, Body, Right, Footer, Content, Form, Item, Input } from 'native-base'
+import { GoogleSignin } from 'react-native-google-signin';
+import firebase from 'react-native-firebase'
 
 export default class Loginpage extends Component {
 
