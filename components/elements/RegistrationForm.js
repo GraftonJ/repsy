@@ -80,9 +80,9 @@ async componentDidMount(){
              <Input placeholder="Zip" />
            </Item>
            <Button block>
-          <Text>Submit</Text>
-        </Button>
-       </Form>
+             <Text>Submit</Text>
+          </Button>
+        </Form>
         </Content>
         <Footer>
         </Footer>
