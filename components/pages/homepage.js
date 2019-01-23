@@ -28,7 +28,7 @@ export default class Homepage extends Component {
   }
 }
 
-//Subscribe doctorsConditions state to store to update on change
+//Subscribe doctorsConditions state to the store to update on change
 componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
