@@ -5,7 +5,10 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'n
 
 import Registrationform from '../elements/RegistrationForm'
 
+
+
 export default class Loginpage extends Component {
+
 
   render() {
 

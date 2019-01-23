@@ -7,13 +7,74 @@ import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
 
 
+
+
+
+//   constructor(props) {
+//   super(props);
+//   this.state = {
+//
+//     // local state
+//     // ---------------
+//     errorMessage: '',
+//     // Field keys match db table fields
+//     postValue: {
+//       fname: '', // holds the form value
+//       lname: '',
+//       specialties_id: '',
+//       npi_num: '',
+//       clinic_name: '',
+//       clinic_address: '',
+//       city: '',
+//       state: '',
+//       zip: 0,
+//       email: '',
+//       password: "",
+//       photo: "",
+//     },
+//   }
+// }
+//
+//   /*********************************/
+//   async addDoctor(doctor) {
+//     console.log('----async addDoctor', doctor)
+//
+//     this.setState()
+//   }
+
+
+
+
+
+
+
+
+
 export default class ConditionsPage extends Component {
   constructor(props) {
   super(props);
   this.state = {
+      // local state
+      // ---------------
     selected: undefined,
     specialties: [],
-  };
+    errorMessage: '',
+    // Field keys match db table fields
+    postValue: {
+      fname: '', // holds the form value
+      lname: '',
+      specialties_id: '',
+      npi_num: '',
+      clinic_name: '',
+      clinic_address: '',
+      city: '',
+      state: '',
+      zip: 0,
+      email: '',
+      password: "",
+      photo: "",
+    }
+  }
 }
 onValueChange(value: string) {
   this.setState({
