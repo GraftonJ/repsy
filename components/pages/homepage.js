@@ -77,7 +77,7 @@ componentWillUnmount(){
         </Header>
         <Content>
           <Button onPress={() => store.setState({
-            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3',]
+            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3', 'Hacked 4']
           })}>
             <Text>PRESS</Text>
           </Button>
