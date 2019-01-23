@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions } from 'react-native';
+import { Platform, StyleSheet, View, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
 import { getDoctorsConditions } from '../../utils/api'
@@ -14,7 +14,8 @@ import {
   Text,
   Left,
   Right,
-  Body
+  Body,
+  Spinner,
 } from 'native-base'
 
 import FooterMenu from '../elements/FooterMenu'
@@ -42,10 +43,12 @@ async componentDidMount(){
 //Get the conditions from the doctors_conditions route
   let conditions = []
   conditions = await getDoctorsConditions()
-  console.log('Conditions Loaded:', conditions);
 //Set the store state with the conditions. This should cause local state to update and re-render
   store.setState({
     doctorsConditions: conditions,
+  })
+  this.setState({
+    isLoading: false,
   })
 }
 
@@ -55,6 +58,15 @@ componentWillUnmount(){
 }
 
   render() {
+    //Show loading spinner if fetching data
+    if (this.state.isLoading) {
+        return (
+
+          <Spinner style={styles.spinner} color='red' />
+
+        )
+      }
+    else {
     return (
       <Container>
         <Header>
@@ -89,6 +101,7 @@ componentWillUnmount(){
         </Footer>
       </Container>
     ) // End of return
+  }
   } // End of render
 
 } // End of componenet
@@ -106,5 +119,8 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 40,
       margin: 10,
+    },
+    spinner: {
+      height: height
     }
 });
