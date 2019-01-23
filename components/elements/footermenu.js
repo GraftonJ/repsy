@@ -9,7 +9,7 @@ export default class Footermenu extends Component {
     return (
       <FooterTab>
         <Button
-          onPress={() => { Actions.ConditionsPage() }}
+          onPress={() => { Actions.ConditionsLibrary() }}
           vertical
         >
           <Icon name="clipboard" />
@@ -23,7 +23,7 @@ export default class Footermenu extends Component {
           <Text style={{fontSize: 11}} >Treatments</Text>
         </Button>
         <Button
-          onPress={() => { Actions.ConditionsPage() }}
+          onPress={() => { Actions.ConditionsLibrary() }}
           vertical
         >
           <Icon active name="text" />

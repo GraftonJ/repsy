@@ -31,7 +31,7 @@ export default class Homepage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { Actions.ConditionsPage() }}
+              onPress={() => { Actions.ConditionsLibrary() }}
             >
               <Text>Conditions</Text>
             </Button>
