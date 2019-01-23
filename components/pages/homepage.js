@@ -16,7 +16,7 @@ import {
   Body
 } from 'native-base'
 
-import Footermenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class Homepage extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ export default class Homepage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { Actions.ConditionsPage() }}
+              onPress={() => { Actions.ConditionsLibrary() }}
             >
               <Text>Conditions</Text>
             </Button>
@@ -52,7 +52,7 @@ export default class Homepage extends Component {
           ))}
         </Content>
         <Footer>
-          <Footermenu/>
+          <FooterMenu/>
         </Footer>
       </Container>
     ) // End of return

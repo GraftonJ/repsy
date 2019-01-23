@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { FooterTab, Button, Icon, Text } from 'native-base'
 
-export default class Footermenu extends Component {
+export default class FooterMenu extends Component {
 
   render() {
     return (
       <FooterTab>
         <Button
-          onPress={() => { Actions.ConditionsPage() }}
+          onPress={() => { Actions.ConditionsLibrary() }}
           vertical
         >
           <Icon name="clipboard" />
@@ -23,7 +23,7 @@ export default class Footermenu extends Component {
           <Text style={{fontSize: 11}} >Treatments</Text>
         </Button>
         <Button
-          onPress={() => { Actions.ConditionsPage() }}
+          onPress={() => { Actions.ConditionsLibrary() }}
           vertical
         >
           <Icon active name="text" />

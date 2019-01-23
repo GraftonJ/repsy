@@ -19,12 +19,14 @@ export default class Loginpage extends Component {
             </Button>
           </Left>
           <Body>
-            <Text>Loginpage</Text>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
         <Content>
+          <Text style={styles.welcome}>Welcome to Repsy!</Text>
+          <Text style={styles.h2}>Create an Account</Text>
           <Registrationform />
         </Content>
         <Footer>
@@ -41,5 +43,24 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
-
+  welcome: {
+    fontFamily: 'Helvetica',
+    fontSize: 25,
+    textAlign: 'center',
+    letterSpacing: 1,
+    marginTop: 40,
+  },
+  h2: {
+    fontFamily: 'Helvetica',
+    fontSize: 15,
+    textAlign: 'center',
+    letterSpacing: 1,
+    marginTop: -2,
+    marginBottom: 30
+  },
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  }
 });

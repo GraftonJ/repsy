@@ -8,8 +8,9 @@ import Homepage from './components/pages/homepage'
 import Loginpage from './components/pages/loginpage'
 import ConditionsPage from './components/pages/ConditionsPage'
 import MedicationsPage from './components/pages/MedicationsPage'
+import ConditionsLibrary from './components/pages/ConditionsLibrary'
 
-// type Props = {};
+
 export default class App extends Component {
 
   constructor(props){
@@ -25,6 +26,7 @@ export default class App extends Component {
           <Scene key="Loginpage" component={Loginpage} initial={true} />
           <Scene key="ConditionsPage" component={ConditionsPage} />
           <Scene key="MedicationsPage" component={MedicationsPage} />
+          <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
         </Scene>
       </Router>
     )
