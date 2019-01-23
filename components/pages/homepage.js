@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
+import { getDoctorsConditions } from '../../utils/api'
 import {
   Container,
   Header,
@@ -25,17 +26,21 @@ export default class Homepage extends Component {
   this.state = {
     doctorsConditions: store.getState().doctorsConditions,
     isLoading: true,
+    userID: store.getState().user.id
   }
 }
 
 //Subscribe doctorsConditions state to the store to update on change
-componentDidMount(){
+async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
       doctorsConditions: store.getState().doctorsConditions,
+      userID: store.getState().user.id
     })
   })
-
+  let conditions = []
+  conditions = await getDoctorsConditions()
+  console.log('Conditions Loaded:', conditions);
 }
 componentWillUnmount(){
   //disconnect from store notifications
