@@ -23,7 +23,8 @@ export default class Homepage extends Component {
   constructor(props) {
   super(props);
   this.state = {
-    doctorsConditions: store.getState().doctorsConditions
+    doctorsConditions: store.getState().doctorsConditions,
+    isLoading: true,
   }
 }
 
@@ -34,6 +35,7 @@ componentDidMount(){
       doctorsConditions: store.getState().doctorsConditions,
     })
   })
+
 }
 componentWillUnmount(){
   //disconnect from store notifications
