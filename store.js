@@ -12,7 +12,7 @@ let state = {
     uid: 999999999,
     fname: 'Georgia',
     lname: 'Smith',
-    id: 3,
+    id: 2,
   },
 
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],

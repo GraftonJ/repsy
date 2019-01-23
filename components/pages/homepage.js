@@ -38,25 +38,21 @@ async componentDidMount(){
       userID: store.getState().user.id
     })
   })
-  //Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
+
+//Get the conditions from the doctors_conditions route
   let conditions = []
   conditions = await getDoctorsConditions()
   console.log('Conditions Loaded:', conditions);
-//Set the store state with the conditions. This should cause local state to update a re-render
+//Set the store state with the conditions. This should cause local state to update and re-render
   store.setState({
     doctorsConditions: conditions,
   })
 }
 
-
-
-
 componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
-
-
 
   render() {
     return (
