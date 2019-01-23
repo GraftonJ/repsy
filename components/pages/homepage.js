@@ -27,6 +27,21 @@ export default class Homepage extends Component {
   }
 }
 
+//Subscribe doctorsConditions state to store to update on change
+componentDidMount(){
+  this.unsubscribe = store.onChange(() => {
+    this.setState({
+      doctorsConditions: store.getState().doctorsConditions,
+    })
+  })
+}
+componentWillUnmount(){
+  //disconnect from store notifications
+  this.unsubscribe()
+}
+//Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
+//Set the store state with the conditions. This should cause local state to update a re-render
+
   render() {
     return (
       <Container>
@@ -45,6 +60,9 @@ export default class Homepage extends Component {
           </Right>
         </Header>
         <Content>
+          <Button onPress={() => store.setState({
+            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3',]
+          })}><Text>PRESS</Text></Button>
           <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
             <Button key={idx} rounded style={styles.button}>
