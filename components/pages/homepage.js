@@ -18,11 +18,12 @@ import {
 
 import FooterMenu from '../elements/FooterMenu'
 
+
 export default class Homepage extends Component {
   constructor(props) {
   super(props);
   this.state = {
-    doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
+    doctorsConditions: store.getState().doctorsConditions
   }
 }
 
