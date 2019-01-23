@@ -9,13 +9,14 @@ import Loginpage from './components/pages/loginpage'
 import ConditionsPage from './components/pages/ConditionsPage'
 import MedicationsPage from './components/pages/MedicationsPage'
 import ConditionsLibrary from './components/pages/ConditionsLibrary'
-
+import ClinicalData from './components/pages/ClinicalDataPage'
 
 export default class App extends Component {
 
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {},
+    current_cancer = ''
   }
 
   render() {
@@ -23,10 +24,11 @@ export default class App extends Component {
       <Router>
         <Scene key="root" hideNavBar= "false">
           <Scene key="Homepage" component={Homepage} />
-          <Scene key="Loginpage" component={Loginpage} initial={true} />
+          <Scene key="Loginpage" component={Loginpage} initial />
           <Scene key="ConditionsPage" component={ConditionsPage} />
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
+          <Scene key="ClinicalData" component={ClinicalData} />
         </Scene>
       </Router>
     )
