@@ -15,7 +15,7 @@ import {
   Body
 } from 'native-base'
 
-import Footermenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class Homepage extends Component {
 
@@ -40,7 +40,7 @@ export default class Homepage extends Component {
         <Content>
         </Content>
         <Footer>
-          <Footermenu/>
+          <FooterMenu/>
         </Footer>
       </Container>
     ) // End of return

@@ -6,7 +6,7 @@ import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, Li
 import store, { URI } from '../../store'
 import { getConditions } from '../../utils/api'
 
-import Footermenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class ConditionsLibrary extends Component {
 
@@ -62,7 +62,7 @@ export default class ConditionsLibrary extends Component {
           </List>
         </Content>
         <Footer>
-          <Footermenu/>
+          <FooterMenu/>
         </Footer>
       </Container>
     ) // End of return
