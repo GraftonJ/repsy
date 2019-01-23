@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
+import { getDoctorsConditions } from '../../utils/api'
 import {
   Container,
   Header,
@@ -25,24 +26,37 @@ export default class Homepage extends Component {
   this.state = {
     doctorsConditions: store.getState().doctorsConditions,
     isLoading: true,
+    userID: store.getState().user.id
   }
 }
 
 //Subscribe doctorsConditions state to the store to update on change
-componentDidMount(){
+async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
       doctorsConditions: store.getState().doctorsConditions,
+      userID: store.getState().user.id
     })
   })
-
+  //Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
+  let conditions = []
+  conditions = await getDoctorsConditions()
+  console.log('Conditions Loaded:', conditions);
+//Set the store state with the conditions. This should cause local state to update a re-render
+  store.setState({
+    doctorsConditions: conditions,
+  })
 }
+
+
+
+
 componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
-//Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
-//Set the store state with the conditions. This should cause local state to update a re-render
+
+
 
   render() {
     return (
@@ -63,12 +77,14 @@ componentWillUnmount(){
         </Header>
         <Content>
           <Button onPress={() => store.setState({
-            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3',]
-          })}><Text>PRESS</Text></Button>
+            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3', 'Hacked 4']
+          })}>
+            <Text>PRESS</Text>
+          </Button>
           <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
             <Button key={idx} rounded style={styles.button}>
-              <Text>{condition}</Text>
+              <Text>{condition.name}</Text>
             </Button>
           ))}
         </Content>
