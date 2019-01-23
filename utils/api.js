@@ -62,7 +62,7 @@ export const getRepsMeds = async () => {
   return json
 }
 
-//GET conditions that a doctor has choosen to follow. id is the doctors id you want to find the conditions for
+//GET conditions that a doctor has choosen to follow. id is the doctors id you want to find the conditions for and is pulled from the user state in the store
 export const getDoctorsConditions = async () => {
   const response = await fetch(`${API}/doctors_Conditions/${store.getState().user.id}`)
   const json = await response.json();

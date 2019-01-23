@@ -38,16 +38,25 @@ async componentDidMount(){
       userID: store.getState().user.id
     })
   })
+  //Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
   let conditions = []
   conditions = await getDoctorsConditions()
   console.log('Conditions Loaded:', conditions);
+//Set the store state with the conditions. This should cause local state to update a re-render
+  store.setState({
+    doctorsConditions: conditions,
+  })
 }
+
+
+
+
 componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
-//Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
-//Set the store state with the conditions. This should cause local state to update a re-render
+
+
 
   render() {
     return (
@@ -69,11 +78,13 @@ componentWillUnmount(){
         <Content>
           <Button onPress={() => store.setState({
             doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3',]
-          })}><Text>PRESS</Text></Button>
+          })}>
+            <Text>PRESS</Text>
+          </Button>
           <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
             <Button key={idx} rounded style={styles.button}>
-              <Text>{condition}</Text>
+              <Text>{condition.name}</Text>
             </Button>
           ))}
         </Content>
