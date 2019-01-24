@@ -139,7 +139,7 @@ onpressSubmit = (ev) => {
           <Form >
             <Item>
               <Input
-                onChangeText={(text) => this.setState({postValue: text})}
+                onChangeText={(text) => this.setState({fname: text})}
                 placeholder="First Name"
                 />
             </Item>
