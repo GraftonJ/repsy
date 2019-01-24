@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions } from 'react-native';
+import { Platform, StyleSheet, View, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
 import { getDoctorsConditions } from '../../utils/api'
@@ -14,11 +14,11 @@ import {
   Text,
   Left,
   Right,
-  Body
+  Body,
+  Spinner,
 } from 'native-base'
 
 import FooterMenu from '../elements/FooterMenu'
-
 
 export default class Homepage extends Component {
   constructor(props) {
@@ -26,7 +26,8 @@ export default class Homepage extends Component {
   this.state = {
     doctorsConditions: store.getState().doctorsConditions,
     isLoading: true,
-    userID: store.getState().user.id
+    userID: store.getState().user.id,
+    userName: store.getState().user.fname,
   }
 }
 
@@ -38,32 +39,36 @@ async componentDidMount(){
       userID: store.getState().user.id
     })
   })
-  //Get the conditions from the doctors_conditions route passing in the doctor ID from the user state
+//Get the conditions from the doctors_conditions route
   let conditions = []
   conditions = await getDoctorsConditions()
-  console.log('Conditions Loaded:', conditions);
-//Set the store state with the conditions. This should cause local state to update a re-render
+//Set the store state with the conditions. This should cause local state to update and re-render
   store.setState({
     doctorsConditions: conditions,
   })
+  this.setState({
+    isLoading: false,
+  })
 }
-
-
-
 
 componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
 
-
-
   render() {
+    //Show loading spinner if fetching data
+    if(this.state.isLoading){
+        return (
+          <Spinner style={styles.spinner} color='red' />
+        )
+      }
+    else {
     return (
       <Container>
         <Header>
           <Left>
-            <Text>Hello Bejan</Text>
+            <Text>Hello {this.state.userName}</Text>
           </Left>
           <Body>
           </Body>
@@ -83,7 +88,7 @@ componentWillUnmount(){
           </Button>
           <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
-            <Button key={idx} rounded style={styles.button}>
+            <Button key={idx} conditionId={condition.id} rounded style={styles.button}>
               <Text>{condition.name}</Text>
             </Button>
           ))}
@@ -92,7 +97,8 @@ componentWillUnmount(){
           <FooterMenu/>
         </Footer>
       </Container>
-    ) // End of return
+      ) // End of return
+    } //End of if loading
   } // End of render
 
 } // End of componenet
@@ -110,5 +116,8 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 40,
       margin: 10,
+    },
+    spinner: {
+      height: height
     }
 });
