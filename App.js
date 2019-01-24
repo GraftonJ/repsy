@@ -9,6 +9,7 @@ import Loginpage from './components/pages/loginpage'
 import ConditionsPage from './components/pages/ConditionsPage'
 import MedicationsPage from './components/pages/MedicationsPage'
 import ConditionsLibrary from './components/pages/ConditionsLibrary'
+import RequestsPage from './components/pages/RequestsPage'
 
 
 export default class App extends Component {
@@ -27,6 +28,7 @@ export default class App extends Component {
           <Scene key="ConditionsPage" component={ConditionsPage} />
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
+          <Scene key="RequestsPage" component={RequestsPage} />
         </Scene>
       </Router>
     )
