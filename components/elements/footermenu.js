@@ -30,7 +30,7 @@ export default class FooterMenu extends Component {
           <Text style={{fontSize: 9.5}} >What's New?</Text>
         </Button>
         <Button
-          onPress={() => { Actions.MedicationsPage() }}
+          onPress={() => { Actions.RequestsPage() }}
           vertical
         >
           <Icon name="send" />
