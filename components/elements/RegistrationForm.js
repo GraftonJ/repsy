@@ -124,6 +124,7 @@ async asyncTryAddDoctor() {
 
     // new account succeeded!
     if(response.ok) {
+      console.log('++++++++++++ new account added!', responseJson)
       Alert.alert('You successfully registered!')
     }
 
@@ -140,20 +141,6 @@ async asyncTryAddDoctor() {
 }
 //
 // /* ***Î****************************************** */
-// onpressSubmit = async () => {
-//   console.log("onpressSubmit()");
-//   var user = this.refs.myform.getValue();
-//
-//   // check that user filled in the fields
-//   if (!user)
-//     return;
-//
-//   console.log("Adding user: ", user);
-//   await this.asyncTryAddUser(user)
-// }
-
-
-
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
   console.log('^^^^^^^^^^^^^^STATE', this.state)
