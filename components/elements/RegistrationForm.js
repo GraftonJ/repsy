@@ -34,9 +34,12 @@ export default class ConditionsPage extends Component {
 /************************************/
 //ON CHANGE EVENT FOR SELECT SPECIALTY
 onValueChange(value: string) {
+  let specialty = this.state.specialties.find(specialty => specialty.name === value)
+  console.log('$$$$$$$$$$$$$$$$$$$$', specialty.id)
   this.setState({
     selected: value,
-    specialties: this.state.specialties
+    specialties_id: specialty.id,
+    specialties: this.state.specialties,
   });
 }
 
@@ -47,10 +50,18 @@ async componentDidMount(){
   //get data from the API
   const response = await fetch(`${URI}/specialties`)
   const json = await getSpecialties()
-  console.log(json)
+  // console.log(json)
   this.setState({specialties: json})
-  console.log(json[0])
+  // console.log(json[0])
 }
+//OPT 1: compare value to name in specialties array and set id equal to that
+// OPT 2:
+
+// specialtyId(selected) {
+//   let specialtyObject = specialties.find(specialty => specialty.name === this.state.selected)
+//   console.log(specialtyObject)
+// }
+
 
 // /************************************/
 // //ADD DOCTOR FUNCTION
@@ -124,10 +135,11 @@ async componentDidMount(){
 // }
 
 
-onpressSubmit = (ev) => {
+onpressSubmit = (ev,) => {
   ev.preventDefault()
   console.log('************onpressSubmit()')
-  console.log('^^^^^^^^^^^^^^', this.state.fname)
+  console.log('^^^^^^^^^^^^^^STATE', this.state)
+  console.log('~~~~~~~~~~~~~~~~~~~SPECIALTIES_ID', this.state.specialties_id)
 }
 
 
@@ -161,26 +173,38 @@ onpressSubmit = (ev) => {
              headerBackButtonTextStyle={{ color: "#fff" }}
              headerTitleStyle={{ color: "#fff" }}>
              {this.state.specialties.map((specialty, idx) => (
-               <Picker.Item key={idx} label={specialty.name} value={specialty.name}/>
+               <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
              ))}
            </Picker>
            <Item>
-             <Input placeholder="NPI #" />
+             <Input
+               onChangeText={(text) => this.setState({npi_num: text})}
+               placeholder="NPI #" />
            </Item>
            <Item>
-             <Input placeholder="Clinic Name" />
+             <Input
+               onChangeText={(text) => this.setState({clinic_name: text})}
+               placeholder="Clinic Name" />
            </Item>
            <Item>
-             <Input placeholder="Clinic Address" />
+             <Input
+               onChangeText={(text) => this.setState({clinic_address: text})}
+               placeholder="Clinic Address" />
            </Item>
            <Item>
-             <Input placeholder="City" />
+             <Input
+               onChangeText={(text) => this.setState({city: text})}
+               placeholder="City" />
            </Item>
            <Item>
-             <Input placeholder="State" />
+             <Input
+               onChangeText={(text) => this.setState({state: text})}
+               placeholder="State" />
            </Item>
            <Item>
-             <Input placeholder="Zip" />
+             <Input
+               onChangeText={(text) => this.setState({zip: text})}
+               placeholder="Zip" />
            </Item>
            <Button  onPress={this.onpressSubmit} type="submit" block>
              <Text>Submit</Text>
