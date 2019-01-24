@@ -6,6 +6,20 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Ic
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
 
+const doctor = {
+  fname: '',
+  lname: '',
+  specialties_id: '',
+  npi_num: '',
+  clinic_name: '',
+  clinic_address: '',
+  city: '',
+  state: '',
+  zip: 0,
+  email: '',
+  password: "",
+}
+
 
 
 export default class ConditionsPage extends Component {
@@ -31,6 +45,8 @@ export default class ConditionsPage extends Component {
       password: "",
   }
 }
+
+
 /************************************/
 //ON CHANGE EVENT FOR SELECT SPECIALTY
 /* 1. gets value (specialty.name) from the dropdown
@@ -60,62 +76,74 @@ async componentDidMount(){
 
 
 // /************************************/
-// //ADD DOCTOR FUNCTION
-// async asyncTryAddDoctor(doctor) {
-//   console.log("-- asyncTryAddUser(): ", doctor);
-//
-//   this.setState({
-//     errorMessage: '',
-//   })
-//
-//   const body = user;
-//   const url = `${URI}/users`;
-//
-//   try {
-//
-//     // call login route
-//     const response = await fetch(url, {
-//       method: 'POST',
-//       body: JSON.stringify(body),
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Accept: 'application/json',
-//       },
-//     });
-//
-//     const responseJson = await response.json();
-//     console.log(")) after response split");
-//
-//     // if the new account fails, display error message
-//     if (!response.ok) {
-//       console.log('==== ', response.status, responseJson);
-//       this.setState({
-//         errorMessage: responseJson.error,
-//       })
-//       return;
-//     }
-//
-//     // new account succeeded!
-//     console.log("('==== new acct added!: ", responseJson.user);
-//     responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
-//     store.setState({
-//       user: responseJson.user,
-//       isLoggedIn: true,
-//     });
-//     // this.setState({
-//     //   value: {
-//     //     name: '', // holds the form value
-//     //     email: '',
-//     //     password: "",
-//     //     dog_names: "",
-//     //     dogNames: "",
-//     // }});
-//     this.props.newAccountAddedCB();
-//   }
-//   catch(err) {
-//     console.log("ERROR asyncTryAddUser fetch failed: ", err);
-//   }
-// }
+//ADD DOCTOR FUNCTION
+async asyncTryAddDoctor() {
+  console.log("---------- asyncTryAddDoct(): ")
+
+  this.setState({
+    errorMessage: '',
+  })
+
+  const body = {
+    fname: this.state.fname,
+    lname: this.state.lname,
+    specialties_id: this.state.specialties_id,
+    npi_num: this.state.npi_num,
+    clinic_name: this.state.clinic_name,
+    clinic_address: this.state.clinic_address,
+    city: this.state.city,
+    state: this.state.state,
+    zip: this.state.zip,
+    email: this.state.email,
+    password: this.state.password,
+  }
+  const url = `${URI}/doctors`
+  //
+  try {
+    // call login route
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+
+
+    const responseJson = await response.json();
+    console.log(responseJson)
+
+    // if the new account fails, display error message
+    if (!response.ok) {
+      console.log('==== ', response.status, responseJson);
+      this.setState({
+        errorMessage: responseJson.error,
+      })
+      return
+    }
+
+    // new account succeeded!
+    // console.log("('==== new acct added!: ", responseJson);
+    // responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
+    // store.setState({
+    //   user: responseJson.user,
+    //   isLoggedIn: true,
+    // });
+    // // this.setState({
+    // //   value: {
+    // //     name: '', // holds the form value
+    // //     email: '',
+    // //     password: "",
+    // //     dog_names: "",
+    // //     dogNames: "",
+    // // }});
+    // this.props.newAccountAddedCB();
+  }
+  catch(err) {
+    console.log("ERROR asyncTryAddUser fetch failed: ", err)
+  }
+}
 //
 // /* ***Î****************************************** */
 // onpressSubmit = async () => {
@@ -131,11 +159,12 @@ async componentDidMount(){
 // }
 
 
-onpressSubmit = (ev,) => {
-  ev.preventDefault()
+
+onpressSubmit = async () => {
   console.log('************onpressSubmit()')
   console.log('^^^^^^^^^^^^^^STATE', this.state)
-  console.log('~~~~~~~~~~~~~~~~~~~SPECIALTIES_ID', this.state.specialties_id)
+  console.log('TRYING TO ADD DOCTOR')
+  await this.asyncTryAddDoctor()
 }
 
 
