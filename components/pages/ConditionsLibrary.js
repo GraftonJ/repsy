@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem } from 'native-base'
+import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner } from 'native-base'
 
 import store, { URI } from '../../store'
 import { getConditions } from '../../utils/api'
@@ -14,6 +14,7 @@ export default class ConditionsLibrary extends Component {
     super(props);
     this.state = {
       selected: undefined,
+      isLoading: true,
       conditions: [],
       filteredcond: []
     };
@@ -34,10 +35,19 @@ export default class ConditionsLibrary extends Component {
     console.log(json)
     this.setState({conditions: json})
     console.log(json[0])
+    this.setState({
+      isLoading: false,
+    })
   }
 
   render() {
-
+    //Show loading spinner if fetching data
+    if(this.state.isLoading){
+        return (
+          <Spinner style={styles.spinner} color='red' />
+        )
+      }
+    else {
     return (
       <Container>
         <Header searchBar rounded>
@@ -67,10 +77,19 @@ export default class ConditionsLibrary extends Component {
       </Container>
     ) // End of return
   } // End of render
-
+}
 } // End of component
 
+// Variables to changes the height and width dynamically for all screens
+const height = Dimensions.get('window').height
+const width = Dimensions.get('window').width
 
+// Put styles in here to format the page
+const styles = StyleSheet.create({
+    spinner: {
+      height: height
+    }
+});
 
 
 
@@ -80,7 +99,7 @@ export default class ConditionsLibrary extends Component {
 //     if(filteredcond.length > 0){
 //       this.setState({
 //         ...this.state,
-//         filteredRecipes: filteredRecipes,
+//         filteredRecipes: filteredcond,
 //         searchVal: `Search: ${searchString}`
 //       })
 //       setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
@@ -88,7 +107,6 @@ export default class ConditionsLibrary extends Component {
 //       this.setState({
 //         ...this.state,
 //         filteredcond: this.state.versionFilter,
-//         searchVal: 'Popular Recipes'
 //       })
 //       setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
 //       // add toast or notification of 'no results'
@@ -101,7 +119,6 @@ export default class ConditionsLibrary extends Component {
 //     this.setState({
 //       ...this.state,
 //       filteredRecipes: this.state.versionFilter,
-//       searchVal: 'Popular Recipes'
 //     })
 //     setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
 //     // add toast or notification of 'no results'

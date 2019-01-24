@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Image, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon, Text, ListItem, List } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon, Text, ListItem, List, Picker, Form } from 'native-base'
 import { WebView } from 'react-native-webview';
 
 import store, { URI } from '../../store'
@@ -14,7 +14,8 @@ export default class ConditionsPage extends Component {
     this.state = {
       selected: undefined,
       current_cancer: "Breast Cancer",
-      meds: []
+      meds: [],
+      selected: ''
     };
   }
 
@@ -31,6 +32,12 @@ export default class ConditionsPage extends Component {
     console.log(json)
     this.setState({meds: json})
     console.log(json[0])
+  }
+
+  onValueChange(value: string) {
+    this.setState({
+      selected: value
+    });
   }
 
   render() {
@@ -52,7 +59,13 @@ export default class ConditionsPage extends Component {
           </Right>
         </Header>
         <Content>
+
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Treatments </Text>
+
+
+
+
+
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
