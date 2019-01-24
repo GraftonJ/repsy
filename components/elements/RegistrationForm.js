@@ -1,52 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions, InputText } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
 
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
-
-
-
-
-
-//   constructor(props) {
-//   super(props);
-//   this.state = {
-//
-//     // local state
-//     // ---------------
-//     errorMessage: '',
-//     // Field keys match db table fields
-//     postValue: {
-//       fname: '', // holds the form value
-//       lname: '',
-//       specialties_id: '',
-//       npi_num: '',
-//       clinic_name: '',
-//       clinic_address: '',
-//       city: '',
-//       state: '',
-//       zip: 0,
-//       email: '',
-//       password: "",
-//       photo: "",
-//     },
-//   }
-// }
-//
-//   /*********************************/
-//   async addDoctor(doctor) {
-//     console.log('----async addDoctor', doctor)
-//
-//     this.setState()
-//   }
-
-
-
-
-
-
 
 
 
@@ -60,7 +18,6 @@ export default class ConditionsPage extends Component {
     specialties: [],
     errorMessage: '',
     // Field keys match db table fields
-    postValue: {
       fname: '', // holds the form value
       lname: '',
       specialties_id: '',
@@ -72,10 +29,10 @@ export default class ConditionsPage extends Component {
       zip: 0,
       email: '',
       password: "",
-      photo: "",
-    }
   }
 }
+/************************************/
+//ON CHANGE EVENT FOR SELECT SPECIALTY
 onValueChange(value: string) {
   this.setState({
     selected: value,
@@ -83,6 +40,8 @@ onValueChange(value: string) {
   });
 }
 
+/***********************************/
+//LOADS SPECIALTIES FROM DATABASE
 async componentDidMount(){
   console.log('******************component mounted')
   //get data from the API
@@ -93,17 +52,101 @@ async componentDidMount(){
   console.log(json[0])
 }
 
+// /************************************/
+// //ADD DOCTOR FUNCTION
+// async asyncTryAddDoctor(doctor) {
+//   console.log("-- asyncTryAddUser(): ", doctor);
+//
+//   this.setState({
+//     errorMessage: '',
+//   })
+//
+//   const body = user;
+//   const url = `${URI}/users`;
+//
+//   try {
+//
+//     // call login route
+//     const response = await fetch(url, {
+//       method: 'POST',
+//       body: JSON.stringify(body),
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Accept: 'application/json',
+//       },
+//     });
+//
+//     const responseJson = await response.json();
+//     console.log(")) after response split");
+//
+//     // if the new account fails, display error message
+//     if (!response.ok) {
+//       console.log('==== ', response.status, responseJson);
+//       this.setState({
+//         errorMessage: responseJson.error,
+//       })
+//       return;
+//     }
+//
+//     // new account succeeded!
+//     console.log("('==== new acct added!: ", responseJson.user);
+//     responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
+//     store.setState({
+//       user: responseJson.user,
+//       isLoggedIn: true,
+//     });
+//     // this.setState({
+//     //   value: {
+//     //     name: '', // holds the form value
+//     //     email: '',
+//     //     password: "",
+//     //     dog_names: "",
+//     //     dogNames: "",
+//     // }});
+//     this.props.newAccountAddedCB();
+//   }
+//   catch(err) {
+//     console.log("ERROR asyncTryAddUser fetch failed: ", err);
+//   }
+// }
+//
+// /* ***Î****************************************** */
+// onpressSubmit = async () => {
+//   console.log("onpressSubmit()");
+//   var user = this.refs.myform.getValue();
+//
+//   // check that user filled in the fields
+//   if (!user)
+//     return;
+//
+//   console.log("Adding user: ", user);
+//   await this.asyncTryAddUser(user)
+// }
+
+
+onpressSubmit = (ev) => {
+  ev.preventDefault()
+  console.log('************onpressSubmit()')
+  console.log('^^^^^^^^^^^^^^', this.state.fname)
+}
+
+
 
   render() {
 
     return (
         <Content>
-          <Form>
+          <Form >
             <Item>
-              <Input placeholder="First Name" />
+              <Input
+                onChangeText={(text) => this.setState({postValue: text})}
+                placeholder="First Name"
+                />
             </Item>
             <Item>
-              <Input placeholder="Last Name" />
+              <Input
+                onChangeText={(text) => this.setState({lname: text})}
+                placeholder="Last Name" />
             </Item>
            <Picker
              mode="dropdown"
@@ -139,7 +182,7 @@ async componentDidMount(){
            <Item>
              <Input placeholder="Zip" />
            </Item>
-           <Button block>
+           <Button  onPress={this.onpressSubmit} type="submit" block>
              <Text>Submit</Text>
           </Button>
         </Form>
