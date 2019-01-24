@@ -7,6 +7,8 @@ import { WebView } from 'react-native-webview';
 import store, { URI } from '../../store'
 import { getMeds } from '../../utils/api'
 
+import FooterMenu from '../elements/FooterMenu'
+
 export default class ConditionsPage extends Component {
 
   constructor(props) {
@@ -61,11 +63,6 @@ export default class ConditionsPage extends Component {
         <Content>
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Treatments </Text>
-
-
-
-
-
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
@@ -75,11 +72,11 @@ export default class ConditionsPage extends Component {
               </ListItem>
             ))}
           </List>
-
-            <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Clinical Guidelines </Text>
+          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Clinical Guidelines </Text>
 
         </Content>
         <Footer>
+          <FooterMenu />
         </Footer>
       </Container>
     )
