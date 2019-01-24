@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, InputText } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions, InputText, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
 
@@ -123,6 +123,10 @@ async asyncTryAddDoctor() {
     }
 
     // new account succeeded!
+    if(response.ok) {
+      Alert.alert('You successfully registered!')
+    }
+
     // console.log("('==== new acct added!: ", responseJson);
     // store.setState({
     //   user: responseJson.user,
@@ -166,12 +170,14 @@ onpressSubmit = async () => {
           <Form >
             <Item>
               <Input
+                autoCorrect={false}
                 onChangeText={(text) => this.setState({fname: text})}
                 placeholder="First Name"
                 />
             </Item>
             <Item>
               <Input
+                autoCorrect={false}
                 onChangeText={(text) => this.setState({lname: text})}
                 placeholder="Last Name" />
             </Item>
@@ -193,26 +199,31 @@ onpressSubmit = async () => {
            </Picker>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({npi_num: text})}
                placeholder="NPI #" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({clinic_name: text})}
                placeholder="Clinic Name" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({clinic_address: text})}
                placeholder="Clinic Address" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({city: text})}
                placeholder="City" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({state: text})}
                placeholder="State" />
            </Item>
@@ -223,11 +234,13 @@ onpressSubmit = async () => {
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({email: text})}
                placeholder="Email" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                secureTextEntry={true}
                onChangeText={(text) => this.setState({password: text})}
                placeholder="Password" />
