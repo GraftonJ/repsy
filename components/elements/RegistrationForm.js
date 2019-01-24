@@ -98,7 +98,7 @@ async asyncTryAddDoctor() {
     password: this.state.password,
   }
   const url = `${URI}/doctors`
-  //
+
   try {
     // call login route
     const response = await fetch(url, {
@@ -109,7 +109,6 @@ async asyncTryAddDoctor() {
         Accept: 'application/json',
       },
     })
-
 
     const responseJson = await response.json();
     console.log(responseJson)
@@ -125,20 +124,11 @@ async asyncTryAddDoctor() {
 
     // new account succeeded!
     // console.log("('==== new acct added!: ", responseJson);
-    // responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
     // store.setState({
     //   user: responseJson.user,
     //   isLoggedIn: true,
     // });
-    // // this.setState({
-    // //   value: {
-    // //     name: '', // holds the form value
-    // //     email: '',
-    // //     password: "",
-    // //     dog_names: "",
-    // //     dogNames: "",
-    // // }});
-    // this.props.newAccountAddedCB();
+
   }
   catch(err) {
     console.log("ERROR asyncTryAddUser fetch failed: ", err)
@@ -238,6 +228,7 @@ onpressSubmit = async () => {
            </Item>
            <Item>
              <Input
+               secureTextEntry={true}
                onChangeText={(text) => this.setState({password: text})}
                placeholder="Password" />
            </Item>
