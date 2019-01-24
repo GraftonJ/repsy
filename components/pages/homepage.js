@@ -20,14 +20,14 @@ import {
 
 import FooterMenu from '../elements/FooterMenu'
 
-
 export default class Homepage extends Component {
   constructor(props) {
   super(props);
   this.state = {
     doctorsConditions: store.getState().doctorsConditions,
     isLoading: true,
-    userID: store.getState().user.id
+    userID: store.getState().user.id,
+    userName: store.getState().user.fname,
   }
 }
 
@@ -39,7 +39,6 @@ async componentDidMount(){
       userID: store.getState().user.id
     })
   })
-
 //Get the conditions from the doctors_conditions route
   let conditions = []
   conditions = await getDoctorsConditions()
@@ -59,11 +58,9 @@ componentWillUnmount(){
 
   render() {
     //Show loading spinner if fetching data
-    if (this.state.isLoading) {
+    if(this.state.isLoading){
         return (
-
           <Spinner style={styles.spinner} color='red' />
-
         )
       }
     else {
@@ -71,7 +68,7 @@ componentWillUnmount(){
       <Container>
         <Header>
           <Left>
-            <Text>Hello Bejan</Text>
+            <Text>Hello {this.state.userName}</Text>
           </Left>
           <Body>
           </Body>
@@ -91,7 +88,7 @@ componentWillUnmount(){
           </Button>
           <Text style={styles.title}>Selected Conditions</Text>
           {this.state.doctorsConditions.map((condition, idx) => (
-            <Button key={idx} rounded style={styles.button}>
+            <Button key={idx} conditionId={condition.id} rounded style={styles.button}>
               <Text>{condition.name}</Text>
             </Button>
           ))}
@@ -100,8 +97,8 @@ componentWillUnmount(){
           <FooterMenu/>
         </Footer>
       </Container>
-    ) // End of return
-  }
+      ) // End of return
+    } //End of if loading
   } // End of render
 
 } // End of componenet
