@@ -58,12 +58,6 @@ componentWillUnmount(){
 
   render() {
     //Show loading spinner if fetching data
-    if(this.state.isLoading){
-        return (
-          <Spinner style={styles.spinner} color='red' />
-        )
-      }
-    else {
     return (
       <Container>
         <Header>
@@ -81,24 +75,23 @@ componentWillUnmount(){
           </Right>
         </Header>
         <Content>
-          <Button onPress={() => store.setState({
-            doctorsConditions: ['Hacked 1', 'Hacked 2', 'Hacked 3', 'Hacked 4']
-          })}>
-            <Text>PRESS</Text>
-          </Button>
           <Text style={styles.title}>Selected Conditions</Text>
-          {this.state.doctorsConditions.map((condition, idx) => (
-            <Button key={idx} conditionId={condition.id} rounded style={styles.button}>
-              <Text>{condition.name}</Text>
-            </Button>
-          ))}
+          { //Check if state is loading to show spinner
+            (this.state.isLoading)
+            ? <Spinner color='red' />
+            : this.state.doctorsConditions.map((condition, idx) => (
+              <Button key={idx} conditionId={condition.id} rounded style={styles.button}>
+                <Text>{condition.name}</Text>
+              </Button>
+            ))
+          }
         </Content>
         <Footer>
           <FooterMenu/>
         </Footer>
       </Container>
       ) // End of return
-    } //End of if loading
+
   } // End of render
 
 } // End of componenet

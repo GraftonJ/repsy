@@ -6,6 +6,20 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Ic
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
 
+const doctor = {
+  fname: '',
+  lname: '',
+  specialties_id: '',
+  npi_num: '',
+  clinic_name: '',
+  clinic_address: '',
+  city: '',
+  state: '',
+  zip: 0,
+  email: '',
+  password: "",
+}
+
 
 
 export default class ConditionsPage extends Component {
@@ -31,84 +45,105 @@ export default class ConditionsPage extends Component {
       password: "",
   }
 }
+
+
 /************************************/
 //ON CHANGE EVENT FOR SELECT SPECIALTY
+/* 1. gets value (specialty.name) from the dropdown
+   2. finds the individual specialty object where value and specialty.name match
+   3. sets selected in state to the value (specialty name)
+   4. sets specialties_id in state to specialty.id
+*/
 onValueChange(value: string) {
+  let specialty = this.state.specialties.find(specialty => specialty.name === value)
   this.setState({
     selected: value,
-    specialties: this.state.specialties
+    specialties_id: specialty.id,
+    specialties: this.state.specialties,
   });
 }
 
 /***********************************/
 //LOADS SPECIALTIES FROM DATABASE
+// [{id, name, create_at, updated_at},{...}...]
 async componentDidMount(){
   console.log('******************component mounted')
   //get data from the API
   const response = await fetch(`${URI}/specialties`)
   const json = await getSpecialties()
-  console.log(json)
   this.setState({specialties: json})
-  console.log(json[0])
 }
 
+
 // /************************************/
-// //ADD DOCTOR FUNCTION
-// async asyncTryAddDoctor(doctor) {
-//   console.log("-- asyncTryAddUser(): ", doctor);
-//
-//   this.setState({
-//     errorMessage: '',
-//   })
-//
-//   const body = user;
-//   const url = `${URI}/users`;
-//
-//   try {
-//
-//     // call login route
-//     const response = await fetch(url, {
-//       method: 'POST',
-//       body: JSON.stringify(body),
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Accept: 'application/json',
-//       },
-//     });
-//
-//     const responseJson = await response.json();
-//     console.log(")) after response split");
-//
-//     // if the new account fails, display error message
-//     if (!response.ok) {
-//       console.log('==== ', response.status, responseJson);
-//       this.setState({
-//         errorMessage: responseJson.error,
-//       })
-//       return;
-//     }
-//
-//     // new account succeeded!
-//     console.log("('==== new acct added!: ", responseJson.user);
-//     responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
-//     store.setState({
-//       user: responseJson.user,
-//       isLoggedIn: true,
-//     });
-//     // this.setState({
-//     //   value: {
-//     //     name: '', // holds the form value
-//     //     email: '',
-//     //     password: "",
-//     //     dog_names: "",
-//     //     dogNames: "",
-//     // }});
-//     this.props.newAccountAddedCB();
-//   }
-//   catch(err) {
-//     console.log("ERROR asyncTryAddUser fetch failed: ", err);
-//   }
-// }
+//ADD DOCTOR FUNCTION
+async asyncTryAddDoctor() {
+  console.log("---------- asyncTryAddDoct(): ")
+
+  this.setState({
+    errorMessage: '',
+  })
+
+  const body = {
+    fname: this.state.fname,
+    lname: this.state.lname,
+    specialties_id: this.state.specialties_id,
+    npi_num: this.state.npi_num,
+    clinic_name: this.state.clinic_name,
+    clinic_address: this.state.clinic_address,
+    city: this.state.city,
+    state: this.state.state,
+    zip: this.state.zip,
+    email: this.state.email,
+    password: this.state.password,
+  }
+  const url = `${URI}/doctors`
+  //
+  try {
+    // call login route
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+
+
+    const responseJson = await response.json();
+    console.log(responseJson)
+
+    // if the new account fails, display error message
+    if (!response.ok) {
+      console.log('==== ', response.status, responseJson);
+      this.setState({
+        errorMessage: responseJson.error,
+      })
+      return
+    }
+
+    // new account succeeded!
+    // console.log("('==== new acct added!: ", responseJson);
+    // responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
+    // store.setState({
+    //   user: responseJson.user,
+    //   isLoggedIn: true,
+    // });
+    // // this.setState({
+    // //   value: {
+    // //     name: '', // holds the form value
+    // //     email: '',
+    // //     password: "",
+    // //     dog_names: "",
+    // //     dogNames: "",
+    // // }});
+    // this.props.newAccountAddedCB();
+  }
+  catch(err) {
+    console.log("ERROR asyncTryAddUser fetch failed: ", err)
+  }
+}
 //
 // /* ***Î****************************************** */
 // onpressSubmit = async () => {
@@ -124,10 +159,12 @@ async componentDidMount(){
 // }
 
 
-onpressSubmit = (ev) => {
-  ev.preventDefault()
+
+onpressSubmit = async () => {
   console.log('************onpressSubmit()')
-  console.log('^^^^^^^^^^^^^^', this.state.fname)
+  console.log('^^^^^^^^^^^^^^STATE', this.state)
+  console.log('TRYING TO ADD DOCTOR')
+  await this.asyncTryAddDoctor()
 }
 
 
@@ -161,26 +198,48 @@ onpressSubmit = (ev) => {
              headerBackButtonTextStyle={{ color: "#fff" }}
              headerTitleStyle={{ color: "#fff" }}>
              {this.state.specialties.map((specialty, idx) => (
-               <Picker.Item key={idx} label={specialty.name} value={specialty.name}/>
+               <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
              ))}
            </Picker>
            <Item>
-             <Input placeholder="NPI #" />
+             <Input
+               onChangeText={(text) => this.setState({npi_num: text})}
+               placeholder="NPI #" />
            </Item>
            <Item>
-             <Input placeholder="Clinic Name" />
+             <Input
+               onChangeText={(text) => this.setState({clinic_name: text})}
+               placeholder="Clinic Name" />
            </Item>
            <Item>
-             <Input placeholder="Clinic Address" />
+             <Input
+               onChangeText={(text) => this.setState({clinic_address: text})}
+               placeholder="Clinic Address" />
            </Item>
            <Item>
-             <Input placeholder="City" />
+             <Input
+               onChangeText={(text) => this.setState({city: text})}
+               placeholder="City" />
            </Item>
            <Item>
-             <Input placeholder="State" />
+             <Input
+               onChangeText={(text) => this.setState({state: text})}
+               placeholder="State" />
            </Item>
            <Item>
-             <Input placeholder="Zip" />
+             <Input
+               onChangeText={(text) => this.setState({zip: text})}
+               placeholder="Zip" />
+           </Item>
+           <Item>
+             <Input
+               onChangeText={(text) => this.setState({email: text})}
+               placeholder="Email" />
+           </Item>
+           <Item>
+             <Input
+               onChangeText={(text) => this.setState({password: text})}
+               placeholder="Password" />
            </Item>
            <Button  onPress={this.onpressSubmit} type="submit" block>
              <Text>Submit</Text>
