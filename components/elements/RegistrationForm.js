@@ -33,9 +33,13 @@ export default class ConditionsPage extends Component {
 }
 /************************************/
 //ON CHANGE EVENT FOR SELECT SPECIALTY
+/* 1. gets value (specialty.name) from the dropdown
+   2. finds the individual specialty object where value and specialty.name match
+   3. sets selected in state to the value (specialty name)
+   4. sets specialties_id in state to specialty.id
+*/
 onValueChange(value: string) {
   let specialty = this.state.specialties.find(specialty => specialty.name === value)
-  console.log('$$$$$$$$$$$$$$$$$$$$', specialty.id)
   this.setState({
     selected: value,
     specialties_id: specialty.id,
@@ -45,22 +49,14 @@ onValueChange(value: string) {
 
 /***********************************/
 //LOADS SPECIALTIES FROM DATABASE
+// [{id, name, create_at, updated_at},{...}...]
 async componentDidMount(){
   console.log('******************component mounted')
   //get data from the API
   const response = await fetch(`${URI}/specialties`)
   const json = await getSpecialties()
-  // console.log(json)
   this.setState({specialties: json})
-  // console.log(json[0])
 }
-//OPT 1: compare value to name in specialties array and set id equal to that
-// OPT 2:
-
-// specialtyId(selected) {
-//   let specialtyObject = specialties.find(specialty => specialty.name === this.state.selected)
-//   console.log(specialtyObject)
-// }
 
 
 // /************************************/
@@ -205,6 +201,16 @@ onpressSubmit = (ev,) => {
              <Input
                onChangeText={(text) => this.setState({zip: text})}
                placeholder="Zip" />
+           </Item>
+           <Item>
+             <Input
+               onChangeText={(text) => this.setState({email: text})}
+               placeholder="Email" />
+           </Item>
+           <Item>
+             <Input
+               onChangeText={(text) => this.setState({password: text})}
+               placeholder="Password" />
            </Item>
            <Button  onPress={this.onpressSubmit} type="submit" block>
              <Text>Submit</Text>
