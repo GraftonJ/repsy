@@ -8,12 +8,7 @@ export const URI = "https://repsy.herokuapp.com"
 let state = {
 
   //Dummy user state for other componenets to pull. Will need to set this state from user object on signin
-  user: {
-    uid: 999999999,
-    fname: 'Doctor',
-    lname: 'Smith',
-    id: 2,
-  },
+  user: {},
 
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
 
