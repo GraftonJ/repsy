@@ -41,7 +41,7 @@ export default class App extends React.Component {
   if (this.state.loading) return (
   <Text>Loading</Text>
 )
-  else if (this.state.user) return (
+  else if (!this.state.user) return (
       <Router>
            <Scene key="root" hideNavBar= "false">
              <Scene key="Homepage" component={Homepage} initial/>

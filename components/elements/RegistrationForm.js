@@ -5,21 +5,7 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Ic
 
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
-
-const doctor = {
-  fname: '',
-  lname: '',
-  specialties_id: '',
-  npi_num: '',
-  clinic_name: '',
-  clinic_address: '',
-  city: '',
-  state: '',
-  zip: 0,
-  email: '',
-  password: "",
-}
-
+import firebase from 'react-native-firebase';
 
 
 export default class ConditionsPage extends Component {
@@ -42,7 +28,7 @@ export default class ConditionsPage extends Component {
       state: '',
       zip: 0,
       email: '',
-      password: "",
+      password: '',
   }
 }
 
@@ -139,13 +125,29 @@ async asyncTryAddDoctor() {
     console.log("ERROR asyncTryAddUser fetch failed: ", err)
   }
 }
-//
+//Register a new user on firebase by passing in email/password
+onRegister = () => {
+  const { email, password } = this.state;
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      // If you need to do anything with the user, do it here
+      // The user will be logged in automatically by the
+      // `onAuthStateChanged` listener we set up in App.js earlier
+    })
+    .catch((error) => {
+      const { code, message } = error;
+      // For details of error codes, see the docs
+      // The message contains the default Firebase string
+      // representation of the error
+    });
+}
 // /* ***Î****************************************** */
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
   console.log('^^^^^^^^^^^^^^STATE', this.state)
   console.log('TRYING TO ADD DOCTOR')
   await this.asyncTryAddDoctor()
+  this.onRegister(this.state.email, this.state.password)
 }
 
 
