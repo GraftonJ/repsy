@@ -15,6 +15,15 @@ let state = {
     id: 2,
   },
 
+  // Gets the current information the user wants about the med
+  desired_info: {
+    condition_name: '',
+    generic_name: '',
+    brand_name: '',
+    label: '',
+    linkkey: ''
+  },
+
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
 
 };
