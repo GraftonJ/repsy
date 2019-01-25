@@ -48,9 +48,19 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - React (0.57.8):
+    - React/Core (= 0.57.8)
+  - react-native-webview (3.2.1):
+    - React
+  - React/Core (0.57.8):
+    - yoga (= 0.57.8.React)
+  - yoga (0.57.8.React)
 
 DEPENDENCIES:
   - Firebase/Core (~> 5.15.0)
+  - React (from `../node_modules/react-native`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -62,6 +72,14 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
 
+EXTERNAL SOURCES:
+  React:
+    :path: "../node_modules/react-native"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga"
+
 SPEC CHECKSUMS:
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -70,7 +88,10 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  react-native-webview: a42108b827082f8f0333529b0772102031d5960d
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 760bb5b3a2148f40089a304d9efc3462989172b3
+PODFILE CHECKSUM: 2bf223f68721d40f927959a6280ea599e66e2a12
 
 COCOAPODS: 1.5.3
