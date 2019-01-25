@@ -8,5 +8,6 @@ target 'repsy' do
   # Pods for repsy
   # Required by RNFirebase
   pod 'Firebase/Core', '~> 5.15.0'
+  pod 'Firebase/Auth'
 
 end

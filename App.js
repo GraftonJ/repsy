@@ -11,14 +11,39 @@ import MedicationsPage from './components/pages/MedicationsPage'
 import ConditionsLibrary from './components/pages/ConditionsLibrary'
 import ClinicalData from './components/pages/ClinicalDataPage'
 import RequestsPage from './components/pages/RequestsPage'
+import firebase from 'react-native-firebase';
 
 export default class App extends Component {
 
   constructor(props){
     super(props)
-    this.state = {},
+    this.state = {
+      loading: true,
+    },
     current_cancer = ''
   }
+
+  /**
+  * When the App component mounts, we listen for any authentication
+  * state changes in Firebase.
+  * Once subscribed, the 'user' parameter will either be null
+  * (logged out) or an Object (logged in)
+  */
+ componentDidMount() {
+   this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+     this.setState({
+       loading: false,
+       user,
+     });
+   });
+ }
+ /**
+  * Don't forget to stop listening for authentication state changes
+  * when the component unmounts.
+  */
+ componentWillUnmount() {
+   this.authSubscription();
+ }
 
   render() {
     return (
