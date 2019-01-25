@@ -8,6 +8,7 @@ import Homepage from './components/pages/homepage'
 import Loginpage from './components/pages/loginpage'
 import ConditionsPage from './components/pages/ConditionsPage'
 import MedicationsPage from './components/pages/MedicationsPage'
+import SelectedMedication from './components/pages/SelectedMedication'
 import ConditionsLibrary from './components/pages/ConditionsLibrary'
 import ClinicalData from './components/pages/ClinicalDataPage'
 import RequestsPage from './components/pages/RequestsPage'
@@ -37,8 +38,24 @@ export default class App extends React.Component {
 
 
  render() {
-  if (this.state.loading) return <Loginpage />;
-  if (this.state.user) return <Homepage />
-  return <FirebaseForm />;
-}
+  if (this.state.loading) return (
+  <Text>Loading</Text>
+)
+  else if (this.state.user) return (
+      <Router>
+           <Scene key="root" hideNavBar= "false">
+             <Scene key="Homepage" component={Homepage} initial/>
+             <Scene key="Loginpage" component={Loginpage} />
+             <Scene key="ConditionsPage" component={ConditionsPage} />
+             <Scene key="MedicationsPage" component={MedicationsPage} />
+             <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
+             <Scene key="ClinicalData" component={ClinicalData} />
+             <Scene key="RequestsPage" component={RequestsPage} />
+             <Scene key="SelectedMedication" component={SelectedMedication} />
+           </Scene>
+     </Router>
+   )
+  else return <Loginpage />;
+
+  }
 }
