@@ -35,9 +35,10 @@ export default class App extends React.Component {
      this.authSubscription();
    }
 
+
  render() {
   if (this.state.loading) return <Loginpage />;
-  if (this.state.user) return <FirebaseForm />
+  if (this.state.user) return <Homepage />
   return <FirebaseForm />;
 }
 }
