@@ -15,7 +15,9 @@ let state = {
     id: 2,
   },
 
-  doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
+
+  //Default State is blank array. Pulled in from getDoctorsConditions API called. Used to render data on the homepage to show the conditions doctors are saving
+  doctorsConditions: [],
 
 };
 
