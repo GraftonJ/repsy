@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, InputText } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions, InputText, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
 
@@ -98,7 +98,7 @@ async asyncTryAddDoctor() {
     password: this.state.password,
   }
   const url = `${URI}/doctors`
-  //
+
   try {
     // call login route
     const response = await fetch(url, {
@@ -109,7 +109,6 @@ async asyncTryAddDoctor() {
         Accept: 'application/json',
       },
     })
-
 
     const responseJson = await response.json();
     console.log(responseJson)
@@ -124,21 +123,17 @@ async asyncTryAddDoctor() {
     }
 
     // new account succeeded!
+    if(response.ok) {
+      console.log('++++++++++++ new account added!', responseJson)
+      Alert.alert('You successfully registered!')
+    }
+
     // console.log("('==== new acct added!: ", responseJson);
-    // responseJson.user.dogNames = responseJson.user.dog_names; // kludge b/c the comments expect 'dogNames'
     // store.setState({
     //   user: responseJson.user,
     //   isLoggedIn: true,
     // });
-    // // this.setState({
-    // //   value: {
-    // //     name: '', // holds the form value
-    // //     email: '',
-    // //     password: "",
-    // //     dog_names: "",
-    // //     dogNames: "",
-    // // }});
-    // this.props.newAccountAddedCB();
+
   }
   catch(err) {
     console.log("ERROR asyncTryAddUser fetch failed: ", err)
@@ -146,20 +141,6 @@ async asyncTryAddDoctor() {
 }
 //
 // /* ***Î****************************************** */
-// onpressSubmit = async () => {
-//   console.log("onpressSubmit()");
-//   var user = this.refs.myform.getValue();
-//
-//   // check that user filled in the fields
-//   if (!user)
-//     return;
-//
-//   console.log("Adding user: ", user);
-//   await this.asyncTryAddUser(user)
-// }
-
-
-
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
   console.log('^^^^^^^^^^^^^^STATE', this.state)
@@ -176,12 +157,14 @@ onpressSubmit = async () => {
           <Form >
             <Item>
               <Input
+                autoCorrect={false}
                 onChangeText={(text) => this.setState({fname: text})}
                 placeholder="First Name"
                 />
             </Item>
             <Item>
               <Input
+                autoCorrect={false}
                 onChangeText={(text) => this.setState({lname: text})}
                 placeholder="Last Name" />
             </Item>
@@ -203,26 +186,31 @@ onpressSubmit = async () => {
            </Picker>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({npi_num: text})}
                placeholder="NPI #" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({clinic_name: text})}
                placeholder="Clinic Name" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({clinic_address: text})}
                placeholder="Clinic Address" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({city: text})}
                placeholder="City" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({state: text})}
                placeholder="State" />
            </Item>
@@ -233,11 +221,14 @@ onpressSubmit = async () => {
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
                onChangeText={(text) => this.setState({email: text})}
                placeholder="Email" />
            </Item>
            <Item>
              <Input
+               autoCorrect={false}
+               secureTextEntry={true}
                onChangeText={(text) => this.setState({password: text})}
                placeholder="Password" />
            </Item>
