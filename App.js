@@ -37,7 +37,7 @@ export default class App extends React.Component {
 
  render() {
   if (this.state.loading) return <Loginpage />;
-  if (this.state.user) return <Homepage />
+  if (this.state.user) return <FirebaseForm />
   return <FirebaseForm />;
 }
 }
