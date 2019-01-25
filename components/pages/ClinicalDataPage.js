@@ -66,6 +66,20 @@ export default class ClinicalData extends Component {
   }
 
   // * *********************************** * //
+  onPressButton = () => {
+    store.setState({
+      desired_info: {
+        condition_name: '',
+        generic_name: '',
+        brand_name: '',
+        label: '',
+        linkkey: ''
+      }
+    });
+    Actions.ConditionsLibrary()
+  }
+
+  // * *********************************** * //
   componentWillUnmount(){
     //disconnect from store notifications
     this.unsubscribe()
@@ -86,7 +100,7 @@ export default class ClinicalData extends Component {
         <Header>
           <Left>
             <Button
-              onPress={() => { Actions.ConditionsLibrary() }}
+              onPress={() => this.onPressButton()}
               transparent
             >
               <Icon name="arrow-back" />

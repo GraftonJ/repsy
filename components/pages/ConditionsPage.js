@@ -46,7 +46,9 @@ export default class ConditionsPage extends Component {
       desired_info: {
         condition_name: store.getState().desired_info.condition_name,
         generic_name: genericName,
-        brand_name: brandName
+        brand_name: brandName,
+        label: '',
+        linkkey: ''
       }
     });
     Actions.SelectedMedication()
