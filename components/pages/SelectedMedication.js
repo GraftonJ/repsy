@@ -1,76 +1,150 @@
+// React Native and Native modules for page
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Text, Picker, Form, Icon } from 'native-base'
 import ModalDropdown from 'react-native-modal-dropdown';
 
-import FooterMenu from '../elements/FooterMenu'
+// Accesses the store and api
+import { getMeds } from '../../utils/api'
+import store, { URI } from '../../store'
 
-const drugLinksData = [
-  {
-  cancer: 'Breast Cancer',
-  generic_name: 'Ado-trastuzumab emtansine',
-  brand_name: 'Kadcyla',
-  dosing: 'https://www.kadcyla.com/hcp/dosing-administration.html',
-  trial_design: 'https://www.kadcyla.com/hcp/trial-design.html',
-  efficacy: 'https://www.kadcyla.com/hcp/efficacy.html',
-  mechanism_of_action: 'https://www.kadcyla.com/hcp/about-kadcyla/proposed-moa.html',
-  patient_types: 'https://www.kadcyla.com/hcp/about-kadcyla/patient-eligibility.html',
-  safety: 'https://www.kadcyla.com/hcp/safety-profile.html',
-  coverage: 'https://www.kadcyla.com/hcp/resources/financial-assistance.html'
-  },
-  {
-  cancer: 'Lung Cancer',
-  generic_name: 'Nivolumab',
-  brand_name: 'Optivo',
-  dosing: 'http://www.opdivohcp.com/metastatic-nsclc/dosing/dosing-administration',
-  trial_design: 'http://www.opdivohcp.com/metastatic-nsclc/efficacy/study-design',
-  efficacy: 'http://www.opdivohcp.com/metastatic-nsclc/efficacy/clinical-trial-results',
-  mechanism_of_action: 'http://www.opdivohcp.com/metastatic-nsclc/how-opdivo-works/mechanism-of-action',
-  patient_types: 'N/A',
-  safety: 'http://www.opdivohcp.com/metastatic-nsclc/selected-safety-profile/adverse-reactions',
-  coverage: 'http://www.opdivohcp.com/metastatic-nsclc/access-financial-resources'
-  },
-  {
-  cancer: 'Prostate Cancer',
-  generic_name: 'Enzalutamide',
-  brand_name: 'Xtandi',
-  dosing: 'https://www.xtandihcp.com/dosing-administration',
-  trial_design: 'https://www.xtandihcp.com/mcrpc-results/efficacy-trial-designs',
-  efficacy: 'https://www.xtandihcp.com/mcrpc-results/primary-endpoints-prevail-trial',
-  mechanism_of_action: 'https://www.xtandihcp.com/about-mcrpc/mechanism-of-action',
-  patient_types: 'https://www.xtandihcp.com/about-mcrpc/patient-profiles/walter',
-  safety: 'https://www.xtandihcp.com/safety-profile',
-  coverage: 'https://www.xtandihcp.com/support-solutions'
-  }
-]
+// Imports the footer navbar at the bottom
+import FooterMenu from '../elements/FooterMenu'
 
 export default class SelectedMedication extends Component {
 
+  // * *********************************** * //
   constructor(props) {
     super(props);
     this.state = {
-      selected: undefined,
-      current_cancer: "Breast Cancer",
-      meds: []
+      meds: [],
+      desired_info: store.getState().desired_info
     };
   }
 
-  onValueChange(value: string) {
-    this.setState({
-      selected: value,
-      meds: this.state.meds
-    });
-  }
-
+  // * *********************************** * //
   async componentDidMount(){
     const response = await fetch(`${URI}/meds`)
     const json = await getMeds()
-    console.log(json)
     this.setState({meds: json})
-    console.log(json[0])
+
+    this.unsubscribe = store.onChange(() => {
+      this.setState({
+        desired_info: store.getState().desired_info
+      })
+    })
   }
 
+  // * *********************************** * //
+  componentWillUnmount(){
+    //disconnect from store notifications
+    this.unsubscribe()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Dosing
+  // Has to update old object keys into state to keep data across pages
+  onpressDosing = () => {
+    console.log('onpressDosing()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Dosing',
+        linkkey: 'dosing'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Trial Design
+  // Has to update old object keys into state to keep data across pages
+  onpressTrialDesign = () => {
+    console.log('onpressTrialDesign()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Trial Design',
+        linkkey: 'trial_design'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Efficacy
+  // Has to update old object keys into state to keep data across pages
+  onpressEfficacy = () => {
+    console.log('onpressEfficacy()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Efficacy',
+        linkkey: 'efficacy'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Mechanism of Action
+  // Has to update old object keys into state to keep data across pages
+  onpressMechanismOfAction = () => {
+    console.log('onpressMechanismOfAction()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Mechanism of Action',
+        linkkey: 'mechanism_of_action'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Patient Types
+  // Has to update old object keys into state to keep data across pages
+  onpressPatientTypes = () => {
+    console.log('onpressPatientTypes()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Patient Types',
+        linkkey: 'patient_types'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
+  // Handles when the user presses Safety
+  // Has to update old object keys into state to keep data across pages
+  onpressSafety = () => {
+    console.log('onpressSafety()');
+    store.setState({
+      desired_info: {
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: store.getState().desired_info.generic_name,
+        brand_name: store.getState().desired_info.brand_name,
+        label: 'Safety',
+        linkkey: 'safety'
+      }
+    });
+    Actions.ClinicalData()
+  }
+
+  // * *********************************** * //
   render() {
 
     return (
@@ -85,8 +159,8 @@ export default class SelectedMedication extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Kadcyla</Text>
-            <Text style={{fontSize: 8}}>(Ado-trastuzumab emtansine)</Text>
+            <Text style={{fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>{this.state.desired_info.brand_name}</Text>
+            <Text style={{fontSize: 8, textAlign: 'center'}}>({this.state.desired_info.generic_name})</Text>
           </Body>
           <Right>
           </Right>
@@ -96,31 +170,37 @@ export default class SelectedMedication extends Component {
 
           <View style={{padding: 20}}>
             <Button
-              onPress={() => { Actions.ClinicalData() }}
+              onPress={() => this.onpressDosing() }
               transparent
             >
               <Icon name="arrow-dropright" /><Text>Dosing</Text>
             </Button>
             <Button
-              onPress={() => { Actions.ClinicalData() }}
+              onPress={() => this.onpressTrialDesign() }
+              transparent
+            >
+              <Icon name="arrow-dropright" /><Text>Trial Design</Text>
+            </Button>
+            <Button
+              onPress={() => this.onpressEfficacy() }
               transparent
             >
               <Icon name="arrow-dropright" /><Text>Efficacy</Text>
             </Button>
             <Button
-              onPress={() => { Actions.ClinicalData() }}
+              onPress={() => this.onpressMechanismOfAction() }
               transparent
             >
               <Icon name="arrow-dropright" /><Text>Mechism of Action</Text>
             </Button>
             <Button
-              onPress={() => { Actions.ClinicalData() }}
+              onPress={() => this.onpressPatientTypes() }
               transparent
             >
               <Icon name="arrow-dropright" /><Text>Patient Types</Text>
             </Button>
             <Button
-              onPress={() => { Actions.ClinicalData() }}
+              onPress={() => this.onpressSafety() }
               transparent
             >
               <Icon name="arrow-dropright" /><Text>Safety</Text>

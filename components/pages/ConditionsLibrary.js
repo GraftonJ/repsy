@@ -1,45 +1,66 @@
+// React Native and Native modules for page
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner } from 'native-base'
 
+// Accesses the store and api
 import store, { URI } from '../../store'
 import { getConditions } from '../../utils/api'
 
+// Imports the footer navbar at the bottom
 import FooterMenu from '../elements/FooterMenu'
 
 export default class ConditionsLibrary extends Component {
 
+  // * *********************************** * //
   constructor(props) {
     super(props);
     this.state = {
-      selected: undefined,
+      desired_info: store.getState().desired_info,
       isLoading: true,
-      conditions: [],
-      filteredcond: []
+      conditions: []
     };
   }
 
-  onValueChange(value: string) {
-    this.setState({
-      selected: value,
-      conditions: this.state.conditions
-    });
-  }
-
+  // * *********************************** * //
   async componentDidMount(){
-    console.log('******************component mounted')
     //get data from the API
     const response = await fetch(`${URI}/conditions`)
     const json = await getConditions()
-    console.log(json)
     this.setState({conditions: json})
-    console.log(json[0])
+    this.unsubscribe = store.onChange(() => {
+      this.setState({
+        desired_info: store.getState().desired_info
+      })
+    })
     this.setState({
       isLoading: false,
     })
   }
 
+  // * *********************************** * //
+  onPressButton = (condition) => {
+    console.log('onPressButton()');
+    store.setState({
+      desired_info: {
+        condition_name: condition,
+        generic_name: '',
+        brand_name: '',
+        label: '',
+        linkkey: ''
+      }
+    });
+    Actions.ConditionsPage()
+  }
+
+  // * *********************************** * //
+  componentWillUnmount(){
+    //disconnect from store notifications
+    this.unsubscribe()
+  }
+
+  // * *********************************** * //
   render() {
     //Show loading spinner if fetching data
     if(this.state.isLoading){
@@ -64,7 +85,7 @@ export default class ConditionsLibrary extends Component {
           <List>
             {this.state.conditions.map((condition, idx) => (
               <ListItem key={idx}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.onPressButton(condition.name)}>
                   <Text>{condition.name}</Text>
                 </TouchableOpacity>
               </ListItem>
@@ -92,7 +113,7 @@ const styles = StyleSheet.create({
 });
 
 
-
+// Filtering for searchbar... will use later
 // filtering(searchString){
 //   if(searchString !== ""){
 //     const filteredcond = this.state.conditions.filter((condition)=>(condition.name.includes(searchString)))

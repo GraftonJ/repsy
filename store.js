@@ -15,9 +15,16 @@ let state = {
     id: 2,
   },
 
+  // Gets the current information the user wants about the med
+  desired_info: {
+    condition_name: '',
+    generic_name: '',
+    brand_name: '',
+    label: '',
+    linkkey: ''
+  },
 
-  //Default State is blank array. Pulled in from getDoctorsConditions API called. Used to render data on the homepage to show the conditions doctors are saving
-  doctorsConditions: [],
+  doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
 
 };
 
