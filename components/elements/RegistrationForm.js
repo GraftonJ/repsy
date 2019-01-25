@@ -60,6 +60,15 @@ async componentDidMount(){
   this.setState({specialties: json})
 }
 
+//Register a new user on firebase by passing in email/password
+onRegister = () => {
+  const { email, password } = this.state;
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => console.log('USER>>>', user))
+    .catch((error) => {
+      const { code, message } = error;
+    });
+}
 
 // /************************************/
 //ADD DOCTOR FUNCTION
@@ -84,6 +93,7 @@ async asyncTryAddDoctor() {
     password: this.state.password,
   }
   const url = `${URI}/doctors`
+
 
   try {
     // call login route
@@ -125,25 +135,14 @@ async asyncTryAddDoctor() {
     console.log("ERROR asyncTryAddUser fetch failed: ", err)
   }
 }
-//Register a new user on firebase by passing in email/password
-onRegister = () => {
-  const { email, password } = this.state;
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => console.log('USER>>>', user))
-    .catch((error) => {
-      const { code, message } = error;
-      // For details of error codes, see the docs
-      // The message contains the default Firebase string
-      // representation of the error
-    });
-}
+
 // /* ***Î****************************************** */
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
   console.log('^^^^^^^^^^^^^^STATE', this.state)
   console.log('TRYING TO ADD DOCTOR')
   await this.asyncTryAddDoctor()
-  this.onRegister(this.state.email, this.state.password)
+  this.onRegister()
 }
 
 
