@@ -11,6 +11,7 @@ import MedicationsPage from './components/pages/MedicationsPage'
 import ConditionsLibrary from './components/pages/ConditionsLibrary'
 import ClinicalData from './components/pages/ClinicalDataPage'
 import RequestsPage from './components/pages/RequestsPage'
+import FirebaseForm from './components/elements/FirebaseForm'
 import firebase from 'react-native-firebase';
 
 export default class App extends React.Component {
@@ -37,6 +38,6 @@ export default class App extends React.Component {
  render() {
   if (this.state.loading) return <Loginpage />;
   if (this.state.user) return <Homepage />
-  return <Loginpage />;
+  return <FirebaseForm />;
 }
 }
