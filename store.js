@@ -10,6 +10,15 @@ let state = {
   //Dummy user state for other componenets to pull. Will need to set this state from user object on signin
   user: { id: 2},
 
+  // Gets the current information the user wants about the med
+  desired_info: {
+    condition_name: '',
+    generic_name: '',
+    brand_name: '',
+    label: '',
+    linkkey: ''
+  },
+
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
 
 };
