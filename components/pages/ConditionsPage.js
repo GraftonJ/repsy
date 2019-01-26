@@ -67,7 +67,7 @@ export default class ConditionsPage extends Component {
         <Header>
           <Left>
             <Button
-              onPress={() => { Actions.ConditionsLibrary() }}
+              onPress={() => { Actions.pop() }}
               transparent
             >
               <Icon name="arrow-back" />

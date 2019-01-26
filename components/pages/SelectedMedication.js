@@ -144,6 +144,20 @@ export default class SelectedMedication extends Component {
     Actions.ClinicalData()
   }
 
+    // * *********************************** * //
+    onPressBackButton = () => {
+      store.setState({
+        desired_info: {
+          condition_name: store.getState().desired_info.condition_name,
+          generic_name: store.getState().desired_info.generic_name,
+          brand_name: store.getState().desired_info.brand_name,
+          label: store.getState().desired_info.label,
+          linkkey: store.getState().desired_info.linkkey
+        }
+      });
+      Actions.ConditionsPage()
+    }
+
   // * *********************************** * //
   render() {
 
@@ -152,7 +166,7 @@ export default class SelectedMedication extends Component {
         <Header>
           <Left>
             <Button
-              onPress={() => { Actions.ConditionsLibrary() }}
+              onPress={() => { this.onPressBackButton() }}
               transparent
             >
               <Icon name="arrow-back" />
