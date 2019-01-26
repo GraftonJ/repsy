@@ -8,7 +8,7 @@ export const URI = "https://repsy.herokuapp.com"
 let state = {
 
   //Dummy user state for other componenets to pull. Will need to set this state from user object on signin
-  user: { id: 2},
+  user: { id: 2 },
 
   // Gets the current information the user wants about the med
   desired_info: {
