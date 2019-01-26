@@ -25,6 +25,7 @@ export default class Homepage extends Component {
   super(props);
   this.state = {
     doctorsConditions: store.getState().doctorsConditions,
+    desired_info: store.getState().desired_info,
     isLoading: true,
     userID: store.getState().user.id,
     userName: store.getState().user.fname,
@@ -36,6 +37,7 @@ async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
       doctorsConditions: store.getState().doctorsConditions,
+      desired_info: store.getState().desired_info,
       userID: store.getState().user.id
     })
   })
@@ -49,6 +51,16 @@ async componentDidMount(){
   this.setState({
     isLoading: false,
   })
+}
+
+// * *********************************** * //
+onPressButton = (name) => {
+  store.setState({
+    desired_info: {
+      condition_name: name
+    }
+  });
+  Actions.ConditionsPage()
 }
 
 componentWillUnmount(){
@@ -80,7 +92,7 @@ componentWillUnmount(){
             (this.state.isLoading)
             ? <Spinner color='red' />
             : this.state.doctorsConditions.map((condition, idx) => (
-              <Button key={idx} conditionId={condition.id} rounded style={styles.button}>
+              <Button key={idx} conditionId={condition.id} rounded style={styles.button} onPress={() => this.onPressButton(condition.name)}>
                 <Text>{condition.name}</Text>
               </Button>
             ))
