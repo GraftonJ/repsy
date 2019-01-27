@@ -216,7 +216,7 @@ export default class RequestsPage extends Component {
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+      <View style={styles.emptyDate}><Text>No Events Today!</Text></View>
     );
   }
 
