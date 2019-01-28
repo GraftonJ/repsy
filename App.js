@@ -13,6 +13,7 @@ import ConditionsLibrary from './components/pages/ConditionsLibrary'
 import ClinicalData from './components/pages/ClinicalDataPage'
 import RequestsPage from './components/pages/RequestsPage'
 import SelectedMedication from './components/pages/SelectedMedication'
+import MedsLibrary from './components/pages/MedsLibrary'
 
 export default class App extends Component {
 
@@ -34,6 +35,7 @@ export default class App extends Component {
           <Scene key="ClinicalData" component={ClinicalData} />
           <Scene key="RequestsPage" component={RequestsPage} />
           <Scene key="SelectedMedication" component={SelectedMedication} />
+          <Scene key="MedsLibrary" component={MedsLibrary} />
         </Scene>
       </Router>
     )
