@@ -10,7 +10,7 @@ import { getMeds } from '../../utils/api'
 import store, { URI } from '../../store'
 
 // Imports the footer navbar at the bottom
-import FooterMenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class SelectedMedication extends Component {
 
