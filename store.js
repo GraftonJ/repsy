@@ -15,6 +15,17 @@ let state = {
     id: 2,
   },
 
+  //List of reps for a particular treatment. Default data type should be an array
+  reps: [],
+
+  //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call
+  med_reps: {
+    id: 0,
+    generic_name: '',
+    brand_name: ,
+    company: '',
+  },
+
   // Gets the current information the user wants about the med
   desired_info: {
     condition_name: '',
@@ -24,7 +35,8 @@ let state = {
     linkkey: ''
   },
 
-  doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
+  //Gets the conditions to list on the homepage
+  doctorsConditions: [],
 };
 
 let listeners = [];
