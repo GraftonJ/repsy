@@ -18,7 +18,7 @@ import {
   Spinner,
 } from 'native-base'
 
-import FooterMenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class Homepage extends Component {
   constructor(props) {
