@@ -4,8 +4,10 @@ import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Left, Right, Body } from 'native-base'
 import { WebView } from 'react-native-webview'
 import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
+import { getBookings } from '../../utils/api'
 
 import store, { URI } from '../../store'
+import timekit from 'timekit-sdk'
 
 // import { LocaleConfig } from 'react-native-calendars';
 
@@ -37,7 +39,8 @@ export default class RequestsPage extends Component {
     })
     //Get the conditions from the doctors_conditions route
     let appointments = []
-    appointments = await getDoctorsBookings()
+    appointments = await getBookings()
+    console.log('appointments', appointments)
     //Set the store state with the conditions. This should cause local state to update and re-render
     store.setState({
       doctorsAppointment: appointments,

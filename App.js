@@ -26,13 +26,13 @@ export default class App extends Component {
       <Router>
         <Scene key="root" hideNavBar= "false">
           <Scene key="FirstPage" component={FirstPage} />
-          <Scene key="Homepage" component={Homepage} initial/>
+          <Scene key="Homepage" component={Homepage} />
           <Scene key="Loginpage" component={Loginpage}/>
           <Scene key="ConditionsPage" component={ConditionsPage} />
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
           <Scene key="ClinicalData" component={ClinicalData} />
-          <Scene key="RequestsPage" component={RequestsPage} />
+          <Scene key="RequestsPage" component={RequestsPage} initial />
           <Scene key="SelectedMedication" component={SelectedMedication} />
         </Scene>
       </Router>
