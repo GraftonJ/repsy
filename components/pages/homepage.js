@@ -79,11 +79,6 @@ componentWillUnmount(){
           <Body>
           </Body>
           <Right>
-            <Button
-              onPress={() => { Actions.ConditionsLibrary() }}
-            >
-              <Text>Conditions</Text>
-            </Button>
           </Right>
         </Header>
         <Content>
