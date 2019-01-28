@@ -16,10 +16,6 @@ export default class Loginpage extends Component {
       <Container>
         <Header>
           <Left>
-            <Button
-              onPress={() => {Actions.Homepage()}}>
-              <Text>Homepage</Text>
-            </Button>
           </Left>
           <Body>
           </Body>
