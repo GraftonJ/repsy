@@ -68,3 +68,19 @@ export const getDoctorsConditions = async () => {
   const json = await response.json();
   return json
 }
+
+
+//GET bookings that a doctor or rep has made
+export const getBookings = async () => {
+  const response = await fetch(`${CALENDAR_API}/bookings`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      user: 'CALENDAR_API_KEY',
+    }
+  })
+  console.log('response', response)
+  const json = await response.json();
+  return json
+}
