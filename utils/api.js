@@ -74,21 +74,18 @@ export const getDoctorsConditions = async () => {
 export const getBookings = async () => {
   try {
     const timekit = require('timekit-sdk')
-    
+
     timekit.configure({
       appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX'
     })
 
     timekit.getBookings()
       .then(function (response) {
-        console.log(response);
+        console.log('response!!!!!', response)
+        return response
       }).catch(function (response) {
-        console.log(response);
+        console.log('response', response)
       })
-    console.log('response', response)
-    const json = await response.json()
-    console.log('json', json)
-    return json
     } catch (error) {
       console.log(error)
     }

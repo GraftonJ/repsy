@@ -26,6 +26,8 @@ export default class RequestsPage extends Component {
     super(props);
     this.state = {
       items: {},
+      doctorsAppointments: store.getState().doctorsAppointments,
+      userID: store.getState().user.id,
       isLookingForAppointment: false,
     }
   }
@@ -40,7 +42,7 @@ export default class RequestsPage extends Component {
     //Get the conditions from the doctors_conditions route
     let appointments = []
     appointments = await getBookings()
-    console.log('appointments', appointments)
+    console.log('hello')
     //Set the store state with the conditions. This should cause local state to update and re-render
     store.setState({
       doctorsAppointment: appointments,
@@ -61,25 +63,6 @@ export default class RequestsPage extends Component {
   }
 
   render() {
-    
-    let currentDate = new Date()
-    let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-    let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-    let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-    const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-    const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-    const workout = { key: 'workout', color: 'red' };
-    const htmlContent = `
-      <div id="bookingjs"></div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script >
-        <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
-        <script>
-          window.timekitBookingConfig = {
-            app_key: 'test_widget_key_gCUAuN91ij3fXpZJsJOeoAxZZ5Wgsklh',
-            project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68'
-          }
-      </script>
-    `
     // // Day Select for Month Calendar
     // onDayPress = (day) => {
 
@@ -115,13 +98,13 @@ export default class RequestsPage extends Component {
             // // the list of items that have to be displayed in agenda. If you want to render item as empty date
             // // the value of date key kas to be an empty array []. If there exists no value for date key it is
             // // considered that the date in question is not yet loaded
-            // items={
-            //   {
-            //     '2019-01-28': [{ text: 'item 1 - any js object' }],
-            //     '2019-01-29': [{ text: 'item 2 - any js object' }],
-            //     '2019-01-30': [],
-            //     '2019-02-01': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
-            //   }}
+            items={
+              {
+                '2019-01-28': [{ text: 'item 1 - any js object' }],
+                '2019-01-29': [{ text: 'item 2 - any js object' }],
+                '2019-01-30': [],
+                '2019-02-01': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
+              }}
             // // callback that gets called when items for a certain month should be loaded (month became visible)
             // loadItemsForMonth={(month) => { console.log('trigger items loading') }}
             // // callback that fires when the calendar is opened or closed
@@ -271,6 +254,24 @@ export default class RequestsPage extends Component {
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
+let currentDate = new Date()
+let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
+const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
+const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
+const workout = { key: 'workout', color: 'red' };
+const htmlContent = `
+      <div id="bookingjs"></div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script >
+        <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
+        <script>
+          window.timekitBookingConfig = {
+            app_key: 'test_widget_key_gCUAuN91ij3fXpZJsJOeoAxZZ5Wgsklh',
+            project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68'
+          }
+      </script>
+    `
 
 const styles = StyleSheet.create({
   item: {
