@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input } from 'native-base'
-
+import { colors } from '../../utils/colors'
 import Registrationform from '../elements/RegistrationForm'
 
 
@@ -26,7 +26,7 @@ export default class Loginpage extends Component {
   render() {
 
     return (
-      <Container style={{flexDirection: "row", justifyContent: "center"}}>
+      <Container>
         <Header>
           <Left>
           </Left>
@@ -79,6 +79,11 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: '#f7f7f7'
+  },
   repsyH1: {
     fontFamily: 'Helvetica',
     fontSize: 55,

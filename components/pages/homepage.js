@@ -92,8 +92,12 @@ componentWillUnmount(){
             (this.state.isLoading)
             ? <Spinner color='red' />
             : this.state.doctorsConditions.map((condition, idx) => (
-              <Button key={idx} conditionId={condition.id} rounded style={styles.button} onPress={() => this.onPressButton(condition.name)}>
-                <Text>{condition.name}</Text>
+              <Button
+                style={styles.button}
+                key={idx} conditionId={condition.id}
+                rounded style={styles.button}
+                onPress={() => this.onPressButton(condition.name)}>
+                <Text style={styles.buttonText}>{condition.name}</Text>
               </Button>
             ))
           }
@@ -115,12 +119,23 @@ const width = Dimensions.get('window').width
 // Put styles in here to format the page
 const styles = StyleSheet.create({
     button: {
+      flexDirection: "row",
+      justifyContent: "center",
       margin: 15,
       width: '80%',
+      alignSelf: 'center',
+    },
+    buttonText: {
+      fontFamily: 'Helvetica',
+      fontSize: 20,
+      justifyContent: 'center'
     },
     title: {
-      fontSize: 40,
-      margin: 10,
+      fontSize: 35,
+      fontFamily: 'Hoefler Text',
+      marginTop: "15%",
+      marginBottom: '5%',
+      alignSelf: 'center',
     },
     spinner: {
       height: height
