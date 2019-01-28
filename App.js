@@ -32,7 +32,7 @@ export default class App extends Component {
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
           <Scene key="ClinicalData" component={ClinicalData} />
-          <Scene key="RequestsPage" component={RequestsPage} />
+          <Scene key="RequestsPage" component={RequestsPage} initial />
           <Scene key="SelectedMedication" component={SelectedMedication} />
         </Scene>
       </Router>
