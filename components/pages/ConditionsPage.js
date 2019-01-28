@@ -10,7 +10,7 @@ import store, { URI } from '../../store'
 import { getMeds } from '../../utils/api'
 
 // Imports the footer navbar at the bottom
-import FooterMenu from '../elements/FooterMenu'
+import FooterMenu from '../elements/footermenu'
 
 export default class ConditionsPage extends Component {
 
@@ -47,8 +47,8 @@ export default class ConditionsPage extends Component {
         condition_name: store.getState().desired_info.condition_name,
         generic_name: genericName,
         brand_name: brandName,
-        label: '',
-        linkkey: ''
+        label: store.getState().desired_info.label,
+        linkkey: store.getState().desired_info.linkkey
       }
     });
     Actions.SelectedMedication()

@@ -16,7 +16,7 @@ export default class FooterMenu extends Component {
           <Text style={{fontSize: 11}} >Conditions</Text>
         </Button>
         <Button
-          onPress={() => { Actions.Homepage() }}
+          onPress={() => { Actions.MedsLibrary() }}
           vertical
         >
           <Icon name="medkit" />

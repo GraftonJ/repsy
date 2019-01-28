@@ -2,16 +2,16 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner } from 'native-base'
+import { Container, Header, Left, Right, Title, Body, Content, Segment, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner, Segements } from 'native-base'
 
 // Accesses the store and api
 import store, { URI } from '../../store'
-import { getConditions } from '../../utils/api'
+import { getMeds } from '../../utils/api'
 
 // Imports the footer navbar at the bottom
 import FooterMenu from '../elements/footermenu'
 
-export default class ConditionsLibrary extends Component {
+export default class MedsLibrary extends Component {
 
   // * *********************************** * //
   constructor(props) {
@@ -19,16 +19,16 @@ export default class ConditionsLibrary extends Component {
     this.state = {
       desired_info: store.getState().desired_info,
       isLoading: true,
-      conditions: []
+      meds: []
     };
   }
 
   // * *********************************** * //
   async componentDidMount(){
     //get data from the API
-    const response = await fetch(`${URI}/conditions`)
-    const json = await getConditions()
-    this.setState({conditions: json})
+    const response = await fetch(`${URI}/meds`)
+    const json = await getMeds()
+    this.setState({meds: json})
     this.unsubscribe = store.onChange(() => {
       this.setState({
         desired_info: store.getState().desired_info
@@ -40,18 +40,20 @@ export default class ConditionsLibrary extends Component {
   }
 
   // * *********************************** * //
-  onPressButton = (condition) => {
+  // Function that handels a button press of one of the drugs.  Passes that to the
+  // desired_info object in the store.  Needs to keep condition name, so that is passed
+  onPressButton = (genericName, brandName) => {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
-        condition_name: condition,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        condition_name: store.getState().desired_info.condition_name,
+        generic_name: genericName,
+        brand_name: brandName,
         label: store.getState().desired_info.label,
         linkkey: store.getState().desired_info.linkkey
       }
     });
-    Actions.ConditionsPage()
+    Actions.SelectedMedication()
   }
 
   // * *********************************** * //
@@ -71,7 +73,7 @@ export default class ConditionsLibrary extends Component {
     else {
     return (
       <Container>
-        <Header searchBar rounded>
+        <Header searchBar rounded hasSegment>
           <Item>
             <Icon name="ios-search" />
             <Input placeholder="Search"  />
@@ -81,12 +83,22 @@ export default class ConditionsLibrary extends Component {
             <Text>Search</Text>
           </Button>
         </Header>
+
+        <Segment>
+          <Button active first>
+            <Text>Generic Name</Text>
+          </Button>
+          <Button active last>
+            <Text>Brand Name</Text>
+          </Button>
+        </Segment>
+
         <Content>
           <List>
-            {this.state.conditions.map((condition, idx) => (
+            {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
-                <TouchableOpacity onPress={() => this.onPressButton(condition.name)}>
-                  <Text>{condition.name}</Text>
+                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name)}>
+                  <Text>{med.generic_name}</Text>
                 </TouchableOpacity>
               </ListItem>
             ))}
@@ -111,41 +123,3 @@ const styles = StyleSheet.create({
       height: height
     }
 });
-
-
-// Filtering for searchbar... will use later
-// filtering(searchString){
-//   if(searchString !== ""){
-//     const filteredcond = this.state.conditions.filter((condition)=>(condition.name.includes(searchString)))
-//     if(filteredcond.length > 0){
-//       this.setState({
-//         ...this.state,
-//         filteredRecipes: filteredcond,
-//         searchVal: `Search: ${searchString}`
-//       })
-//       setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
-//     }else{
-//       this.setState({
-//         ...this.state,
-//         filteredcond: this.state.versionFilter,
-//       })
-//       setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
-//       // add toast or notification of 'no results'
-//       Toast.show({
-//         text: 'No Results',
-//         buttonText: 'Okay'
-//       })
-//     }
-//   }else{
-//     this.setState({
-//       ...this.state,
-//       filteredRecipes: this.state.versionFilter,
-//     })
-//     setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
-//     // add toast or notification of 'no results'
-//     Toast.show({
-//       text: 'No Results',
-//       buttonText: 'Okay'
-//     })
-//   }
-// }
