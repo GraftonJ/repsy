@@ -58,7 +58,7 @@ export default class RequestsPage extends Component {
   }
 
   render() {
-    
+
     let currentDate = new Date()
     let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
     let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
@@ -210,7 +210,7 @@ export default class RequestsPage extends Component {
             markingType={'multi-dot'}
           /> */}
 
-          
+
       </Container>
     ) // End of return
   } // End of render
