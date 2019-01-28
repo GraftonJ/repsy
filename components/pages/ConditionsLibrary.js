@@ -9,7 +9,7 @@ import store, { URI } from '../../store'
 import { getConditions } from '../../utils/api'
 
 // Imports the footer navbar at the bottom
-import FooterMenu from '../elements/footermenu'
+import FooterMenu from '../elements/FooterMenu'
 
 export default class ConditionsLibrary extends Component {
 
