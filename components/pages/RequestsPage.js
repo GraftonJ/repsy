@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'native-base'
+import { Container, Header, Content, Footer, Left, Right, Body } from 'native-base'
 import { WebView } from 'react-native-webview'
 import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
 
@@ -21,16 +21,53 @@ import store, { URI } from '../../store'
 export default class RequestsPage extends Component {
 
   constructor(props) {
-  super(props);
-  this.state = {
-    items: {}
+    super(props);
+    this.state = {
+      items: {},
+      isLookingForAppointment: false,
+    }
   }
-  
-}
+
+  async componentDidMount() {
+    this.unsubscribe = store.onChange(() => {
+      this.setState({
+        doctorsAppointments: store.getState().doctorsAppointments,
+        userID: store.getState().user.id
+      })
+    })
+    //Get the conditions from the doctors_conditions route
+    let appointments = []
+    appointments = await getDoctorsBookings()
+    //Set the store state with the conditions. This should cause local state to update and re-render
+    store.setState({
+      doctorsAppointment: appointments,
+    })
+  }
+
+  //Request new Appointment function for create request button
+  requestAppointment = () => {
+    console.log('hello')
+    this.setState({
+      isLookingForAppointment: true,
+    })
+  }
+
+  componentWillUnmount() {
+    //disconnect from store notifications
+    this.unsubscribe()
+  }
 
   render() {
-    var htmlContent = `
-    <div id="bookingjs"></div>
+    
+    let currentDate = new Date()
+    let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+    let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+    let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
+    const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
+    const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
+    const workout = { key: 'workout', color: 'red' };
+    const htmlContent = `
+      <div id="bookingjs"></div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script >
         <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
         <script>
@@ -40,13 +77,6 @@ export default class RequestsPage extends Component {
           }
       </script>
     `
-    let currentDate = new Date()
-    let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-    let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-    let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-    const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-    const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-    const workout = { key: 'workout', color: 'red' };
     // // Day Select for Month Calendar
     // onDayPress = (day) => {
 
@@ -61,8 +91,7 @@ export default class RequestsPage extends Component {
         <Header>
           <Left>
             <Button
-              onPress={() => {Actions.Homepage()}}>
-              <Text>Home Page</Text>
+              onPress={() => {Actions.Homepage()}} title='Home Page'>
             </Button>
           </Left>
           <Body>
@@ -126,8 +155,14 @@ export default class RequestsPage extends Component {
             // refreshing={false}
             // // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
             // refreshControl={null}
-              />
-          <WebView source={{ html: htmlContent }} />
+        />
+        { //Check if state is looking for appointment
+          (this.state.isLookingForAppointment)
+            ? <WebView source={{ html: htmlContent }} />
+            : <View>
+
+            </View>
+        }
           {/* <Calendar
             // Initially visible month. Default = Date()
             current={currentDate}
@@ -215,7 +250,7 @@ export default class RequestsPage extends Component {
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>No Events Today!</Text></View>
+      <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request"/></View>
     );
   }
 
@@ -241,7 +276,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginRight: 10,
-    marginTop: 17
+    marginTop: 17,
   },
   emptyDate: {
     height: 15,
