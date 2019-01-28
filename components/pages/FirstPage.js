@@ -23,6 +23,11 @@ export default class Loginpage extends Component {
     Actions.Homepage()
   }
 
+  //CREATE ACCOUNT BUTTON
+  onPressCreateAccount = () => {
+    Actions.Loginpage()
+  }
+
   render() {
 
     return (
@@ -59,11 +64,19 @@ export default class Loginpage extends Component {
             </Item>
           </Form>
           <Button
+            dark
             onPress={this.onPressButton}
             style={styles.loginButton}
-            transparent>
+          >
           <Text style={styles.loginButtonText}>Login</Text>
         </Button>
+        <Text style={styles.Or}>or</Text>
+        <Button
+          onPress={this.onPressCreateAccount}
+          style={styles.loginButton}
+          transparent>
+        <Text style={styles.createAccountText}>Create Account</Text>
+       </Button>
         </Content>
         <Footer>
         </Footer>
@@ -115,13 +128,28 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    width: '40%'
   },
   loginButtonText: {
     color: 'rgb(84, 157, 191)',
-    fontFamily: 'Hoefler Text',
+    fontFamily: 'Helvetica',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
     letterSpacing: 1,
   },
+  createAccountText: {
+    color: 'rgb(84, 157, 191)',
+    fontFamily: 'Helvetica',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  Or : {
+    fontFamily: 'Hoefler Text',
+    fontSize: 15,
+    alignSelf: 'center',
+    marginBottom: -30
+  }
 });
