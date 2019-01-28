@@ -4,6 +4,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import { Router, Scene } from 'react-native-router-flux';
 import { Container, Header, Content, Footer } from 'native-base'
 
+import FirstPage from './components/pages/FirstPage'
 import Homepage from './components/pages/homepage'
 import Loginpage from './components/pages/loginpage'
 import ConditionsPage from './components/pages/ConditionsPage'
@@ -25,8 +26,9 @@ export default class App extends Component {
     return (
       <Router>
         <Scene key="root" hideNavBar= "false">
-          <Scene key="Homepage" component={Homepage} />
-          <Scene key="Loginpage" component={Loginpage} initial />
+          <Scene key="FirstPage" component={FirstPage} />
+          <Scene key="Homepage" component={Homepage} initial/>
+          <Scene key="Loginpage" component={Loginpage}/>
           <Scene key="ConditionsPage" component={ConditionsPage} />
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />

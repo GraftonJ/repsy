@@ -25,7 +25,6 @@ let state = {
   },
 
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
-
 };
 
 let listeners = [];
