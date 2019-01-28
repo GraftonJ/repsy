@@ -230,11 +230,11 @@ export default class RequestsPage extends Component {
   }
 } // End of componenet
 
-// Variables to changes the height and width dynamically for all screens
+// Variables to change the height and width dynamically for all screens
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
-// Put styles in here to format the page
+
 const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
