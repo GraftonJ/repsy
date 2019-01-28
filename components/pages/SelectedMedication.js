@@ -182,7 +182,7 @@ export default class SelectedMedication extends Component {
         <Content>
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Clinical Data </Text>
 
-          <View style={{padding: 20}}>
+          <View style={{padding: 2}}>
             <Button
               onPress={() => this.onpressDosing() }
               transparent
@@ -219,10 +219,6 @@ export default class SelectedMedication extends Component {
             >
               <Icon name="arrow-dropright" /><Text>Safety</Text>
             </Button>
-          </View>
-
-          <View style={{padding: 20}}>
-            <ModalDropdown options={['Dosing', 'Efficacy', 'Mechanism of Action', 'Patient Types', 'Safety']}/>
           </View>
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Coverage </Text>
