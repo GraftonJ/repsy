@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions} from 'react-native';
+import { Platform, StyleSheet, View, Dimensions, Alert} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
 import { getDoctorsConditions } from '../../utils/api'
@@ -68,6 +68,11 @@ componentWillUnmount(){
   this.unsubscribe()
 }
 
+//******************************/
+//onPress logout
+onPressLogout = () => {
+  Alert.alert('logout button pressed')
+}
   render() {
     //Show loading spinner if fetching data
     return (
@@ -96,7 +101,9 @@ componentWillUnmount(){
               </Button>
             ))
           }
-          <Button dark>
+          <Button
+            onPress={this.onPressLogout}
+            dark>
             <Text>Logout</Text>
           </Button>
         </Content>
