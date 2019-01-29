@@ -1,7 +1,7 @@
 import store from '../store';
 
 const API = `https://repsy.herokuapp.com`
-
+const CALENDAR_API = `https://api.timekit.io/v2`
 
 /*On the page you want to make API call
 need to import the function (ex: import { getSpecialties } from '../../utils/api')
@@ -67,4 +67,26 @@ export const getDoctorsConditions = async () => {
   const response = await fetch(`${API}/doctors_Conditions/${store.getState().user.id}`)
   const json = await response.json();
   return json
+}
+
+
+//GET bookings that a doctor or rep has made
+export const getBookings = async () => {
+  try {
+    const timekit = require('timekit-sdk')
+
+    timekit.configure({
+      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX'
+    })
+
+    timekit.getBookings()
+      .then(function (response) {
+        console.log('response!!!!!', response)
+        return response
+      }).catch(function (response) {
+        console.log('response', response)
+      })
+    } catch (error) {
+      console.log(error)
+    }
 }

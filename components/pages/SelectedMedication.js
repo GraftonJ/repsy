@@ -155,7 +155,7 @@ export default class SelectedMedication extends Component {
           linkkey: store.getState().desired_info.linkkey
         }
       });
-      Actions.ConditionsPage()
+      Actions.pop()
     }
 
   // * *********************************** * //

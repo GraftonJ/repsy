@@ -76,7 +76,7 @@ export default class ClinicalData extends Component {
         linkkey: store.getState().desired_info.linkkey
       }
     });
-    Actions.SelectedMedication()
+    Actions.pop()
   }
 
   // * *********************************** * //

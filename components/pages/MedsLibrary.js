@@ -19,7 +19,8 @@ export default class MedsLibrary extends Component {
     this.state = {
       desired_info: store.getState().desired_info,
       isLoading: true,
-      meds: []
+      meds: [],
+      med_selected: true
     };
   }
 
@@ -63,7 +64,39 @@ export default class MedsLibrary extends Component {
   }
 
   // * *********************************** * //
+  tabSwitch = (bool) => {
+    switch(bool) {
+      case true:
+        this.state.meds.sort(function(a, b){
+          if(a.generic_name < b.generic_name) { return -1; }
+          if(a.generic_name > b.generic_name) { return 1; }
+          return 0;
+        })
+        this.state.med_selected = false
+        break;
+      case false:
+        this.state.meds.sort(function(a, b){
+          if(a.brand_name < b.brand_name) { return -1; }
+          if(a.brand_name > b.brand_name) { return 1; }
+          return 0;
+        })
+        this.state.med_selected = true
+        break;
+      }
+    }
+
+  // * *********************************** * //
+
+
+  // * *********************************** * //
   render() {
+
+    this.state.meds.sort(function(a, b){
+      if(a.generic_name < b.generic_name) { return -1; }
+      if(a.generic_name > b.generic_name) { return 1; }
+      return 0;
+    })
+
     //Show loading spinner if fetching data
     if(this.state.isLoading){
         return (
@@ -85,15 +118,16 @@ export default class MedsLibrary extends Component {
         </Header>
 
         <Segment>
-          <Button active first>
+          <Button active first onPress={() => this.tabSwitch(false) }>
             <Text>Generic Name</Text>
           </Button>
-          <Button active last>
+          <Button last onPress={() => this.tabSwitch(true) }>
             <Text>Brand Name</Text>
           </Button>
         </Segment>
 
         <Content>
+        {this.state.med_selected ?
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
@@ -103,6 +137,18 @@ export default class MedsLibrary extends Component {
               </ListItem>
             ))}
           </List>
+          :
+          <List>
+            {this.state.meds.map((med, idx) => (
+              <ListItem key={idx}>
+                <TouchableOpacity onPress={() => this.onPressButton(med.brand_name, med.brand_name)}>
+                  <Text>{med.brand_name}</Text>
+                </TouchableOpacity>
+              </ListItem>
+            ))}
+          </List>
+        }
+
         </Content>
         <Footer>
           <FooterMenu/>

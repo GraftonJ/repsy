@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input } from 'native-base'
+import React, { Component } from 'react'
+import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner } from 'native-base'
 import { colors } from '../../utils/colors'
 import Registrationform from '../elements/RegistrationForm'
 
+import store, { URI } from '../../store'
 
 
 export default class Loginpage extends Component {
@@ -13,19 +14,135 @@ export default class Loginpage extends Component {
   this.state = {
     email: '',
     password: '',
+    loginErrorMessage: '',
+    isLoggedIn: store.getState().isLoggedIn,
+    user: store.getState().user,
+    isLoading: false,
   }
 }
 
-  //LOGIN BUTTON
-  onPressButton = () => {
-    // Alert.alert('email:', this.state.email)
-    // Alert.alert('password:', this.state.password)
+//Dee@gmail.com Secret
+/* ********************************************* */
+//Checks store for isLoggedIn(bool), and user(obj)
+componentDidMount() {
+  console.log("Login::componentDidMount()")
+
+  this.unsubscribe = store.onChange(() => {
+    this.setState({
+      isLoggedIn: store.getState().isLoggedIn,
+      user: store.getState().user,
+    })
+  })
+}
+
+  /* ********************************************* */
+  componentWillUnmount() {
+    // disconnect from store notifications
+    this.unsubscribe()
+  }
+
+  /* ********************************************* */
+  async asyncTryLogin(email, password) {
+    console.log("-- asyncTryLogin(): ", email, password)
+
+    this.setState({
+      loginErrorMsg: '',
+    })
+
+    const body = { email, password }
+    const url = `${URI}/doctors/login`
+
+    try {
+
+      // call login route
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      const responseJson = await response.json()
+      console.log(responseJson)
+
+      // if the login fails, display error message
+      if (!response.ok) {
+        console.log('==== ', response.status, responseJson)
+        this.setState({
+          loginErrorMsg: responseJson.error,
+        })
+        return false
+      }
+
+      // login succeeded!
+      console.log("('==== login success!: ", responseJson.doctor)
+      console.log('---- **** --- auth: ', response.headers.map.auth)
+
+      // add the authHeader to user object since it will be passed in future fetch calls
+      // responseJson.user.authHeader = response.headers.map.auth
+      store.setState({
+        user: responseJson.doctor,
+        isLoggedIn: true,
+      })
+      return true
+    }
+    catch(err) {
+      console.log("ERROR onpressLogin fetch failed: ", err)
+    }
+  }
+
+
+
+  /* ********************************************* */
+onPressLogin = async () => {
+  console.log("Login::onpressLogin()")
+  this.setState({
+    isLoading: true,
+  })
+
+  const email = this.state.email
+  const password = this.state.password
+
+  const value = { email, password }
+  console.log("value: ",value)
+
+  // check that user filled in the fields
+  if (!value) {
+    return
+  }
+
+  const success = await this.asyncTryLogin(email, password)
+  if (success) {
+    console.log('YAAAAAAAYYYYY SUCCESS!')
+    this.setState({
+        email: '', // holds the form value
+        password: '', // holds the form value
+    })
     Actions.Homepage()
+  }
+}
+
+
+
+
+
+
+
+  //LOGIN BUTTON
+  // onPressButton = () => {
+  //   // Alert.alert('email:', this.state.email)
+  //   // Alert.alert('password:', this.state.password)
+  //   Actions.Homepage()
+  // }
+
+  //CREATE ACCOUNT BUTTON
+  onPressCreateAccount = () => {
+    Actions.Loginpage()
   }
 
   render() {
-
-    return (
+      return (
       <Container>
         <Header>
           <Left>
@@ -39,6 +156,8 @@ export default class Loginpage extends Component {
         <Content>
           <Text style={styles.repsyH1}>REPSY</Text>
           <Text style={styles.h2}>Connecting Doctors & Reps</Text>
+          {(this.state.isLoading) ? <Spinner color='red' /> :
+          <Container>
           <Form>
             <Item >
               <Input
@@ -59,11 +178,21 @@ export default class Loginpage extends Component {
             </Item>
           </Form>
           <Button
-            onPress={this.onPressButton}
+            dark
+            onPress={this.onPressLogin}
             style={styles.loginButton}
-            transparent>
+          >
           <Text style={styles.loginButtonText}>Login</Text>
         </Button>
+        <Text style={styles.Or}>or</Text>
+        <Button
+          onPress={this.onPressCreateAccount}
+          style={styles.loginButton}
+          transparent>
+        <Text style={styles.createAccountText}>Create Account</Text>
+       </Button>
+       </Container>
+       }
         </Content>
         <Footer>
         </Footer>
@@ -115,13 +244,28 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    width: '40%'
   },
   loginButtonText: {
     color: 'rgb(84, 157, 191)',
-    fontFamily: 'Hoefler Text',
+    fontFamily: 'Helvetica',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
     letterSpacing: 1,
   },
-});
+  createAccountText: {
+    color: 'rgb(84, 157, 191)',
+    fontFamily: 'Helvetica',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  Or : {
+    fontFamily: 'Hoefler Text',
+    fontSize: 15,
+    alignSelf: 'center',
+    marginBottom: -30,
+  },
+})
