@@ -75,7 +75,7 @@ componentWillUnmount(){
 //******************************/
 //onPress logout
 onPressLogout = () => {
-  Alert.alert('logout button pressed')
+  Alert.alert('Bye now! Thanks for using Repsy!')
   store.setState({
     user: null,
     isLoggedIn: false

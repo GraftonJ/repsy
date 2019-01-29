@@ -104,7 +104,7 @@ onPressLogin = async () => {
     isLoading: true,
   })
 
-  const email = this.state.email
+  const email = this.state.email.toLowerCase()
   const password = this.state.password
 
   const value = { email, password }
