@@ -8,6 +8,7 @@ import { getBookings } from '../../utils/api'
 
 import store, { URI } from '../../store'
 import timekit from 'timekit-sdk'
+import moment from 'moment'
 
 // import { LocaleConfig } from 'react-native-calendars';
 
@@ -27,6 +28,7 @@ export default class RequestsPage extends Component {
     this.state = {
       doctorsAppointments: store.getState().doctorsAppointments,
       userID: store.getState().user.id,
+      items: store.getState().items,
       isLookingForAppointment: false,
     }
   }
@@ -35,16 +37,18 @@ export default class RequestsPage extends Component {
     this.unsubscribe = store.onChange(() => {
       this.setState({
         doctorsAppointments: store.getState().doctorsAppointments,
-        userID: store.getState().user.id
+        userID: store.getState().user.id,
+        items: store.getState().items
       })
     })
     //Get the conditions from the doctors_conditions route
     let appointments = []
     appointments = await getBookings()
+  
     console.log('appointments', appointments)
     //Set the store state with the conditions. This should cause local state to update and re-render
     store.setState({
-      doctorsAppointment: appointments,
+      // doctorsAppointments: appointments,
     })
   }
 
@@ -61,6 +65,23 @@ export default class RequestsPage extends Component {
   }
 
   render() {
+
+    const timeToString = (time) => {
+      const date = new Date(time)
+      return date.toISOString().split('T')[0]
+    }
+
+    this.state.items.forEach((x) => {
+      console.log('x', x)
+      let event = x.attributes.event
+      const date = timeToString(event.start)
+      console.log('time', date)
+      appointments = { date: [{ name: `${event.what}`}]}
+      // this.setState({
+      //   doctorsAppointments: appointments,
+      // })
+    })
+
     return (
       <Container>
         <Header>
@@ -232,10 +253,7 @@ export default class RequestsPage extends Component {
     return r1.name !== r2.name;
   }
 
-  timeToString(time) {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
-  }
+  
 } // End of componenet
 
 // Variables to change the height and width dynamically for all screens

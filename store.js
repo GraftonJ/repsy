@@ -43,6 +43,7 @@ let state = {
     '2019-01-30': [],
     '2019-02-01': [{ name: 'item 3 - any js object' }, { name: 'any js object' }, { name: 'store test' }],
   },
+  items: [],
 }
 
 let listeners = [];
