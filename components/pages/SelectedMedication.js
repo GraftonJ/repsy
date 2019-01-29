@@ -49,9 +49,6 @@ export default class SelectedMedication extends Component {
     console.log('onpressDosing()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
         label: 'Dosing',
         linkkey: 'dosing'
       }

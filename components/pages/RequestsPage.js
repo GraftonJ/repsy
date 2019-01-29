@@ -61,7 +61,7 @@ export default class RequestsPage extends Component {
   }
 
   render() {
-    
+
     const timeToString = (time) => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
@@ -171,7 +171,7 @@ export default class RequestsPage extends Component {
             // refreshControl={null}
             />
         }
-        
+
       <Footer>
           <Button onPress={() => this.requestAppointment()} title="Create New Request" />
       </Footer>
@@ -189,7 +189,7 @@ export default class RequestsPage extends Component {
     return r1.name !== r2.name
   }
 
-  
+
 } // End of componenet
 
 // Variables to change the height and width dynamically for all screens

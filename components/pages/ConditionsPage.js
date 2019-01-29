@@ -44,11 +44,8 @@ export default class ConditionsPage extends Component {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
         generic_name: genericName,
-        brand_name: brandName,
-        label: store.getState().desired_info.label,
-        linkkey: store.getState().desired_info.linkkey
+        brand_name: brandName
       }
     });
     Actions.SelectedMedication()
