@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner, Toast } from 'native-base'
 import { colors } from '../../utils/colors'
 import Registrationform from '../elements/RegistrationForm'
 
@@ -18,6 +18,7 @@ export default class Loginpage extends Component {
     isLoggedIn: store.getState().isLoggedIn,
     user: store.getState().user,
     isLoading: false,
+    error: false,
   }
 }
 
@@ -70,7 +71,9 @@ componentDidMount() {
       if (!response.ok) {
         console.log('==== ', response.status, responseJson)
         this.setState({
+          isLoading: false,
           loginErrorMsg: responseJson.error,
+          error: true,
         })
         return false
       }
@@ -111,6 +114,14 @@ onPressLogin = async () => {
   if (!value) {
     return
   }
+  // if(this.state.loginErrorMessage){
+  //   console.log()
+  //   this.setState({
+  //     isLoading: false,
+  //   })
+  //   Toast.show({text: 'wrong', buttonText: 'okay'})
+  //Toast.show({text: 'wrong', buttonText: 'okay', duration: 4000})
+  // }
 
   const success = await this.asyncTryLogin(email, password)
   if (success) {
@@ -123,18 +134,6 @@ onPressLogin = async () => {
   }
 }
 
-
-
-
-
-
-
-  //LOGIN BUTTON
-  // onPressButton = () => {
-  //   // Alert.alert('email:', this.state.email)
-  //   // Alert.alert('password:', this.state.password)
-  //   Actions.Homepage()
-  // }
 
   //CREATE ACCOUNT BUTTON
   onPressCreateAccount = () => {
@@ -156,10 +155,16 @@ onPressLogin = async () => {
         <Content>
           <Text style={styles.repsyH1}>REPSY</Text>
           <Text style={styles.h2}>Connecting Doctors & Reps</Text>
-          {(this.state.isLoading) ? <Spinner color='red' /> :
+          {(this.state.isLoading)
+            ?
+            <Spinner color='red' />
+            :
+          (this.state.error)
+            ?
           <Container>
           <Form>
-            <Item >
+            <Text>Incorrect Email or Password</Text>
+            <Item error>
               <Input
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -167,7 +172,7 @@ onPressLogin = async () => {
                 placeholder="Email"
                 onChangeText={(text) => this.setState({email: text})}/>
             </Item>
-            <Item last>
+            <Item error>
               <Input
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -192,6 +197,42 @@ onPressLogin = async () => {
         <Text style={styles.createAccountText}>Create Account</Text>
        </Button>
        </Container>
+       :
+       <Container>
+       <Form>
+         <Item >
+           <Input
+             autoCorrect={false}
+             autoCapitalize="none"
+             style={styles.inputText}
+             placeholder="Email"
+             onChangeText={(text) => this.setState({email: text})}/>
+         </Item>
+         <Item last>
+           <Input
+             autoCorrect={false}
+             autoCapitalize="none"
+             secureTextEntry={true}
+             style={styles.inputText}
+             placeholder="Password"
+             onChangeText={(text) => this.setState({password: text})}/>
+         </Item>
+       </Form>
+       <Button
+         dark
+         onPress={this.onPressLogin}
+         style={styles.loginButton}
+       >
+       <Text style={styles.loginButtonText}>Login</Text>
+     </Button>
+     <Text style={styles.Or}>or</Text>
+     <Button
+       onPress={this.onPressCreateAccount}
+       style={styles.loginButton}
+       transparent>
+     <Text style={styles.createAccountText}>Create Account</Text>
+    </Button>
+    </Container>
        }
         </Content>
         <Footer>

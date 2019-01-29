@@ -221,12 +221,14 @@ onpressSubmit = async () => {
            </Item>
            <Item>
              <Input
+               autoCapitalize="none"
                autoCorrect={false}
                onChangeText={(text) => this.setState({email: text})}
                placeholder="Email" />
            </Item>
            <Item>
              <Input
+               autoCapitalize="none"
                autoCorrect={false}
                secureTextEntry={true}
                onChangeText={(text) => this.setState({password: text})}

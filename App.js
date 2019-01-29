@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import { Router, Scene } from 'react-native-router-flux';
-import { Container, Header, Content, Footer } from 'native-base'
+import { Container, Header, Content, Footer, Root } from 'native-base'
 
 import FirstPage from './components/pages/FirstPage'
 import Homepage from './components/pages/homepage'
@@ -24,6 +24,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <Root>
       <Router>
         <Scene key="root" hideNavBar= "false">
           <Scene key="FirstPage" component={FirstPage} initial/>
@@ -38,6 +39,7 @@ export default class App extends Component {
           <Scene key="MedsLibrary" component={MedsLibrary} />
         </Scene>
       </Router>
+    </Root>
     )
   }
 }
