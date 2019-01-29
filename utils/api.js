@@ -56,8 +56,15 @@ export const getReps = async () => {
 }
 
 //GET ALL REPS_MEDS
-export const getRepsMeds = async () => {
+export const getAllRepsMeds = async () => {
   const response = await fetch(`${API}/reps_meds`)
+  const json = await response.json();
+  return json
+}
+
+//GET all reps for a particular med id
+export const getRepsMed = async () => {
+  const response = await fetch(`${API}/reps_meds/${store.getState().med_reps.id}`)
   const json = await response.json();
   return json
 }

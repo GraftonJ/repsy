@@ -33,10 +33,10 @@ let state = {
 
   //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call
   med_reps: {
-    id: 0,
-    generic_name: '',
-    brand_name: '',
-    company: '',
+    id: 1,
+    generic_name: 'Ibuprofen',
+    brand_name: 'Advil',
+    company: 'Amgen',
   },
 
   // Gets the current information the user wants about the med
