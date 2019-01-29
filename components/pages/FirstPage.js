@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native'
+import { Platform, StyleSheet, View, Text, Dimensions, Alert, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner, Toast } from 'native-base'
 import { colors } from '../../utils/colors'
@@ -104,7 +104,7 @@ onPressLogin = async () => {
     isLoading: true,
   })
 
-  const email = this.state.email
+  const email = this.state.email.toLowerCase()
   const password = this.state.password
 
   const value = { email, password }
@@ -156,6 +156,7 @@ onPressLogin = async () => {
           </Right>
         </Header>
         <Content>
+          <Image style={styles.image} source={require('../../medicalStaff.png')} />
           <Text style={styles.repsyH1}>REPSY</Text>
           <Text style={styles.h2}>Connecting Doctors & Reps</Text>
           {(this.state.isLoading)
@@ -222,7 +223,7 @@ onPressLogin = async () => {
          </Item>
        </Form>
        <Button
-         dark
+         bordered dark
          onPress={this.onPressLogin}
          style={styles.loginButton}
        >
@@ -262,12 +263,12 @@ const styles = StyleSheet.create({
     fontSize: 55,
     textAlign: 'center',
     letterSpacing: 10,
-    marginTop: '50%',
     color: 'rgb(96, 29, 16)',
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 5
+    textShadowRadius: 5,
+    marginTop: '5%'
   },
   h2: {
     fontFamily: 'Hoefler Text',
@@ -275,7 +276,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textAlign: 'center',
     marginTop: -5,
-    marginBottom: 30
+    marginBottom: 30,
+    color: 'rgb(84, 157, 191)'
   },
   repsyHeader: {
     fontFamily: 'Helvetica-Bold',
@@ -301,7 +303,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   createAccountText: {
-    color: 'rgb(84, 157, 191)',
+    color: 'rgb(96, 29, 16)',
     fontFamily: 'Helvetica',
     fontWeight: 'bold',
     fontSize: 15,
@@ -312,4 +314,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: -30,
   },
+  image: {
+    alignSelf: 'center',
+    width: '25%',
+    height: '10%',
+    marginTop: '25%'
+  }
 })
