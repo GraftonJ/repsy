@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View, Text, Dimensions, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner } from 'native-base'
 import { colors } from '../../utils/colors'
 import Registrationform from '../elements/RegistrationForm'
 
@@ -16,7 +16,8 @@ export default class Loginpage extends Component {
     password: '',
     loginErrorMessage: '',
     isLoggedIn: store.getState().isLoggedIn,
-    user: store.getState().user
+    user: store.getState().user,
+    isLoading: false,
   }
 }
 
@@ -96,7 +97,9 @@ componentDidMount() {
   /* ********************************************* */
 onPressLogin = async () => {
   console.log("Login::onpressLogin()")
-
+  this.setState({
+    isLoading: true,
+  })
 
   const email = this.state.email
   const password = this.state.password
@@ -139,8 +142,7 @@ onPressLogin = async () => {
   }
 
   render() {
-
-    return (
+      return (
       <Container>
         <Header>
           <Left>
@@ -154,6 +156,8 @@ onPressLogin = async () => {
         <Content>
           <Text style={styles.repsyH1}>REPSY</Text>
           <Text style={styles.h2}>Connecting Doctors & Reps</Text>
+          {(this.state.isLoading) ? <Spinner color='red' /> :
+          <Container>
           <Form>
             <Item >
               <Input
@@ -187,6 +191,8 @@ onPressLogin = async () => {
           transparent>
         <Text style={styles.createAccountText}>Create Account</Text>
        </Button>
+       </Container>
+       }
         </Content>
         <Footer>
         </Footer>
