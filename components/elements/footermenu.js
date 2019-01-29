@@ -23,11 +23,11 @@ export default class FooterMenu extends Component {
           <Text style={{fontSize: 11}} >Treatments</Text>
         </Button>
         <Button
-          onPress={() => { Actions.ConditionsLibrary() }}
+          onPress={() => { Actions.Homepage() }}
           vertical
         >
-          <Icon active name="text" />
-          <Text style={{fontSize: 9.5}} >What's New?</Text>
+          <Icon active name="home" />
+          <Text style={{fontSize: 11}} >Home</Text>
         </Button>
         <Button
           onPress={() => { Actions.RequestsPage() }}

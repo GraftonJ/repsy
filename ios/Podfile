@@ -6,7 +6,6 @@ target 'repsy' do
   # use_frameworks!
 
   # Pods for repsy
-
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   pod 'React', :path => '../node_modules/react-native'

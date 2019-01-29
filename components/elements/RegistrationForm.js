@@ -43,6 +43,9 @@ export default class ConditionsPage extends Component {
       zip: 0,
       email: '',
       password: "",
+      isLoggedIn: store.getState().isLoggedIn,
+      user: store.getState().user,
+
   }
 }
 
@@ -111,7 +114,8 @@ async asyncTryAddDoctor() {
     })
 
     const responseJson = await response.json();
-    console.log(responseJson)
+    // console.log(responseJson.doctor)
+    //{id: 8, fname: sherman, lname: potter...}
 
     // if the new account fails, display error message
     if (!response.ok) {
@@ -125,7 +129,14 @@ async asyncTryAddDoctor() {
     // new account succeeded!
     if(response.ok) {
       console.log('++++++++++++ new account added!', responseJson)
-      Alert.alert('You successfully registered!')
+      //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
+      store.setState({
+        isLoggedIn: true,
+        user: responseJson.doctor
+      })
+      console.log('*****store isLoggedIn', store.getState().isLoggedIn)
+      console.log('******store user', store.getState().user)
+      Actions.Homepage()
     }
 
     // console.log("('==== new acct added!: ", responseJson);
