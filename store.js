@@ -8,12 +8,25 @@ export const URI = "https://repsy.herokuapp.com"
 let state = {
 
   //Dummy user state for other componenets to pull. Will need to set this state from user object on signin
-  user: {
-    uid: 999999999,
-    fname: 'Doctor',
-    lname: 'Smith',
-    id: 2,
-  },
+  // user: {
+  //   uid: 999999999,
+  //   fname: 'Doctor',
+  //   lname: 'Smith',
+  //   id: 2,
+  // },
+
+  // Logged in user set by Login
+  // Null when user is not logged in
+  /* { id: 2,
+       name: "New User",
+       email: "nuser@gmail.com",
+       dogNames: ""Luna"",
+       authHeader: "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE1NDUxNTYxMjMsImV4cCI6MTU0NTc2MDkyM30.xWToQs1ECfLF9wyKbs4uQTZnvzTFnrA4atKIRxU0bzI", // JWT from server to pass back in subsequebnt fetch's
+     } */
+  user: null,
+  // convenience flag that is kept in sync with "user" key by Login
+  isLoggedIn: true,
+
 
   // Gets the current information the user wants about the med
   desired_info: {
