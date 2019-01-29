@@ -135,18 +135,6 @@ onPressLogin = async () => {
 }
 
 
-
-
-
-
-
-  //LOGIN BUTTON
-  // onPressButton = () => {
-  //   // Alert.alert('email:', this.state.email)
-  //   // Alert.alert('password:', this.state.password)
-  //   Actions.Homepage()
-  // }
-
   //CREATE ACCOUNT BUTTON
   onPressCreateAccount = () => {
     Actions.Loginpage()
