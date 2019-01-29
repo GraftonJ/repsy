@@ -37,8 +37,13 @@ let state = {
   },
 
   doctorsConditions: ['First Condition', 'Second Condition', 'Third Condition'],
-  doctorsAppointments: [],
-};
+  doctorsAppointments: {
+    '2019-01-28': [{ name: 'item 1 - any js object' }, { name: 'item 2 - any js object' }],
+    '2019-01-29': [{ name: 'item 2 - any js object' }],
+    '2019-01-30': [],
+    '2019-02-01': [{ name: 'item 3 - any js object' }, { name: 'any js object' }, { name: 'store test' }],
+  },
+}
 
 let listeners = [];
 
