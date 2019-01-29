@@ -94,7 +94,34 @@ export const getBookings = async () => {
         console.log('error', err)
       })
       
-    // // GET all Bookings for calendar from Timekit.io
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// //GET bookings that a doctor or rep has made
+// export const getABooking = async () => {
+//   try {
+//     timekit.configure({
+//       appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+//       app: 'REPSY',
+//       resourceEmail: 'tarmstrong1327@gmail.com',
+//       resourceKey: '4cY2KWMggw95mAdx51eYUO2CyIWI2xup'
+//     })
+//     timekit.getBookings()
+//       .then((res) => {
+//         console.log('response!!!!!', res)
+//         return res
+//       }).catch((err) => {
+//         console.log('response', err)
+//       })
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+
+
+// // GET all Bookings for calendar from Timekit.io
     // // first get all bookable resources for REPSY
     // timekit.getResources()
     //   .then((res) => {
@@ -118,29 +145,3 @@ export const getBookings = async () => {
 
     // console.log('getResource', timekit.getResource( "72595f19-674f-46ab-9f77-eb34daf4bc68" ))
     // console.log('getResource', timekit.getEvent("72595f19-674f-46ab-9f77-eb34daf4bc68"))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
-//GET bookings that a doctor or rep has made
-export const getABooking = async () => {
-  try {
-    timekit.configure({
-      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
-      app: 'REPSY',
-      resourceEmail: 'tarmstrong1327@gmail.com',
-      resourceKey: '4cY2KWMggw95mAdx51eYUO2CyIWI2xup'
-    })
-    timekit.getBookings()
-      .then((res) => {
-        console.log('response!!!!!', res)
-        return res
-      }).catch((err) => {
-        console.log('response', err)
-      })
-  } catch (err) {
-    console.log(err)
-  }
-}

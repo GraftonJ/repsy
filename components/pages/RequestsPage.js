@@ -66,22 +66,52 @@ export default class RequestsPage extends Component {
 
   render() {
 
+    // const timeToString = (time) => {
+    //   const date = new Date(time)
+    //   return date.toISOString().split('T')[0]
+    // }
+
+    // this.state.items.forEach((x) => {
+    //   console.log('x', x)
+    //   let event = x.attributes.event
+    //   const date = timeToString(event.start)
+    //   console.log('time', date)
+    //   const item = { 
+    //     date: '' [{ name: `${event.what}` }] }
+    //   appointments = { date: [{ name: `${event.what}`}]}
+    //   console.log('appointments', appointments)
+    //   // this.setState({
+    //   //   doctorsAppointments: appointments,
+    //   // })
+    // })
     const timeToString = (time) => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
     }
 
+    // Variable to load in calendar data
+    let calendarData = {}
+
+    // Loads the calendarData variable with all the relevant appointments
     this.state.items.forEach((x) => {
-      console.log('x', x)
+      //console.log('x', x)
       let event = x.attributes.event
       const date = timeToString(event.start)
-      console.log('time', date)
-      appointments = { date: [{ name: `${event.what}`}]}
-      // this.setState({
-      //   doctorsAppointments: appointments,
-      // })
-    })
+      //console.log('time', date)
 
+      // Cycles through and creates the objects for the timekit according
+      // to the timekits desired format: {'Year-Month-Day': [{name: "Description"}]'}
+      if (!calendarData[date]) {
+        calendarData[date] = [{ name: `${event.what}` }]
+      } else {
+        calendarData[date].push({ name: `${event.what}` })
+      }
+
+      //console.log("Calendar Data ====>", calendarData)
+
+      return calendarData
+
+    })
     return (
       <Container>
         <Header>
@@ -97,10 +127,10 @@ export default class RequestsPage extends Component {
           </Right>
         </Header>
         <Agenda
-          items={this.state.doctorsAppointments}
+          items={calendarData}
           selected={currentDate}
           renderItem={this.renderItem.bind(this)}
-          renderEmptyDate={this.renderEmptyDate.bind(this)}
+          // renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
           theme={{ agendaKnobColor: 'grey' }}
 
@@ -141,7 +171,11 @@ export default class RequestsPage extends Component {
         // // specify how agenda knob should look like
         // renderKnob={() => { return (<View />); }}
         // // specify what should be rendered instead of ActivityIndicator
-        // renderEmptyData={() => { return (<View />); }}
+        renderEmptyData={() => { 
+          return (
+            <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
+          ) 
+        }}
         // // specify your item comparison function for increased performance
         // rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
         // // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly.
@@ -155,87 +189,14 @@ export default class RequestsPage extends Component {
           (this.state.isLookingForAppointment)
             ? <WebView source={{ html: htmlContent }} />
             : <View>
-
             </View>
         }
-        {/* <Calendar
-            // Initially visible month. Default = Date()
-            current={currentDate}
-            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={yesterdayDate}
-            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-            maxDate={nextMonthDate}
-            // Handler which gets executed on day press. Default = undefined
-            onDayPress={onDayPress}
-            // Handler which gets executed on day long press. Default = undefined
-            onDayLongPress={(day) => { console.log('selected day', day) }}
-            //If you need custom functionality not supported by current day component implementations you can pass your own custom day component to the calendar.
-            // dayComponent={({ date, state }) => {
-            //   return (<View style={{ flex: 1 }}><Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>{date.day}</Text></View>);
-            // }}
-            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-            monthFormat={'yyyy MM'}
-            // Handler which gets executed when visible month changes in calendar. Default = undefined
-            onMonthChange={(month) => { console.log('month changed', month) }}
-            // Hide month navigation arrows. Default = false
-            hideArrows={false}
-            // Replace default arrows with custom ones (direction can be 'left' or 'right')
-            // renderArrow={(direction) => (<Arrow />)}
-            // Do not show days of other months in month page. Default = false
-            hideExtraDays={true}
-            // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-            // day from another month that is visible in calendar page. Default = false
-            disableMonthChange={true}
-            // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-            firstDay={1}
-            // Hide day names. Default = false
-            hideDayNames={false}
-            // Show week numbers to the left. Default = false
-            showWeekNumbers={false}
-            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-            onPressArrowLeft={substractMonth => substractMonth()}
-            // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-            onPressArrowRight={addMonth => addMonth()}
-            markedDates={{
-              '2019-01-16': { dots: [vacation, massage, workout], selected: true, marked: true, selectedColor: 'teal' },
-              '2019-01-17': { dots: [workout], marked: true },
-              '2019-01-18': { dots: [massage], marked: true, activeOpacity: 0 },
-              '2019-01-19': { disabled: true, disableTouchEvent: true },
-            }}
-            markingType={'multi-dot'}
-          /> */}
-
-
+      <Footer>
+          <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+      </Footer>
       </Container>
     ) // End of return
   } // End of render
-
-
-  // loadItems(day) {
-  //   setTimeout(() => {
-  //     for (let i = -15; i < 85; i++) {
-  //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-  //       const strTime = this.timeToString(time);
-  //       if (!this.state.items[strTime]) {
-  //         this.state.items[strTime] = [];
-  //         const numItems = Math.floor(Math.random() * 5);
-  //         for (let j = 0; j < numItems; j++) {
-  //           this.state.items[strTime].push({
-  //             name: 'Item for ' + strTime,
-  //             height: Math.max(50, Math.floor(Math.random() * 150))
-  //           });
-  //         }
-  //       }
-  //     }
-  //     //console.log(this.state.items);
-  //     const newItems = {};
-  //     Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
-  //     this.setState({
-  //       items: newItems
-  //     })
-  //   }, 1000)
-  //   // console.log(`Load Items for ${day.year}-${day.month}`);
-  // }
 
   renderItem(item) {
     return (
@@ -243,14 +204,8 @@ export default class RequestsPage extends Component {
     );
   }
 
-  renderEmptyDate() {
-    return (
-      <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
-    );
-  }
-
   rowHasChanged(r1, r2) {
-    return r1.name !== r2.name;
+    return r1.name !== r2.name
   }
 
   
@@ -264,12 +219,12 @@ const width = Dimensions.get('window').width
 //  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
 //  const strTime = this.timeToString(time);
 let currentDate = new Date()
-let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-const workout = { key: 'workout', color: 'red' };
+// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
+// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
+// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
+// const workout = { key: 'workout', color: 'red' };
 
 const htmlContent = `
       <div id="bookingjs"></div>
