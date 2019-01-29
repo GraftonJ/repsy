@@ -44,7 +44,7 @@ export default class RequestsPage extends Component {
     //Get the conditions from the doctors_conditions route
     let appointments = []
     appointments = await getBookings()
-  
+
     console.log('appointments', appointments)
     //Set the store state with the conditions. This should cause local state to update and re-render
     store.setState({
@@ -76,7 +76,7 @@ export default class RequestsPage extends Component {
     //   let event = x.attributes.event
     //   const date = timeToString(event.start)
     //   console.log('time', date)
-    //   const item = { 
+    //   const item = {
     //     date: '' [{ name: `${event.what}` }] }
     //   appointments = { date: [{ name: `${event.what}`}]}
     //   console.log('appointments', appointments)
@@ -171,10 +171,10 @@ export default class RequestsPage extends Component {
         // // specify how agenda knob should look like
         // renderKnob={() => { return (<View />); }}
         // // specify what should be rendered instead of ActivityIndicator
-        renderEmptyData={() => { 
+        renderEmptyData={() => {
           return (
             <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
-          ) 
+          )
         }}
         // // specify your item comparison function for increased performance
         // rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
@@ -208,7 +208,7 @@ export default class RequestsPage extends Component {
     return r1.name !== r2.name
   }
 
-  
+
 } // End of componenet
 
 // Variables to change the height and width dynamically for all screens
