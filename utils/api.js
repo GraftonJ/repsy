@@ -1,5 +1,6 @@
-import store from '../store';
+import store from '../store'
 
+import timekit from 'timekit-sdk'
 const API = `https://repsy.herokuapp.com`
 const CALENDAR_API = `https://api.timekit.io/v2`
 
