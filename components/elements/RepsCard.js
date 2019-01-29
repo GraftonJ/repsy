@@ -9,18 +9,15 @@ export default class RepsCard extends Component {
   super(props);
   }
   render() {
-      const { reps } = this.props
+      const {reps} = this.props
       return (
-        <Container>
-          <Header />
-          <Content>
             <List>
               <ListItem thumbnail>
                 <Left>
                   <Thumbnail square source={{ uri: `http://www.darwinsmoney.com/wp-content/uploads/2012/06/sales-rep.jpg` }} />
                 </Left>
                 <Body>
-                  <Text>{reps.fname} {reps.lname}</Text>
+                  <Text>{reps.fname}</Text>
                   <Text note numberOfLines={1}>Company: {reps.company}</Text>
                 </Body>
                 <Right>
@@ -30,8 +27,6 @@ export default class RepsCard extends Component {
                 </Right>
               </ListItem>
             </List>
-          </Content>
-        </Container>
       );
     }
 }

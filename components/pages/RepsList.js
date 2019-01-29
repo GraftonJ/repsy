@@ -62,7 +62,7 @@ render() {
     <Container>
       <Header>
         <Left>
-          <Text>Hello</Text>
+          <Text>Hello </Text>
         </Left>
         <Body>
         </Body>
