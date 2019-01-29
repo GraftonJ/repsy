@@ -25,7 +25,7 @@ let state = {
      } */
   user: null,
   // convenience flag that is kept in sync with "user" key by Login
-  isLoggedIn: true,
+  isLoggedIn: false,
 
 
   // Gets the current information the user wants about the med
