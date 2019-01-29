@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions} from 'react-native';
+import { Platform, StyleSheet, View, Dimensions, Alert} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
 import { getDoctorsConditions } from '../../utils/api'
@@ -27,8 +27,10 @@ export default class Homepage extends Component {
     doctorsConditions: store.getState().doctorsConditions,
     desired_info: store.getState().desired_info,
     isLoading: true,
-    userID: store.getState().user.id,
+    // userID: store.getState().user.id,
     userName: store.getState().user.fname,
+    user: store.getState().user,
+    isLoggedIn: store.getState().isLoggedIn
   }
 }
 
@@ -38,7 +40,9 @@ async componentDidMount(){
     this.setState({
       doctorsConditions: store.getState().doctorsConditions,
       desired_info: store.getState().desired_info,
-      userID: store.getState().user.id
+      // userID: store.getState().user.id,
+      user: store.getState().user,
+      isLoggedIn: store.getState().isLoggedIn
     })
   })
 //Get the conditions from the doctors_conditions route
@@ -68,6 +72,18 @@ componentWillUnmount(){
   this.unsubscribe()
 }
 
+//******************************/
+//onPress logout
+onPressLogout = () => {
+  Alert.alert('logout button pressed')
+  store.setState({
+    user: null,
+    isLoggedIn: false
+  })
+  console.log('***********STORE USER',store.getState().user)
+  console.log('***********STORE LOGGEDIN', store.getState().isLoggedIn)
+  Actions.FirstPage()
+}
   render() {
     //Show loading spinner if fetching data
     return (
@@ -96,6 +112,11 @@ componentWillUnmount(){
               </Button>
             ))
           }
+          <Button
+            onPress={this.onPressLogout}
+            dark>
+            <Text>Logout</Text>
+          </Button>
         </Content>
         <Footer>
           <FooterMenu/>
