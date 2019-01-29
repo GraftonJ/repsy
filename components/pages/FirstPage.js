@@ -65,7 +65,7 @@ componentDidMount() {
         },
       })
       const responseJson = await response.json()
-      console.log(responseJson)
+      console.log('RESPONSEJSON', responseJson)
 
       // if the login fails, display error message
       if (!response.ok) {
@@ -130,6 +130,9 @@ onPressLogin = async () => {
         email: '', // holds the form value
         password: '', // holds the form value
     })
+    // store.setState({
+    //   user:
+    // })
     Actions.Homepage()
   }
 }

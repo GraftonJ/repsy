@@ -27,8 +27,10 @@ export default class Homepage extends Component {
     doctorsConditions: store.getState().doctorsConditions,
     desired_info: store.getState().desired_info,
     isLoading: true,
-    userID: store.getState().user.id,
+    // userID: store.getState().user.id,
     userName: store.getState().user.fname,
+    user: store.getState().user,
+    isLoggedIn: store.getState().isLoggedIn
   }
 }
 
@@ -38,7 +40,9 @@ async componentDidMount(){
     this.setState({
       doctorsConditions: store.getState().doctorsConditions,
       desired_info: store.getState().desired_info,
-      userID: store.getState().user.id
+      // userID: store.getState().user.id,
+      user: store.getState().user,
+      isLoggedIn: store.getState().isLoggedIn
     })
   })
 //Get the conditions from the doctors_conditions route
@@ -72,6 +76,13 @@ componentWillUnmount(){
 //onPress logout
 onPressLogout = () => {
   Alert.alert('logout button pressed')
+  store.setState({
+    user: null,
+    isLoggedIn: false
+  })
+  console.log('***********STORE USER',store.getState().user)
+  console.log('***********STORE LOGGEDIN', store.getState().isLoggedIn)
+  Actions.FirstPage()
 }
   render() {
     //Show loading spinner if fetching data
