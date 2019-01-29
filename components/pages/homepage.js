@@ -96,6 +96,9 @@ componentWillUnmount(){
               </Button>
             ))
           }
+          <Button dark>
+            <Text>Logout</Text>
+          </Button>
         </Content>
         <Footer>
           <FooterMenu/>
