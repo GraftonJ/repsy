@@ -22,7 +22,7 @@ let state = {
   med_reps: {
     id: 0,
     generic_name: '',
-    brand_name: ,
+    brand_name: '',
     company: '',
   },
 
