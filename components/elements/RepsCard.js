@@ -9,16 +9,17 @@ export default class RepsCard extends Component {
   super(props);
   }
   render() {
-      const {reps} = this.props
+      const {reps, index} = this.props
       return (
             <List>
               <ListItem thumbnail>
                 <Left>
-                  <Thumbnail square source={{ uri: `http://www.darwinsmoney.com/wp-content/uploads/2012/06/sales-rep.jpg` }} />
+                  <Thumbnail square source={{ uri: `${reps[index].reps_photo}` }} />
                 </Left>
                 <Body>
-                  <Text>{reps.fname}</Text>
-                  <Text note numberOfLines={1}>Company: {reps.company}</Text>
+                  <Text>{reps[index].fname} {reps[index].lname}</Text>
+                  <Text>{reps[index].city}, {reps[index].state}</Text>
+                  <Text note numberOfLines={1}>Company: {reps[index].company}</Text>
                 </Body>
                 <Right>
                   <Button transparent>

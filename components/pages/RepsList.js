@@ -75,6 +75,7 @@ render() {
           ? <Spinner color='red' />
           : reps.map((rep, idx) => (
             <RepsCard
+            index={idx}
             key={idx}
             reps={reps}
             />
