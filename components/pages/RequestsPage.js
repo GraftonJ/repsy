@@ -26,7 +26,7 @@ export default class RequestsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: store.getState().user.id,
+      user: store.getState().user.id,
       items: store.getState().items,
       isLookingForAppointment: false,
     }
@@ -35,7 +35,6 @@ export default class RequestsPage extends Component {
   async componentDidMount() {
     this.unsubscribe = store.onChange(() => {
       this.setState({
-        userID: store.getState().user.id,
         items: store.getState().items
       })
     })
