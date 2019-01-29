@@ -25,7 +25,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Root>
+    <Root>
       <Router>
         <Scene key="root" hideNavBar= "false">
           <Scene key="FirstPage" component={FirstPage} initial/>
