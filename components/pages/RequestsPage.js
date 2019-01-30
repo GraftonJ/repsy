@@ -94,7 +94,8 @@ export default class RequestsPage extends Component {
         {
           (this.state.isLookingForAppointment)
             ?
-            <WebView source={{ html: htmlContent }} />
+            // <WebView source={{ html: htmlContent }} />
+            createBookingForm
             : <Agenda
               items={calendarBookings}
               selected={currentDate}
@@ -168,6 +169,10 @@ const htmlContent = `
           }
       </script>
     `
+const createBookingForm = <Content>
+    <View>
+    </View>
+    </Content>
 
 const styles = StyleSheet.create({
   item: {
