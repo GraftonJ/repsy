@@ -94,7 +94,6 @@ export const getBookings = async () => {
 
     const getResources = await timekit.getResources()
     let resources = getResources.data
-    console.log('resources', resources)
 
     const getBookings = await timekit.include('attributes').getBookings()
     let calendarData = {}

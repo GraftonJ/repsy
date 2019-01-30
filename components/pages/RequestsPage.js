@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Left, Right, Body, Toast } from 'native-base'
+import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon } from 'native-base'
 import { WebView } from 'react-native-webview'
 import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
 import { getBookings } from '../../utils/api'
@@ -47,6 +47,7 @@ export default class RequestsPage extends Component {
 
     store.setState({
       calendarBookings: store.getState().calendarBookings,
+      calendarResources: store.getState().calendarResources,
     })
   }
 
@@ -71,9 +72,13 @@ export default class RequestsPage extends Component {
 
   render() {
     const {
-      calendarBookings
+      calendarBookings,
+      calendarResources
     } = this.state
 
+    // const PickerInformation = (calendarResources) => {
+
+    // }
     return (
       <Container>
         <Header>
@@ -95,7 +100,31 @@ export default class RequestsPage extends Component {
           (this.state.isLookingForAppointment)
             ?
             // <WebView source={{ html: htmlContent }} />
-            createBookingForm
+            <Content>
+              <Form>
+                <Item floatingLabel>
+                  <Label>Resource</Label>
+                  <Input />
+                </Item>
+                <Item floatingLabel last>
+                  <Label>Password</Label>
+                  <Input />
+                </Item> 
+                    <Picker
+                      mode="dropdown"
+                      iosIcon={<Icon name="arrow-down" />}
+                      style={{ width: undefined }}
+                      placeholder="Who do you want to Book?"
+                      placeholderStyle={{ color: "#bfc6ea" }}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.selected}
+                    // onValueChange={this.onValueChange2.bind(this)}
+                    >
+                  <Picker.Item label="Wallet" value="key0" />
+                 
+                </Picker>
+              </Form>
+            </Content>
             : <Agenda
               items={calendarBookings}
               selected={currentDate}
@@ -146,17 +175,7 @@ export default class RequestsPage extends Component {
 // Variables to change the height and width dynamically for all screens
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
-
-
-//  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-//  const strTime = this.timeToString(time);
 let currentDate = new Date()
-// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-// const workout = { key: 'workout', color: 'red' };
 
 const htmlContent = `
       <div id="bookingjs"></div>
@@ -169,10 +188,7 @@ const htmlContent = `
           }
       </script>
     `
-const createBookingForm = <Content>
-    <View>
-    </View>
-    </Content>
+
 
 const styles = StyleSheet.create({
   item: {
@@ -191,3 +207,12 @@ const styles = StyleSheet.create({
 })
 
 
+
+//  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+//  const strTime = this.timeToString(time);
+// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
+// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
+// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
+// const workout = { key: 'workout', color: 'red' };
