@@ -35,23 +35,23 @@ export default class App extends Component {
 
   render() {
     return (
-      <Root>
-        <Router>
-          <Scene key="root" hideNavBar= "false">
-            <Scene key="FirstPage" component={FirstPage} />
-            <Scene key="Homepage" component={Homepage} />
-            <Scene key="RepsList" component={RepsList} />
-            <Scene key="Loginpage" component={Loginpage}/>
-            <Scene key="ConditionsPage" component={ConditionsPage} />
-            <Scene key="MedicationsPage" component={MedicationsPage} />
-            <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
-            <Scene key="ClinicalData" component={ClinicalData} />
-            <Scene key="RequestsPage" component={RequestsPage} initial />
-            <Scene key="SelectedMedication" component={SelectedMedication} />
-            <Scene key="MedsLibrary" component={MedsLibrary} />
-          </Scene>
-        </Router>
-      </Root>
+    <Root>
+      <Router>
+        <Scene key="root" hideNavBar= "false">
+          <Scene key="FirstPage" component={FirstPage} initial />
+          <Scene key="Homepage" component={Homepage} />
+          <Scene key="RepsList" component={RepsList} />
+          <Scene key="Loginpage" component={Loginpage}/>
+          <Scene key="ConditionsPage" component={ConditionsPage}  />
+          <Scene key="MedicationsPage" component={MedicationsPage} />
+          <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
+          <Scene key="ClinicalData" component={ClinicalData}  />
+          <Scene key="RequestsPage" component={RequestsPage} />
+          <Scene key="SelectedMedication" component={SelectedMedication} />
+          <Scene key="MedsLibrary" component={MedsLibrary} />
+        </Scene>
+      </Router>
+    </Root>
     )
   }
 }
