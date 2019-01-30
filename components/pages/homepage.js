@@ -35,23 +35,26 @@ export default class Homepage extends Component {
     user: store.getState().user,
     isLoggedIn: store.getState().isLoggedIn,
     errorMessage: '',
-    selected: '',
+    selected: null,
     chosenCondition_id: '',
+    addedCondition: store.getState().addedCondition,
+    selected: store.getState().selected
   }
 }
 
 /******************************/
 //onValueChange
 /*****************************/
-onValueChange(value: string) {
+onValueChange (value) {
   let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
-  console.log(chosen, chosen.id)
-  this.setState({
+  // console.log(chosen, chosen.id)
+  store.setState({
+    addedCondition: chosen,
     selected: value,
-    chosenCondition_id: chosen.id
   })
-console.log('this.state.selected:', this.state.selected)
-console.log('this.state.chosenCondition_id', this.state.chosenCondition_id)
+console.log('store.getState().addedCondition:', store.getState().addedCondition)
+console.log('this.state.user.id', this.state.user.id)
+
   // store.setState({
   //   selected: value,
   //   doctorsConditions: chosenCondition,
@@ -90,70 +93,70 @@ async componentDidMount(){
 }
 
 //ADD SPECIALTY_CONDITION FUNCTION
-// async asyncTryAddCondition() {
-//   console.log("---------- asyncTryAddCondition(): ")
-//
-//   this.setState({
-//     errorMessage: '',
-//   })
-//
-// //POST request for doctorsConditions
-//   // router.post('/', validatePostBody, (req, res, next) => {
-//   //   const {id, doctors_id, conditions_id} = req.body
-//   const body = {
-//     doctors_id: this.state.user.id,
-//     conditions_id: this.state.chosenCondition.id,
-//   }
-//   const url = `${URI}/doctors_conditions`
-//
-//   try {
-//     // call login route
-//     const response = await fetch(url, {
-//       method: 'POST',
-//       body: JSON.stringify(body),
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Accept: 'application/json',
-//       },
-//     })
-//
-//     const responseJson = await response.json();
-//     // console.log(responseJson.doctor)
-//     //{id: 8, fname: sherman, lname: potter...}
-//
-//     // if the new account fails, display error message
-//     if (!response.ok) {
-//       console.log('==== ', response.status, responseJson);
-//       this.setState({
-//         errorMessage: responseJson.error,
-//       })
-//       return
-//     }
-//
-//     // new account succeeded!
-//     if(response.ok) {
-//       console.log('++++++++++++ new condition added!', responseJson)
-//       //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
-//       // store.setState({
-//       //   isLoggedIn: true,
-//       //   user: responseJson.doctor
-//       // })
-//       // console.log('*****store isLoggedIn', store.getState().isLoggedIn)
-//       // console.log('******store user', store.getState().user)
-//       // Actions.Homepage()
-//     }
-//
-//     // console.log("('==== new acct added!: ", responseJson);
-//     // store.setState({
-//     //   user: responseJson.user,
-//     //   isLoggedIn: true,
-//     // });
-//
-//   }
-//   catch(err) {
-//     console.log("ERROR asyncTryAddCondition fetch failed: ", err)
-//   }
-// }
+async asyncTryAddCondition() {
+  console.log("---------- asyncTryAddCondition(): ")
+
+  this.setState({
+    errorMessage: '',
+  })
+
+//POST request for doctorsConditions
+  // router.post('/', validatePostBody, (req, res, next) => {
+  //   const {id, doctors_id, conditions_id} = req.body
+  const body = {
+    doctors_id: store.getState().user.id,
+    conditions_id: store.getState().addedCondition.id,
+  }
+  const url = `${URI}/doctors_conditions`
+
+  try {
+    // call login route
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+
+    const responseJson = await response.json();
+    // console.log(responseJson.doctor)
+    //{id: 8, fname: sherman, lname: potter...}
+
+    // if the new account fails, display error message
+    if (!response.ok) {
+      console.log('==== ', response.status, responseJson);
+      this.setState({
+        errorMessage: responseJson.error,
+      })
+      return
+    }
+
+    // new account succeeded!
+    if(response.ok) {
+      console.log('++++++++++++ new condition added!', responseJson)
+      //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
+      // store.setState({
+      //   isLoggedIn: true,
+      //   user: responseJson.doctor
+      // })
+      // console.log('*****store isLoggedIn', store.getState().isLoggedIn)
+      // console.log('******store user', store.getState().user)
+      // Actions.Homepage()
+    }
+
+    // console.log("('==== new acct added!: ", responseJson);
+    // store.setState({
+    //   user: responseJson.user,
+    //   isLoggedIn: true,
+    // });
+
+  }
+  catch(err) {
+    console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+  }
+}
 
 
 
@@ -167,6 +170,12 @@ onPressButton = (name) => {
     }
   });
   Actions.ConditionsPage()
+}
+//on press for added condition to database
+onPressAddCondition = async () => {
+  console.log('condition added to the DB!')
+
+  await this.asyncTryAddCondition()
 }
 
 
@@ -238,12 +247,12 @@ onPressLogout = () => {
               placeholder="Select Conditions of Interest"
               placeholderStyle={{ color: "rgb(79, 79, 78)" }}
               note={false}
-              selectedValue={this.state.selected}
+              selectedValue={store.getState().selected}
               onValueChange={this.onValueChange.bind(this)}
               headerStyle={{ backgroundColor: "#2874F0" }}
               headerBackButtonTextStyle={{ color: "#fff" }}
               headerTitleStyle={{ color: "#fff" }}
-              selectedValue={this.state.selected}>
+              selectedValue={store.getState().selected}>
 
               {this.state.specialtyConditions.map((specCond, idx) => (
                 <Picker.Item key={idx} label={specCond.name} value={specCond.name} id={specCond.id}/>
@@ -251,6 +260,10 @@ onPressLogout = () => {
             </Picker>
           </Form>
           }
+          <Button
+            onPress={this.onPressAddCondition}>
+            <Text>Add Condition</Text>
+          </Button>
           <Button
             onPress={this.onPressLogout}
             dark>
