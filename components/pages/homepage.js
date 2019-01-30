@@ -61,6 +61,26 @@ console.log('this.state.user.id', this.state.user.id)
   // });
   // console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
 }
+// const doctorConditions = async() => {
+//   // get all conditions
+//   let conditionsList = []
+//   conditionsList = await getConditions()
+//   let specificConditions = conditionsList.filter(condition => condition.specialties_id === this.state.user.specialties_id)
+//   this.setState({
+//     specialtyConditions: specificConditions,
+//     isLoading: false,
+//   })
+// }
+
+async getDocConditions () {
+  //Get the conditions from the doctors_conditions route
+    let conditions = []
+    conditions = await getDoctorsConditions()
+  //Set the store state with the conditions. This should cause local state to update and re-render
+    store.setState({
+      doctorsConditions: conditions,
+    })
+}
 
 //Subscribe doctorsConditions state to the store to update on change
 async componentDidMount(){
@@ -73,13 +93,15 @@ async componentDidMount(){
       isLoggedIn: store.getState().isLoggedIn
     })
   })
-//Get the conditions from the doctors_conditions route
-  let conditions = []
-  conditions = await getDoctorsConditions()
-//Set the store state with the conditions. This should cause local state to update and re-render
-  store.setState({
-    doctorsConditions: conditions,
-  })
+
+// //Get the conditions from the doctors_conditions route
+//   let conditions = []
+//   conditions = await getDoctorsConditions()
+// //Set the store state with the conditions. This should cause local state to update and re-render
+//   store.setState({
+//     doctorsConditions: conditions,
+//   })
+this.getDocConditions()
 
   // get all conditions
   let conditionsList = []
@@ -133,25 +155,17 @@ async asyncTryAddCondition() {
       return
     }
 
-    // new account succeeded!
+    // new condition succeeded!
     if(response.ok) {
       console.log('++++++++++++ new condition added!', responseJson)
-      //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
+
+        this.getDocConditions()
+
       // store.setState({
-      //   isLoggedIn: true,
-      //   user: responseJson.doctor
-      // })
-      // console.log('*****store isLoggedIn', store.getState().isLoggedIn)
-      // console.log('******store user', store.getState().user)
-      // Actions.Homepage()
+      //   ...store.state,
+      //   doctorsConditions: responseJson
+      //
     }
-
-    // console.log("('==== new acct added!: ", responseJson);
-    // store.setState({
-    //   user: responseJson.user,
-    //   isLoggedIn: true,
-    // });
-
   }
   catch(err) {
     console.log("ERROR asyncTryAddCondition fetch failed: ", err)
@@ -269,6 +283,15 @@ onPressLogout = () => {
             dark>
             <Text>Logout</Text>
           </Button>
+          {this.state.doctorsConditions.map((condition, idx) => (
+            <Button
+              style={styles.button}
+              key={idx} conditionId={condition.id}
+              rounded style={styles.button}
+              onPress={() => this.onPressButton(condition.name)}>
+              <Text style={styles.buttonText}>{condition.name}</Text>
+            </Button>
+          ))}
         </Content>
         <Footer>
           <FooterMenu/>
