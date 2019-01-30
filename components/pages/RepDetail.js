@@ -99,7 +99,7 @@ componentWillUnmount(){
               Expertise including {reps[0].brand_name} ({reps[0].generic_name})
             </Text>
             <Text style={styles.credentials}>
-              Summary:
+              Summary
             </Text>
             <Text style={styles.credentialsContent}>
               {reps[0].credentials}
@@ -129,17 +129,21 @@ const styles = StyleSheet.create({
     repName: {
       fontSize: 30,
       marginLeft: 10,
+      textAlign: 'center'
     },
     companyName: {
       marginLeft: 15,
+      textAlign: 'center'
     },
     pharma: {
       marginLeft: 15,
+      textAlign: 'center'
     },
     credentials: {
       marginLeft: 10,
       marginTop: 10,
       fontSize: 30,
+      textAlign: 'center'
     },
     credentialsContent: {
       marginLeft: 15,
