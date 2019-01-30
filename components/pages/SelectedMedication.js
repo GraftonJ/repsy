@@ -155,6 +155,10 @@ export default class SelectedMedication extends Component {
       Actions.pop()
     }
 
+    onPressScheduleButton = () => {
+      Actions.RepDetail()
+    }
+
   // * *********************************** * //
   render() {
 
@@ -222,7 +226,7 @@ export default class SelectedMedication extends Component {
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Patient Resources </Text>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Sales Representative </Text>
+          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }} onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Speaker Programs </Text>
         </Content>

@@ -40,6 +40,8 @@ let state = {
 
   // Gets the current information the user wants about the med
   desired_info: {
+    med_id: null,
+    pharma_company: '',
     condition_name: '',
     generic_name: '',
     brand_name: '',

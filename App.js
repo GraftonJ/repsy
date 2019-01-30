@@ -40,8 +40,8 @@ export default class App extends Component {
       <Router>
         <Scene key="root" hideNavBar= "false">
           <Scene key="FirstPage" component={FirstPage}  />
-          <Scene key="RepDetail" component={RepDetail}  initial/>
-          <Scene key="Homepage" component={Homepage} />
+          <Scene key="RepDetail" component={RepDetail}  />
+          <Scene key="Homepage" component={Homepage} initial/>
           <Scene key="RepsList" component={RepsList} />
           <Scene key="Loginpage" component={Loginpage}/>
           <Scene key="ConditionsPage" component={ConditionsPage}  />
