@@ -55,6 +55,7 @@ export default class RequestsPage extends Component {
     this.setState({
       isLookingForAppointment: false,
     })
+    getBookings()
   }
 
   componentWillUnmount() {
@@ -66,8 +67,6 @@ export default class RequestsPage extends Component {
     const {
       calender
     } = this.state.calender
-
-    console.log("What I am looking for =====>", calender)
 
     return (
       <Container>
