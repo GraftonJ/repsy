@@ -95,6 +95,7 @@ onPressLogout = () => {
           <Body>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
         <Content>
@@ -134,6 +135,11 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
     button: {
       flexDirection: "row",
       justifyContent: "center",

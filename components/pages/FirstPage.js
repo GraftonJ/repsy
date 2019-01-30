@@ -135,6 +135,9 @@ onPressLogin = async () => {
     // })
     Actions.Homepage()
   }
+  else{
+    Alert.alert('please fill out all fields')
+  }
 }
 
 
