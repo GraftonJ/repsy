@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
-    marginTop: '5%'
+    // marginTop: '5%'
   },
   h2: {
     fontFamily: 'Hoefler Text',
@@ -316,8 +316,10 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    width: '25%',
-    height: '10%',
+    // width: '25%',
+    // height: '10%',
+    width: 100,
+    height: 110,
     marginTop: '25%'
-  }
+  },
 })
