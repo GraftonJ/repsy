@@ -100,7 +100,6 @@ export default class RequestsPage extends Component {
                   <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
                 )
               }}
-
             />
         }
 
