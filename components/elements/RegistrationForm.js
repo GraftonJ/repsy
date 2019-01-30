@@ -64,6 +64,8 @@ onValueChange(value: string) {
     specialties_id: specialty.id,
     specialties: this.state.specialties,
   });
+  console.log('selected', this.state.selected)
+  console.log('specialties_id:', specialty.id)
 }
 
 /***********************************/

@@ -16,7 +16,8 @@ import {
   Right,
   Body,
   Spinner,
-  Picker
+  Picker,
+  Form,
 } from 'native-base'
 
 import FooterMenu from '../elements/FooterMenu'
@@ -32,8 +33,30 @@ export default class Homepage extends Component {
     // userID: store.getState().user.id,
     userName: store.getState().user.fname,
     user: store.getState().user,
-    isLoggedIn: store.getState().isLoggedIn
+    isLoggedIn: store.getState().isLoggedIn,
+    errorMessage: '',
+    selected: '',
+    chosenCondition_id: '',
   }
+}
+
+/******************************/
+//onValueChange
+/*****************************/
+onValueChange(value: string) {
+  let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
+  console.log(chosen, chosen.id)
+  this.setState({
+    selected: value,
+    chosenCondition_id: chosen.id
+  })
+console.log('this.state.selected:', this.state.selected)
+console.log('this.state.chosenCondition_id', this.state.chosenCondition_id)
+  // store.setState({
+  //   selected: value,
+  //   doctorsConditions: chosenCondition,
+  // });
+  // console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
 }
 
 //Subscribe doctorsConditions state to the store to update on change
@@ -63,8 +86,74 @@ async componentDidMount(){
     specialtyConditions: specificConditions,
     isLoading: false,
   })
-  console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
+  // console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
 }
+
+//ADD SPECIALTY_CONDITION FUNCTION
+// async asyncTryAddCondition() {
+//   console.log("---------- asyncTryAddCondition(): ")
+//
+//   this.setState({
+//     errorMessage: '',
+//   })
+//
+// //POST request for doctorsConditions
+//   // router.post('/', validatePostBody, (req, res, next) => {
+//   //   const {id, doctors_id, conditions_id} = req.body
+//   const body = {
+//     doctors_id: this.state.user.id,
+//     conditions_id: this.state.chosenCondition.id,
+//   }
+//   const url = `${URI}/doctors_conditions`
+//
+//   try {
+//     // call login route
+//     const response = await fetch(url, {
+//       method: 'POST',
+//       body: JSON.stringify(body),
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Accept: 'application/json',
+//       },
+//     })
+//
+//     const responseJson = await response.json();
+//     // console.log(responseJson.doctor)
+//     //{id: 8, fname: sherman, lname: potter...}
+//
+//     // if the new account fails, display error message
+//     if (!response.ok) {
+//       console.log('==== ', response.status, responseJson);
+//       this.setState({
+//         errorMessage: responseJson.error,
+//       })
+//       return
+//     }
+//
+//     // new account succeeded!
+//     if(response.ok) {
+//       console.log('++++++++++++ new condition added!', responseJson)
+//       //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
+//       // store.setState({
+//       //   isLoggedIn: true,
+//       //   user: responseJson.doctor
+//       // })
+//       // console.log('*****store isLoggedIn', store.getState().isLoggedIn)
+//       // console.log('******store user', store.getState().user)
+//       // Actions.Homepage()
+//     }
+//
+//     // console.log("('==== new acct added!: ", responseJson);
+//     // store.setState({
+//     //   user: responseJson.user,
+//     //   isLoggedIn: true,
+//     // });
+//
+//   }
+//   catch(err) {
+//     console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+//   }
+// }
 
 
 
@@ -80,23 +169,15 @@ onPressButton = (name) => {
   Actions.ConditionsPage()
 }
 
+
+
 componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
 
 
-/******************************/
-//onValueChange
-/*****************************/
-onValueChange(value: string) {
-  let chosenCondition = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
-  store.setState({
-    selected: value,
-    doctorsConditions: chosenCondition,
-  });
-  console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
-}
+
 
 
 //DOCTORS CONDITONS BUTTON PULLED FROM render
@@ -149,6 +230,7 @@ onPressLogout = () => {
             (this.state.isLoading)
             ? <Spinner color='red' />
             :
+            <Form>
             <Picker
               mode="dropdown"
               iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
@@ -160,12 +242,14 @@ onPressLogout = () => {
               onValueChange={this.onValueChange.bind(this)}
               headerStyle={{ backgroundColor: "#2874F0" }}
               headerBackButtonTextStyle={{ color: "#fff" }}
-              headerTitleStyle={{ color: "#fff" }}>
+              headerTitleStyle={{ color: "#fff" }}
+              selectedValue={this.state.selected}>
 
               {this.state.specialtyConditions.map((specCond, idx) => (
                 <Picker.Item key={idx} label={specCond.name} value={specCond.name} id={specCond.id}/>
               ))}
             </Picker>
+          </Form>
           }
           <Button
             onPress={this.onPressLogout}
