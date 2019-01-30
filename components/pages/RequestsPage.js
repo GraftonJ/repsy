@@ -87,7 +87,7 @@ export default class RequestsPage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { this.viewAppointments() }} title='Current Appointments'>
+              onPress={() => { this.viewAppointments() }} title='Appointments'>
             </Button>
           </Right>
         </Header>
