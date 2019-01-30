@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, InputText, Alert, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, List, ListItem, Thumbnail, Left, Body, Right, Button } from 'native-base'
-
+import store, { URI } from '../../store'
 
 export default class RepsCard extends Component {
   constructor(props) {
@@ -23,7 +23,16 @@ export default class RepsCard extends Component {
                 </Body>
                 <Right>
                   <Button transparent>
-                    <Text>View</Text>
+                    <Text onPress={() => {
+                      store.setState({
+                        desired_info: {
+                          ...store.getState().desired_info,
+                          repIdx: index,
+                        }
+                      })
+                      Actions.RepDetail() }}>
+                      View
+                      </Text>
                   </Button>
                 </Right>
               </ListItem>

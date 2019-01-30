@@ -7,6 +7,8 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 // Accesses the store and api
 import { getMeds } from '../../utils/api'
+import { getRepsMed } from '../../utils/api'
+
 import store, { URI } from '../../store'
 
 // Imports the footer navbar at the bottom
@@ -18,6 +20,7 @@ export default class SelectedMedication extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      reps: store.getState().reps,
       meds: [],
       desired_info: store.getState().desired_info
     };
@@ -155,8 +158,20 @@ export default class SelectedMedication extends Component {
       Actions.pop()
     }
 
-    onPressScheduleButton = () => {
-      Actions.RepDetail()
+    async onPressScheduleButton(){
+      //Get the reps from the reps route
+        let repsList = []
+        repsList = await getRepsMed()
+      //Set the store state with the conditions. This should cause local state to update and re-render
+        store.setState({
+          reps: repsList,
+        })
+        if(store.getState().reps.length > 1) {
+          Actions.RepsList()
+        }
+        else {
+        Actions.RepDetail()
+      }
     }
 
   // * *********************************** * //

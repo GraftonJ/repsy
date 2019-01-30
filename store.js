@@ -46,7 +46,8 @@ let state = {
     generic_name: '',
     brand_name: '',
     label: '',
-    linkkey: ''
+    linkkey: '',
+    repIdx: null
   },
 
   //Gets the conditions to list on the homepage
