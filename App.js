@@ -15,6 +15,7 @@ import ClinicalData from './components/pages/ClinicalDataPage'
 import RequestsPage from './components/pages/RequestsPage'
 import SelectedMedication from './components/pages/SelectedMedication'
 import MedsLibrary from './components/pages/MedsLibrary'
+import RepDetail from './components/pages/RepDetail'
 
 export default class App extends Component {
 
@@ -28,7 +29,8 @@ export default class App extends Component {
     <Root>
       <Router>
         <Scene key="root" hideNavBar= "false">
-          <Scene key="FirstPage" component={FirstPage} initial />
+          <Scene key="FirstPage" component={FirstPage}  />
+          <Scene key="RepDetail" component={RepDetail}  initial/>
           <Scene key="Homepage" component={Homepage} />
           <Scene key="RepsList" component={RepsList} />
           <Scene key="Loginpage" component={Loginpage}/>

@@ -30,7 +30,7 @@ let state = {
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],
 
-  //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call
+  //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call. id is med id.
   med_reps: {
     id: 1,
     generic_name: 'Ibuprofen',
