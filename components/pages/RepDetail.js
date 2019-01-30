@@ -68,9 +68,18 @@ componentWillUnmount(){
         <Container>
           <Header>
             <Left>
-              <Text>Hello</Text>
+              <Button
+                onPress={() => { Actions.pop() }}
+                transparent
+              >
+                <Icon name="arrow-back" />
+              </Button>
             </Left>
             <Body>
+              <Text style={{fontSize: 17, fontWeight: 'bold', textAlign: 'center'}}>
+                {reps[0].brand_name}
+              </Text>
+              <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[0].generic_name})</Text>
             </Body>
             <Right>
             </Right>
