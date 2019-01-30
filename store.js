@@ -52,7 +52,8 @@ let state = {
 
   //Store all the bookings
   items: [],
-  calender: {}
+  calendarBookings: {},
+  calendarResources: {}
 };
 
 

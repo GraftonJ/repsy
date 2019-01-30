@@ -92,27 +92,35 @@ export const getBookings = async () => {
       disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
     })
 
-    const res = await timekit.include('attributes').getBookings()
-    let calenderData = {}
+    const getResources = await timekit.getResources()
+    let resources = getResources.data
+    console.log('resources', resources)
+
+    const getBookings = await timekit.include('attributes').getBookings()
+    let calendarData = {}
+
     const timeToString = (time) => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
     }
-    res.data.forEach((x) => {
+
+    getBookings.data.forEach((x) => {
       let event = x.attributes.event
       const date = timeToString(event.start)
 
       // Cycles through and creates the objects for the timekit according
       // to the timekits desired format: {'Year-Month-Day': [{name: "Description"}]'}
-      if (!calenderData[date]) {
-        calenderData[date] = [{ name: `${event.what}` }]
+      if (!calendarData[date]) {
+        calendarData[date] = [{ name: `${event.what}` }]
       } else {
-        calenderData[date].push({ name: `${event.what}` })
+        calendarData[date].push({ name: `${event.what}` })
       }
     })
+
     store.setState({
-      items: res.data,
-      calender: calenderData
+      items: getBookings.data,
+      calendarBookings: calendarData,
+      calendarResources: resources
     })
   } catch (error) {
     console.log(error)
