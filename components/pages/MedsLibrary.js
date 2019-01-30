@@ -20,7 +20,10 @@ export default class MedsLibrary extends Component {
       desired_info: store.getState().desired_info,
       isLoading: true,
       meds: [],
-      med_selected: true
+      med_selected: true,
+      medication_tab: true,
+      generic_checker: true,
+      brand_checker: false
     };
   }
 
@@ -34,6 +37,11 @@ export default class MedsLibrary extends Component {
       this.setState({
         desired_info: store.getState().desired_info
       })
+    })
+    this.state.meds.sort(function(a, b){
+      if(a.generic_name < b.generic_name) { return -1; }
+      if(a.generic_name > b.generic_name) { return 1; }
+      return 0;
     })
     this.setState({
       isLoading: false,
@@ -68,19 +76,29 @@ export default class MedsLibrary extends Component {
     switch(bool) {
       case true:
         this.state.meds.sort(function(a, b){
-          if(a.generic_name < b.generic_name) { return -1; }
-          if(a.generic_name > b.generic_name) { return 1; }
-          return 0;
-        })
-        this.state.med_selected = false
-        break;
-      case false:
-        this.state.meds.sort(function(a, b){
           if(a.brand_name < b.brand_name) { return -1; }
           if(a.brand_name > b.brand_name) { return 1; }
           return 0;
         })
-        this.state.med_selected = true
+        this.setState({
+          medication_tab: false,
+          generic_checker: false,
+          brand_checker: true
+        })
+        console.log("I called it false")
+        break;
+      case false:
+        this.state.meds.sort(function(a, b){
+          if(a.generic_name < b.generic_name) { return -1; }
+          if(a.generic_name > b.generic_name) { return 1; }
+          return 0;
+        })
+        this.setState({
+          medication_tab: true,
+          generic_checker: true,
+          brand_checker: false
+        })
+        console.log("I called it true")
         break;
       }
     }
@@ -90,12 +108,6 @@ export default class MedsLibrary extends Component {
 
   // * *********************************** * //
   render() {
-
-    this.state.meds.sort(function(a, b){
-      if(a.generic_name < b.generic_name) { return -1; }
-      if(a.generic_name > b.generic_name) { return 1; }
-      return 0;
-    })
 
     //Show loading spinner if fetching data
     if(this.state.isLoading){
@@ -118,16 +130,16 @@ export default class MedsLibrary extends Component {
         </Header>
 
         <Segment>
-          <Button active first onPress={() => this.tabSwitch(false) }>
+          <Button first active={this.state.generic_checker} onPress={() => this.tabSwitch(false) }>
             <Text>Generic Name</Text>
           </Button>
-          <Button last onPress={() => this.tabSwitch(true) }>
+          <Button last active={this.state.brand_checker} onPress={() => this.tabSwitch(true) }>
             <Text>Brand Name</Text>
           </Button>
         </Segment>
 
-        <Content>
-        {this.state.med_selected ?
+        <Content padder>
+        {this.state.medication_tab ?
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
@@ -141,7 +153,7 @@ export default class MedsLibrary extends Component {
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
-                <TouchableOpacity onPress={() => this.onPressButton(med.brand_name, med.brand_name)}>
+                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name)}>
                   <Text>{med.brand_name}</Text>
                 </TouchableOpacity>
               </ListItem>
