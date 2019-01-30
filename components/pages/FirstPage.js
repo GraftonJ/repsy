@@ -136,7 +136,9 @@ onPressLogin = async () => {
     Actions.Homepage()
   }
   else{
-    Alert.alert('please fill out all fields')
+    this.setState({
+      isLoading: false
+    })
   }
 }
 

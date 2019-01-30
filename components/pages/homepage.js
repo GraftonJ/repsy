@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, Alert} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
-import { getDoctorsConditions } from '../../utils/api'
+import { getDoctorsConditions, getConditions } from '../../utils/api'
 import {
   Container,
   Header,
@@ -16,6 +16,7 @@ import {
   Right,
   Body,
   Spinner,
+  Picker
 } from 'native-base'
 
 import FooterMenu from '../elements/FooterMenu'
@@ -24,6 +25,7 @@ export default class Homepage extends Component {
   constructor(props) {
   super(props);
   this.state = {
+    specialtyConditions: [],
     doctorsConditions: store.getState().doctorsConditions,
     desired_info: store.getState().desired_info,
     isLoading: true,
@@ -52,10 +54,21 @@ async componentDidMount(){
   store.setState({
     doctorsConditions: conditions,
   })
+
+  // get all conditions
+  let conditionsList = []
+  conditionsList = await getConditions()
+  let specificConditions = conditionsList.filter(condition => condition.specialties_id === this.state.user.specialties_id)
   this.setState({
+    specialtyConditions: specificConditions,
     isLoading: false,
   })
+  console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
 }
+
+
+
+
 
 // * *********************************** * //
 onPressButton = (name) => {
@@ -71,6 +84,38 @@ componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
+
+
+/******************************/
+//onValueChange
+/*****************************/
+onValueChange(value: string) {
+  let chosenCondition = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
+  store.setState({
+    selected: value,
+    doctorsConditions: chosenCondition,
+  });
+  console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
+}
+
+
+//DOCTORS CONDITONS BUTTON PULLED FROM render
+// this.state.doctorsConditions.map((condition, idx) => (
+//   <Button
+//     style={styles.button}
+//     key={idx} conditionId={condition.id}
+//     rounded style={styles.button}
+//     onPress={() => this.onPressButton(condition.name)}>
+//     <Text style={styles.buttonText}>{condition.name}</Text>
+//   </Button>
+// ))
+
+
+
+
+
+
+
 
 //******************************/
 //onPress logout
@@ -103,15 +148,24 @@ onPressLogout = () => {
           { //Check if state is loading to show spinner
             (this.state.isLoading)
             ? <Spinner color='red' />
-            : this.state.doctorsConditions.map((condition, idx) => (
-              <Button
-                style={styles.button}
-                key={idx} conditionId={condition.id}
-                rounded style={styles.button}
-                onPress={() => this.onPressButton(condition.name)}>
-                <Text style={styles.buttonText}>{condition.name}</Text>
-              </Button>
-            ))
+            :
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+              style={{ width: undefined }}
+              placeholder="Select Conditions of Interest"
+              placeholderStyle={{ color: "rgb(79, 79, 78)" }}
+              note={false}
+              selectedValue={this.state.selected}
+              onValueChange={this.onValueChange.bind(this)}
+              headerStyle={{ backgroundColor: "#2874F0" }}
+              headerBackButtonTextStyle={{ color: "#fff" }}
+              headerTitleStyle={{ color: "#fff" }}>
+
+              {this.state.specialtyConditions.map((specCond, idx) => (
+                <Picker.Item key={idx} label={specCond.name} value={specCond.name} id={specCond.id}/>
+              ))}
+            </Picker>
           }
           <Button
             onPress={this.onPressLogout}
