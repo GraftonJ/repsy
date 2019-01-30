@@ -1,8 +1,18 @@
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { Router, Scene } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Root } from 'native-base'
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  Root,
+} from 'native-base';
 
 import FirstPage from './components/pages/FirstPage'
 import RepsList from './components/pages/RepsList'
@@ -19,7 +29,7 @@ import RepDetail from './components/pages/RepDetail'
 
 export default class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {}
   }
