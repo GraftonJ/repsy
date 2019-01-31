@@ -1,6 +1,6 @@
 // React Native and Native modules for page
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
+import {Alert, Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Text, Picker, Form, Icon } from 'native-base'
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -158,29 +158,38 @@ export default class SelectedMedication extends Component {
       Actions.pop()
     }
 
-    async onPressScheduleButton(){
-      //Get the reps from the reps route
-        let repsList = []
-        repsList = await getRepsMed()
-      //Set the store state with the conditions. This should cause local state to update and re-render
-        store.setState({
-          reps: repsList,
-        })
-      //Check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet
-        if(store.getState().reps.length > 1) {
-          Actions.RepsList()
-        }
-        else {
-          console.log('ELSE SELECTED MED STATEMENT>>>>>>');
-        //Set the repIdx in the store to 0 since there is only one rep in the array
-        store.setState({
-          desired_info: {
+    //Helper function to check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet. If no reps, Alert.
+    checkReps = () => {
+      let availReps = store.getState().reps.length
+      if(!availReps){
+        Alert.alert('Sorry, None Available')
+      }
+      else if(availReps > 1) {
+        Actions.RepsList()
+      }
+      else {
+        console.log('ELSE SELECTED MED STATEMENT>>>>>>');
+      //Set the repIdx in the store to 0 since there is only one rep in the array
+      store.setState({
+        desired_info: {
           ...store.getState().desired_info,
           repIdx: 0,
           }
         })
-        Actions.RepDetail()
+      Actions.RepDetail()
       }
+    }
+
+    async onPressScheduleButton(){
+      //Get the reps from the reps route
+      let repsList = []
+      repsList = await getRepsMed()
+      //Set the store state with the conditions. This should cause local state to update and re-render
+      store.setState({
+        reps: repsList,
+      })
+      //Check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet
+      this.checkReps()
     }
 
   // * *********************************** * //
