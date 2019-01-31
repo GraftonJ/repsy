@@ -35,7 +35,9 @@ export default class MedsLibrary extends Component {
     this.setState({meds: json})
     this.unsubscribe = store.onChange(() => {
       this.setState({
-        desired_info: store.getState().desired_info
+        desired_info: {
+        ...store.getState().desired_info,
+        }
       })
     })
     this.state.meds.sort(function(a, b){
@@ -45,6 +47,13 @@ export default class MedsLibrary extends Component {
     })
     this.setState({
       isLoading: false,
+    })
+    //Reset the rep index to 0 incase the treatment footer is clicked from a rep with a different index number
+    store.setState({
+      desired_info: {
+        ...store.getState().desired_info,
+        repIdx: 0,
+      }
     })
   }
 
