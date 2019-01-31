@@ -31,7 +31,23 @@ export default class RequestsPage extends Component {
       calendarBookings: store.getState().calendarBookings,
       calendarResources: store.getState().calendarResources,
       isLookingForAppointment: false,
-      chosenDate: currentDate
+      chosenDate: currentDate,
+      bookingRequest: {
+        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+        graph: 'confirm_decline',
+        start: '2019-02-10T21:30:00-06:00',
+        end: '2019-02-10T22:15:00-07:00',
+        what: 'NEW BOOKING',
+        where: 'Courthouse, Hill Valley, CA 95420, USA',
+        description: 'New booking TEST',
+        customer: {
+          name: 'Jimbo Martins',
+          email: 'tarmstrong1327@gmail.com',
+          phone: '(916) 555-4385',
+          voip: 'McFly',
+          timezone: 'America/Los_Angeles'
+        }
+      }
     }
   }
 
@@ -81,35 +97,12 @@ export default class RequestsPage extends Component {
     this.setState({ chosenDate: newDate });
   }
 
+  //***************************************
   createNewBookingRequest = async () => {
-    console.log("Dummy Request Was Hit")
     try {
-      timekit.configure({
-        // app: 'test-repsy-3078',
-        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
-        // Optional
-        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
-        // el: '#bookingjs', // Which element should we the library load into
-        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
-        debug: true, // Enable debugging mode to output useful state/step data in the console
-        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
-      })
-      timekit.createBooking({
-        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
-        graph: 'confirm_decline',
-        start: '2019-02-10T21:30:00-06:00',
-        end: '2019-02-10T22:15:00-07:00',
-        what: 'NEW BOOKING',
-        where: 'Courthouse, Hill Valley, CA 95420, USA',
-        description: 'New booking TEST',
-        customer: {
-          name: 'Jimbo Martins',
-          email: 'tarmstrong1327@gmail.com',
-          phone: '(916) 555-4385',
-          voip: 'McFly',
-          timezone: 'America/Los_Angeles'
-        }
-      }).then(function (response) {
+      timekit.createBooking(
+        this.state.bookingRequest
+      ).then(function (response) {
         console.log("WORKED +++> ", response);
       }).catch(function (response) {
         console.log("DIED +++> ", response);
@@ -117,6 +110,8 @@ export default class RequestsPage extends Component {
     } catch (error) {
       console.log(error)
     }
+
+    this.viewAppointments()
   }
 
   render() {
@@ -127,7 +122,7 @@ export default class RequestsPage extends Component {
     } = this.state
 
     // this.createNewBookingRequest()
-    
+
     return (
       <Container>
         <Header>
@@ -210,10 +205,8 @@ export default class RequestsPage extends Component {
       <Footer>
           {
             (this.state.isLookingForAppointment)
-              ? <View>
-                  <Button onPress={() => this.requestAppointment()} title="Submit New Request" /> 
-                </View> : 
-                <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+              ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request" />
+              : <Button onPress={() => this.requestAppointment()} title="Create New Request" />
           }
       </Footer>
       </Container>
@@ -288,5 +281,3 @@ const styles = StyleSheet.create({
     paddingTop: 30
   }
 })
-
-
