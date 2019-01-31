@@ -82,6 +82,7 @@ async getDocConditions () {
     })
 }
 
+
 //Subscribe doctorsConditions state to the store to update on change
 async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
@@ -94,13 +95,6 @@ async componentDidMount(){
     })
   })
 
-// //Get the conditions from the doctors_conditions route
-//   let conditions = []
-//   conditions = await getDoctorsConditions()
-// //Set the store state with the conditions. This should cause local state to update and re-render
-//   store.setState({
-//     doctorsConditions: conditions,
-//   })
 this.getDocConditions()
 
   // get all conditions
@@ -114,6 +108,14 @@ this.getDocConditions()
   // console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
 }
 
+
+// conditions_id: store.getState().addedCondition.id
+// checkAddedCondition() {
+  //get doctorsConditions array from the store
+  //check to see if addedCondition.id is in that array
+  //if it is, throw an error
+// }
+
 //ADD SPECIALTY_CONDITION FUNCTION
 async asyncTryAddCondition() {
   console.log("---------- asyncTryAddCondition(): ")
@@ -121,6 +123,16 @@ async asyncTryAddCondition() {
   this.setState({
     errorMessage: '',
   })
+
+let existing = this.state.doctorsConditions.filter(condition => condition.id === store.getState().addedCondition.id)
+if(existing) {
+  console.log('condition has already been added')
+  Alert.alert('You have already chosen this condition')
+  return
+}
+  //get doctorsConditions array from the store
+  //check to see if addedCondition.id is in that array
+  //if it is, throw an error
 
 //POST request for doctorsConditions
   // router.post('/', validatePostBody, (req, res, next) => {
