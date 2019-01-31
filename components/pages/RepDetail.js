@@ -62,7 +62,7 @@ componentWillUnmount(){
     const { reps, desired_info } = this.state
     if(this.state.isLoading) {
       return (
-        <Spinner color='red' />
+        <Spinner color='red' style={styles.spinner}/>
       )
     }
     else {
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
     },
     scheduleButton: {
       marginTop: 10,
+    },
+    spinner: {
+      height: height
     }
 
 });
