@@ -88,9 +88,15 @@ export default class RequestsPage extends Component {
   }
 
   onResourceValueChange(value: string) {
-    this.setState({
-      bookingRequest: { resource_id: value }
-    });
+    // this.setState({
+    //   selectedResource: value
+    // });
+      this.setState({
+        bookingRequest: {
+          ...this.state.bookingRequest,
+          resource_id: value
+        }
+      })
   }
 
   setDate(newDate) {
@@ -183,11 +189,11 @@ export default class RequestsPage extends Component {
                       placeholder="Who do you want to Book?"
                       placeholderStyle={{ color: "#bfc6ea" }}
                       placeholderIconColor="#007aff"
-                      selectedValue={this.state.selectedResource}
+                      selectedValue={this.state.bookingRequest.resource_id}
                       onValueChange={this.onResourceValueChange.bind(this)}
                     >
                     {calendarResources.map((x, idx) => {
-                      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
+                      return <Picker.Item key={idx} label={x.first_name + ' ' + x.last_name} value={x.id} id={x.id} />
                     })}
                 </Picker>
                 </Item>
