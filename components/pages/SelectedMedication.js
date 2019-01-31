@@ -52,6 +52,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressDosing()');
     store.setState({
       desired_info: {
+        ...store.getState().desired_info,
         label: 'Dosing',
         linkkey: 'dosing'
       }
@@ -66,9 +67,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressTrialDesign()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Trial Design',
         linkkey: 'trial_design'
       }
@@ -83,9 +82,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressEfficacy()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Efficacy',
         linkkey: 'efficacy'
       }
@@ -100,9 +97,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressMechanismOfAction()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Mechanism of Action',
         linkkey: 'mechanism_of_action'
       }
@@ -117,9 +112,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressPatientTypes()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Patient Types',
         linkkey: 'patient_types'
       }
@@ -134,9 +127,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressSafety()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Safety',
         linkkey: 'safety'
       }
@@ -148,11 +139,7 @@ export default class SelectedMedication extends Component {
     onPressBackButton = () => {
       store.setState({
         desired_info: {
-          condition_name: store.getState().desired_info.condition_name,
-          generic_name: store.getState().desired_info.generic_name,
-          brand_name: store.getState().desired_info.brand_name,
-          label: store.getState().desired_info.label,
-          linkkey: store.getState().desired_info.linkkey
+          ...store.getState().desired_info,
         }
       });
       Actions.pop()
