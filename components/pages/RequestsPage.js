@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon } from 'native-base'
+import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon, DatePicker } from 'native-base'
 import { WebView } from 'react-native-webview'
 import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
 import { getBookings } from '../../utils/api'
@@ -31,6 +31,7 @@ export default class RequestsPage extends Component {
       calendarBookings: store.getState().calendarBookings,
       calendarResources: store.getState().calendarResources,
       isLookingForAppointment: false,
+      chosenDate: currentDate
     }
   }
 
@@ -76,14 +77,56 @@ export default class RequestsPage extends Component {
     });
   }
 
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
+  }
+
+  createNewBookingRequest = async () => {
+    console.log("Dummy Request Was Hit")
+    try {
+      timekit.configure({
+        // app: 'test-repsy-3078',
+        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+        // Optional
+        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+        // el: '#bookingjs', // Which element should we the library load into
+        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
+        debug: true, // Enable debugging mode to output useful state/step data in the console
+        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
+      })
+      timekit.createBooking({
+        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+        graph: 'confirm_decline',
+        start: '2019-02-10T21:30:00-06:00',
+        end: '2019-02-10T22:15:00-07:00',
+        what: 'NEW BOOKING',
+        where: 'Courthouse, Hill Valley, CA 95420, USA',
+        description: 'New booking TEST',
+        customer: {
+          name: 'Jimbo Martins',
+          email: 'tarmstrong1327@gmail.com',
+          phone: '(916) 555-4385',
+          voip: 'McFly',
+          timezone: 'America/Los_Angeles'
+        }
+      }).then(function (response) {
+        console.log("WORKED +++> ", response);
+      }).catch(function (response) {
+        console.log("DIED +++> ", response);
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
     const {
-      calendarBookings
+      calendarBookings,
+      calendarResources,
+      chosenDate
     } = this.state
 
-    let resourcesForCalendar = store.getState().calendarResources.map((x, idx) => {
-      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
-    })
+    // this.createNewBookingRequest()
     
     return (
       <Container>
@@ -114,7 +157,7 @@ export default class RequestsPage extends Component {
                 </Item>
                 <Item floatingLabel last>
                   <Label>Password</Label>
-                  <Input />
+                  <Input secureTextEntry/>
                 </Item>
                 <Item picker>
                     <Picker
@@ -127,9 +170,28 @@ export default class RequestsPage extends Component {
                       selectedValue={this.state.selectedResource}
                       onValueChange={this.onResourceValueChange.bind(this)}
                     >
-                    {resourcesForCalendar}
+                    {calendarResources.map((x, idx) => {
+                      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
+                    })}
                 </Picker>
-                </Item> 
+                </Item>
+                 <Item>
+                  <DatePicker
+                    defaultDate={currentDate}
+                    locale={"en"}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    placeHolderText={currentDate + 'or Select Date'}
+                    textStyle={{ color: "green" }}
+                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    onDateChange={this.setDate.bind(this)}
+                    disabled={false}
+                  />
+                  {console.log('selectedResource', this.state.selectedResource)}
+                  {console.log('chosenDate', chosenDate)}
+                  {console.log('this.state', this.state)}
+                 </Item>
               </Form>
             </Content>
             : <Agenda
@@ -145,7 +207,6 @@ export default class RequestsPage extends Component {
               }}
             />
         }
-
       <Footer>
           <Button onPress={() => this.requestAppointment()} title="Create New Request" />
       </Footer>
