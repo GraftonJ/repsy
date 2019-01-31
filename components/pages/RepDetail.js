@@ -52,6 +52,7 @@ async componentDidMount(){
 }
 // * *********************************** * //
 componentWillUnmount(){
+  store.setState()
   //disconnect from store notifications
   this.unsubscribe()
 }
