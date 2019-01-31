@@ -70,15 +70,21 @@ export default class RequestsPage extends Component {
     this.unsubscribe()
   }
 
+  onResourceValueChange(value: string) {
+    this.setState({
+      selectedResource: value
+    });
+  }
+
   render() {
     const {
-      calendarBookings,
-      calendarResources
+      calendarBookings
     } = this.state
 
-    // const PickerInformation = (calendarResources) => {
-
-    // }
+    let resourcesForCalendar = store.getState().calendarResources.map((x, idx) => {
+      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
+    })
+    
     return (
       <Container>
         <Header>
@@ -109,7 +115,8 @@ export default class RequestsPage extends Component {
                 <Item floatingLabel last>
                   <Label>Password</Label>
                   <Input />
-                </Item> 
+                </Item>
+                <Item picker>
                     <Picker
                       mode="dropdown"
                       iosIcon={<Icon name="arrow-down" />}
@@ -117,12 +124,12 @@ export default class RequestsPage extends Component {
                       placeholder="Who do you want to Book?"
                       placeholderStyle={{ color: "#bfc6ea" }}
                       placeholderIconColor="#007aff"
-                      selectedValue={this.state.selected}
-                    // onValueChange={this.onValueChange2.bind(this)}
+                      selectedValue={this.state.selectedResource}
+                      onValueChange={this.onResourceValueChange.bind(this)}
                     >
-                  <Picker.Item label="Wallet" value="key0" />
-                 
+                    {resourcesForCalendar}
                 </Picker>
+                </Item> 
               </Form>
             </Content>
             : <Agenda
@@ -175,7 +182,17 @@ export default class RequestsPage extends Component {
 // Variables to change the height and width dynamically for all screens
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
+
+
+//  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+//  const strTime = this.timeToString(time);
 let currentDate = new Date()
+// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
+// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
+// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
+// const workout = { key: 'workout', color: 'red' };
 
 const htmlContent = `
       <div id="bookingjs"></div>
@@ -188,7 +205,6 @@ const htmlContent = `
           }
       </script>
     `
-
 
 const styles = StyleSheet.create({
   item: {
@@ -207,12 +223,3 @@ const styles = StyleSheet.create({
 })
 
 
-
-//  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-//  const strTime = this.timeToString(time);
-// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-// const workout = { key: 'workout', color: 'red' };

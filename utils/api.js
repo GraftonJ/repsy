@@ -126,6 +126,13 @@ export const getBookings = async () => {
   }
 }
 
+// // GET resources
+// export const getResources = async () => {
+//   const getResources = await timekit.getResources()
+//   let resources = getResources.data
+//   return resources
+// }
+
 // //GET bookings that a doctor or rep has made
 // export const getABooking = async () => {
 //   try {
