@@ -160,7 +160,7 @@ onPressLogin = async () => {
             <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
-        <Content>
+        <Content scrollEnabled={false}>
           <Image style={styles.image} source={require('../../medicalStaff.png')} />
           <Text style={styles.repsyH1}>REPSY</Text>
           <Text style={styles.h2}>Connecting Doctors & Reps</Text>

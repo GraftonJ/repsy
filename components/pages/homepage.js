@@ -48,29 +48,24 @@ export default class Homepage extends Component {
 onValueChange (value: string) {
   let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
   // console.log(chosen, chosen.id)
-  store.setState({
-    addedCondition: chosen,
-    selected: value,
-  })
+  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === chosen.name)
+
+  if(duplicate) {
+    store.setState({
+      addedCondition: null,
+      selected: '',
+    })
+  }
+
+  if(!duplicate) {
+    store.setState({
+      addedCondition: chosen,
+      selected: value,
+    })
 console.log('store.getState().addedCondition:', store.getState().addedCondition)
 console.log('this.state.user.id', this.state.user.id)
-
-  // store.setState({
-  //   selected: value,
-  //   doctorsConditions: chosenCondition,
-  // });
-  // console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
+  }
 }
-// const doctorConditions = async() => {
-//   // get all conditions
-//   let conditionsList = []
-//   conditionsList = await getConditions()
-//   let specificConditions = conditionsList.filter(condition => condition.specialties_id === this.state.user.specialties_id)
-//   this.setState({
-//     specialtyConditions: specificConditions,
-//     isLoading: false,
-//   })
-// }
 
 async getDocConditions () {
   //Get the conditions from the doctors_conditions route
@@ -81,6 +76,7 @@ async getDocConditions () {
       doctorsConditions: conditions,
     })
 }
+
 
 //Subscribe doctorsConditions state to the store to update on change
 async componentDidMount(){
@@ -94,13 +90,6 @@ async componentDidMount(){
     })
   })
 
-// //Get the conditions from the doctors_conditions route
-//   let conditions = []
-//   conditions = await getDoctorsConditions()
-// //Set the store state with the conditions. This should cause local state to update and re-render
-//   store.setState({
-//     doctorsConditions: conditions,
-//   })
 this.getDocConditions()
 
   // get all conditions
@@ -114,6 +103,14 @@ this.getDocConditions()
   // console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
 }
 
+
+// conditions_id: store.getState().addedCondition.id
+// checkAddedCondition() {
+  //get doctorsConditions array from the store
+  //check to see if addedCondition.id is in that array
+  //if it is, throw an error
+// }
+
 //ADD SPECIALTY_CONDITION FUNCTION
 async asyncTryAddCondition() {
   console.log("---------- asyncTryAddCondition(): ")
@@ -121,6 +118,12 @@ async asyncTryAddCondition() {
   this.setState({
     errorMessage: '',
   })
+
+
+
+  //get doctorsConditions array from the store
+  //check to see if addedCondition.id is in that array
+  //if it is, throw an error
 
 //POST request for doctorsConditions
   // router.post('/', validatePostBody, (req, res, next) => {
@@ -189,8 +192,8 @@ onPressButton = (name) => {
 //on press for added condition to database
 onPressAddCondition = async () => {
   console.log('condition added to the DB!')
+    await this.asyncTryAddCondition()
 
-  await this.asyncTryAddCondition()
 }
 
 
@@ -199,27 +202,6 @@ componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
-
-
-
-
-
-//DOCTORS CONDITONS BUTTON PULLED FROM render
-// this.state.doctorsConditions.map((condition, idx) => (
-//   <Button
-//     style={styles.button}
-//     key={idx} conditionId={condition.id}
-//     rounded style={styles.button}
-//     onPress={() => this.onPressButton(condition.name)}>
-//     <Text style={styles.buttonText}>{condition.name}</Text>
-//   </Button>
-// ))
-
-
-
-
-
-
 
 
 //******************************/
