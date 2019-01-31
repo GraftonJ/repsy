@@ -52,6 +52,10 @@ let state = {
   //Gets the conditions to list on the homepage
   doctorsConditions: [],
 
+  //gets specified conditions
+  addedCondition: null,
+  selected: '',
+
   //Store all the bookings
   items: [],
   calender: {}

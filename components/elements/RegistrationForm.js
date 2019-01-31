@@ -59,11 +59,13 @@ export default class ConditionsPage extends Component {
 */
 onValueChange(value: string) {
   let specialty = this.state.specialties.find(specialty => specialty.name === value)
-  this.setState({
+  store.setState({
     selected: value,
     specialties_id: specialty.id,
     specialties: this.state.specialties,
   });
+  console.log('selected', this.state.selected)
+  console.log('specialties_id:', specialty.id)
 }
 
 /***********************************/

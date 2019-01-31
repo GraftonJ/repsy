@@ -135,6 +135,11 @@ onPressLogin = async () => {
     // })
     Actions.Homepage()
   }
+  else{
+    this.setState({
+      isLoading: false
+    })
+  }
 }
 
 
