@@ -169,7 +169,7 @@ onpressSubmit = async () => {
              headerStyle={{ backgroundColor: "#2874F0" }}
              headerBackButtonTextStyle={{ color: "#fff" }}
              headerTitleStyle={{ color: "#fff" }}
-             selectedValue={this.state.selected}>
+             selectedValue={store.getState().selectedSpecialty}>
              {this.state.specialties.map((specialty, idx) => (
                <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
              ))}
