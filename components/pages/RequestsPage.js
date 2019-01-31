@@ -210,10 +210,8 @@ export default class RequestsPage extends Component {
       <Footer>
           {
             (this.state.isLookingForAppointment)
-              ? <View>
-                  <Button onPress={() => this.requestAppointment()} title="Submit New Request" /> 
-                </View> : 
-                <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+              ? <Button onPress={() => this.requestAppointment()} title="Submit New Request" /> 
+              : <Button onPress={() => this.requestAppointment()} title="Create New Request" />
           }
       </Footer>
       </Container>
