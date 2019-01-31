@@ -171,6 +171,14 @@ export default class SelectedMedication extends Component {
           Actions.RepsList()
         }
         else {
+          console.log('ELSE SELECTED MED STATEMENT>>>>>>');
+        //Set the repIdx in the store to 0 since there is only one rep in the array
+        store.setState({
+          desired_info: {
+          ...store.getState().desired_info,
+          repIdx: 0,
+          }
+        })
         Actions.RepDetail()
       }
     }
