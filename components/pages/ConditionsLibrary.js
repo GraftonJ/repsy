@@ -44,11 +44,8 @@ export default class ConditionsLibrary extends Component {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
+        ...store.getState().desired_info,
         condition_name: condition,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
-        label: store.getState().desired_info.label,
-        linkkey: store.getState().desired_info.linkkey
       }
     });
     Actions.ConditionsPage()

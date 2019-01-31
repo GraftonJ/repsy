@@ -31,6 +31,10 @@ export default class RepsList extends Component {
   }
 }
 
+onPressView(){
+  Action.RepDetail()
+}
+
 //Subscribe doctorsConditions state to the store to update on change
 async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
@@ -62,7 +66,12 @@ render() {
     <Container>
       <Header>
         <Left>
-          <Text>Hello </Text>
+          <Button
+            onPress={() => { Actions.pop() }}
+            transparent
+          >
+            <Icon name="arrow-back" />
+          </Button>
         </Left>
         <Body>
         </Body>
@@ -78,6 +87,7 @@ render() {
             index={idx}
             key={idx}
             reps={reps}
+            id={reps.id}
             />
           ))
         }

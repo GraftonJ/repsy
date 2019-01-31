@@ -25,6 +25,7 @@ export default class RepDetail extends Component {
   super(props);
   this.state = {
     reps: store.getState().reps,
+    desired_info: store.getState().desired_info,
     isLoading: true,
   }
 }
@@ -33,7 +34,8 @@ export default class RepDetail extends Component {
 async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
-      reps: store.getState().reps
+      reps: store.getState().reps,
+      desired_info: store.getState().desired_info
     })
   })
 //Get the reps from the reps route
@@ -57,10 +59,10 @@ componentWillUnmount(){
 //******************************/
 
   render() {
-    const { reps } = this.state
+    const { reps, desired_info } = this.state
     if(this.state.isLoading) {
       return (
-        <Spinner color='red' />
+        <Spinner color='red' style={styles.spinner}/>
       )
     }
     else {
@@ -79,7 +81,7 @@ componentWillUnmount(){
               <Text style={{fontSize: 17, fontWeight: 'bold', textAlign: 'center'}}>
                 {reps[0].brand_name}
               </Text>
-              <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[0].generic_name})</Text>
+              <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[desired_info.repIdx].generic_name})</Text>
             </Body>
             <Right>
             </Right>
@@ -87,16 +89,16 @@ componentWillUnmount(){
           <Content>
             <Image
               style={{width: '100%', height: 300}}
-              source={{uri: `${reps[0].reps_photo}`}}
+              source={{uri: `${reps[desired_info.repIdx].reps_photo}`}}
             />
             <Text style={styles.repName}>
-              {reps[0].fname} {reps[0].lname}
+              {reps[0].fname} {reps[desired_info.repIdx].lname}
             </Text>
             <Text style={styles.companyName}>
-              Representative for {reps[0].company}
+              Representative for {reps[desired_info.repIdx].company}
             </Text>
             <Text style={styles.pharma}>
-              Expertise including {reps[0].brand_name} ({reps[0].generic_name})
+              Expertise including {reps[desired_info.repIdx].brand_name} ({reps[desired_info.repIdx].generic_name})
             </Text>
             <Text style={styles.credentials}>
               Summary
@@ -155,6 +157,9 @@ const styles = StyleSheet.create({
     },
     scheduleButton: {
       marginTop: 10,
+    },
+    spinner: {
+      height: height
     }
 
 });
