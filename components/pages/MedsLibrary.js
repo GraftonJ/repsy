@@ -51,15 +51,14 @@ export default class MedsLibrary extends Component {
   // * *********************************** * //
   // Function that handels a button press of one of the drugs.  Passes that to the
   // desired_info object in the store.  Needs to keep condition name, so that is passed
-  onPressButton = (genericName, brandName) => {
+  onPressButton = (genericName, brandName, med_id) => {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
+        ...store.getState().desired_info,
         generic_name: genericName,
+        med_id: med_id,
         brand_name: brandName,
-        label: store.getState().desired_info.label,
-        linkkey: store.getState().desired_info.linkkey
       }
     });
     Actions.SelectedMedication()
@@ -143,7 +142,7 @@ export default class MedsLibrary extends Component {
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
-                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name)}>
+                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name, med.id)}>
                   <Text>{med.generic_name}</Text>
                 </TouchableOpacity>
               </ListItem>
@@ -153,7 +152,7 @@ export default class MedsLibrary extends Component {
           <List>
             {this.state.meds.map((med, idx) => (
               <ListItem key={idx}>
-                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name)}>
+                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name, med.id)}>
                   <Text>{med.brand_name}</Text>
                 </TouchableOpacity>
               </ListItem>
