@@ -30,6 +30,10 @@ let state = {
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],
 
+  //sets value of dropdown on registration form
+  selectedSpecialty: '',
+  selectedSpecialty_id: '',
+
   //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call. id is med id.
   med_reps: {
     id: 1,
@@ -52,7 +56,7 @@ let state = {
   //Gets the conditions to list on the homepage
   doctorsConditions: [],
 
-  //gets specified conditions
+  //gets specified conditions from homepage
   addedCondition: null,
   selected: '',
 

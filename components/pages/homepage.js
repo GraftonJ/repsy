@@ -45,7 +45,7 @@ export default class Homepage extends Component {
 /******************************/
 //onValueChange
 /*****************************/
-onValueChange (value) {
+onValueChange (value: string) {
   let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
   // console.log(chosen, chosen.id)
   store.setState({
@@ -261,7 +261,6 @@ onPressLogout = () => {
               placeholder="Select Conditions of Interest"
               placeholderStyle={{ color: "rgb(79, 79, 78)" }}
               note={false}
-              selectedValue={store.getState().selected}
               onValueChange={this.onValueChange.bind(this)}
               headerStyle={{ backgroundColor: "#2874F0" }}
               headerBackButtonTextStyle={{ color: "#fff" }}
