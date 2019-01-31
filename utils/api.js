@@ -92,32 +92,103 @@ export const getBookings = async () => {
       disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
     })
 
-    const res = await timekit.include('attributes').getBookings()
-    let calenderData = {}
+    const getResources = await timekit.getResources()
+    let resources = getResources.data
+
+    const getBookings = await timekit.include('attributes').getBookings()
+    let calendarData = {}
+
     const timeToString = (time) => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
     }
-    res.data.forEach((x) => {
+
+    getBookings.data.forEach((x) => {
       let event = x.attributes.event
       const date = timeToString(event.start)
 
       // Cycles through and creates the objects for the timekit according
       // to the timekits desired format: {'Year-Month-Day': [{name: "Description"}]'}
-      if (!calenderData[date]) {
-        calenderData[date] = [{ name: `${event.what}` }]
+      if (!calendarData[date]) {
+        calendarData[date] = [{ name: `${event.what}` }]
       } else {
-        calenderData[date].push({ name: `${event.what}` })
+        calendarData[date].push({ name: `${event.what}` })
       }
     })
+
     store.setState({
-      items: res.data,
-      calender: calenderData
+      items: getBookings.data,
+      calendarBookings: calendarData,
+      calendarResources: resources
     })
   } catch (error) {
     console.log(error)
   }
 }
+
+// GET resources
+export const createNewBookingRequest1 = async () => {
+
+}
+
+
+
+
+createNewBookingRequest = async () => {
+  console.log("Dummy Request Was Hit")
+  try {
+    timekit.configure({
+      // app: 'test-repsy-3078',
+      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+      // Optional
+      project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+      // el: '#bookingjs', // Which element should we the library load into
+      autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
+      debug: true, // Enable debugging mode to output useful state/step data in the console
+      disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
+    })
+    timekit.createBooking({
+      resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+      graph: 'confirm_decline',
+      start: '2019-10-10T21:30:00-06:00',
+      end: '2019-10-10T22:15:00-07:00',
+      what: 'Tim Made A BOOKING... this is the WHAT field',
+      where: 'Courthouse, Hill Valley, CA 95420, USA',
+      description: 'Tim made a booking... this is the descrip field',
+      customer: {
+        name: 'Jimbo Martins',
+        email: 'tarmstrong1327@gmail.com',
+        phone: '(916) 555-4385',
+        voip: 'McFly',
+        timezone: 'America/Los_Angeles'
+      }
+    }).then(function (response) {
+      console.log("WORKED +++> ", response);
+    }).catch(function (response) {
+      console.log("DIED +++> ", response);
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+// // GET resources
+// export const getResources = async () => {
+//   const getResources = await timekit.getResources()
+//   let resources = getResources.data
+//   return resources
+// }
+
+
+
+
+
+
+
+
+
+
 
 // //GET bookings that a doctor or rep has made
 // export const getABooking = async () => {

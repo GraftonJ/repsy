@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Left, Right, Body } from 'native-base'
+import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon, DatePicker } from 'native-base'
 import { WebView } from 'react-native-webview'
 import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
 import { getBookings } from '../../utils/api'
@@ -28,8 +28,10 @@ export default class RequestsPage extends Component {
     this.state = {
       user: store.getState().user.id,
       items: store.getState().items,
-      calender: store.getState(),
+      calendarBookings: store.getState().calendarBookings,
+      calendarResources: store.getState().calendarResources,
       isLookingForAppointment: false,
+      chosenDate: currentDate
     }
   }
 
@@ -37,11 +39,17 @@ export default class RequestsPage extends Component {
     this.unsubscribe = store.onChange(() => {
       this.setState({
         items: store.getState().items,
-        calender: store.getState()
+        calendarBookings: store.getState().calendarBookings,
+        calendarResources: store.getState().calendarResources,
       })
     })
     //Get the conditions from the doctors_conditions route
     getBookings()
+
+    store.setState({
+      calendarBookings: store.getState().calendarBookings,
+      calendarResources: store.getState().calendarResources,
+    })
   }
 
   //Request new Appointment function for create request button
@@ -55,6 +63,7 @@ export default class RequestsPage extends Component {
     this.setState({
       isLookingForAppointment: false,
     })
+    getBookings()
   }
 
   componentWillUnmount() {
@@ -62,13 +71,63 @@ export default class RequestsPage extends Component {
     this.unsubscribe()
   }
 
+  onResourceValueChange(value: string) {
+    this.setState({
+      selectedResource: value
+    });
+  }
+
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
+  }
+
+  createNewBookingRequest = async () => {
+    console.log("Dummy Request Was Hit")
+    try {
+      timekit.configure({
+        // app: 'test-repsy-3078',
+        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+        // Optional
+        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+        // el: '#bookingjs', // Which element should we the library load into
+        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
+        debug: true, // Enable debugging mode to output useful state/step data in the console
+        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
+      })
+      timekit.createBooking({
+        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+        graph: 'confirm_decline',
+        start: '2019-02-10T21:30:00-06:00',
+        end: '2019-02-10T22:15:00-07:00',
+        what: 'NEW BOOKING',
+        where: 'Courthouse, Hill Valley, CA 95420, USA',
+        description: 'New booking TEST',
+        customer: {
+          name: 'Jimbo Martins',
+          email: 'tarmstrong1327@gmail.com',
+          phone: '(916) 555-4385',
+          voip: 'McFly',
+          timezone: 'America/Los_Angeles'
+        }
+      }).then(function (response) {
+        console.log("WORKED +++> ", response);
+      }).catch(function (response) {
+        console.log("DIED +++> ", response);
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
     const {
-      calender
-    } = this.state.calender
+      calendarBookings,
+      calendarResources,
+      chosenDate
+    } = this.state
 
-    console.log("What I am looking for =====>", calender)
-
+    // this.createNewBookingRequest()
+    
     return (
       <Container>
         <Header>
@@ -82,16 +141,61 @@ export default class RequestsPage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { this.viewAppointments() }} title='Current Appointments'>
+              onPress={() => { this.viewAppointments() }} title='Appointments'>
             </Button>
           </Right>
         </Header>
         {
           (this.state.isLookingForAppointment)
             ?
-            <WebView source={{ html: htmlContent }} />
+            // <WebView source={{ html: htmlContent }} />
+            <Content>
+              <Form>
+                <Item floatingLabel>
+                  <Label>Resource</Label>
+                  <Input />
+                </Item>
+                <Item floatingLabel last>
+                  <Label>Password</Label>
+                  <Input secureTextEntry/>
+                </Item>
+                <Item picker>
+                    <Picker
+                      mode="dropdown"
+                      iosIcon={<Icon name="arrow-down" />}
+                      style={{ width: undefined }}
+                      placeholder="Who do you want to Book?"
+                      placeholderStyle={{ color: "#bfc6ea" }}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.selectedResource}
+                      onValueChange={this.onResourceValueChange.bind(this)}
+                    >
+                    {calendarResources.map((x, idx) => {
+                      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
+                    })}
+                </Picker>
+                </Item>
+                 <Item>
+                  <DatePicker
+                    defaultDate={currentDate}
+                    locale={"en"}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    placeHolderText={currentDate + 'or Select Date'}
+                    textStyle={{ color: "green" }}
+                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    onDateChange={this.setDate.bind(this)}
+                    disabled={false}
+                  />
+                  {console.log('selectedResource', this.state.selectedResource)}
+                  {console.log('chosenDate', chosenDate)}
+                  {console.log('this.state', this.state)}
+                 </Item>
+              </Form>
+            </Content>
             : <Agenda
-              items={calender}
+              items={calendarBookings}
               selected={currentDate}
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
@@ -101,10 +205,8 @@ export default class RequestsPage extends Component {
                   <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
                 )
               }}
-
             />
         }
-
       <Footer>
           <Button onPress={() => this.requestAppointment()} title="Create New Request" />
       </Footer>
@@ -114,8 +216,21 @@ export default class RequestsPage extends Component {
 
   renderItem(item) {
     return (
-      <View style={[styles.item, { height: item.height }]}><Text>{item.name}</Text></View>
-    );
+      <View style={[styles.item, { height: item.height }]}>
+        <Text>{item.name}</Text>
+        <Button
+          title='Toast'
+          onPress={() =>
+            Toast.show({
+              text: "Wrong password!",
+              buttonText: "Okay",
+              buttonTextStyle: { color: "#008000" },
+              buttonStyle: { backgroundColor: "#5cb85c" }
+            })}
+        >
+          <Text>Toast</Text>
+        </Button>
+      </View>    );
   }
 
   rowHasChanged(r1, r2) {
@@ -169,52 +284,3 @@ const styles = StyleSheet.create({
 })
 
 
-// renderEmptyDate={this.renderEmptyDate.bind(this)}
-
-// // the list of items that have to be displayed in agenda. If you want to render item as empty date
-// // the value of date key kas to be an empty array []. If there exists no value for date key it is
-// // considered that the date in question is not yet loaded
-// items={
-//   {
-//     '2019-01-28': [{ name: 'item 1 - any js object' }, { name: 'item 2 - any js object' }],
-//     '2019-01-29': [{ name: 'item 2 - any js object' }],
-//     '2019-01-30': [],
-//     '2019-02-01': [{ name: 'item 3 - any js object' }, { name: 'any js object' }],
-//   }}
-// // callback that gets called when items for a certain month should be loaded (month became visible)
-// loadItemsForMonth={(month) => { console.log('trigger items loading') }}
-// // callback that fires when the calendar is opened or closed
-// onCalendarToggled={(calendarOpened) => { console.log(calendarOpened) }}
-// // callback that gets called on day press
-// onDayPress={(day) => { console.log('day pressed') }}
-// // callback that gets called when day changes while scrolling agenda list
-// onDayChange={(day) => { console.log('day changed') }}
-// // initially selected day
-// selected={currentDate}
-// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-// // minDate={yesterdayDate}
-// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-// maxDate={nextMonthDate}
-// // Max amount of months allowed to scroll to the past. Default = 50
-// pastScrollRange={50}
-// // Max amount of months allowed to scroll to the future. Default = 50
-// futureScrollRange={50}
-// // specify how each item should be rendered in agenda
-// renderItem={(item, firstItemInDay) => { return (<View />); }}
-// // specify how each date should be rendered. day can be undefined if the item is not first in that day.
-// renderDay={(day, item) => { return (<View />); }}
-// // specify how empty date content with no items should be rendered
-// renderEmptyDate={() => { return (<View />); }}
-// // specify how agenda knob should look like
-// renderKnob={() => { return (<View />); }}
-// // specify what should be rendered instead of ActivityIndicator
-
-
-// // specify your item comparison function for increased performance
-// rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
-// // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly.
-// onRefresh={() => console.log('refreshing...')}
-// // Set this true while waiting for new data from a refresh
-// refreshing={false}
-// // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
-// refreshControl={null}
