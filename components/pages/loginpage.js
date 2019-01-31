@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon } from 'native-base'
 
 import Registrationform from '../elements/RegistrationForm'
 
@@ -16,6 +16,11 @@ export default class Loginpage extends Component {
       <Container>
         <Header>
           <Left>
+            <Button
+              onPress={() => { Actions.pop() }}
+              transparent>
+              <Icon name="arrow-back" />
+              </Button>
           </Left>
           <Body>
           </Body>
