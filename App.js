@@ -39,8 +39,8 @@ export default class App extends Component {
     <Root>
       <Router>
         <Scene key="root" hideNavBar= "false">
-          <Scene key="FirstPage" component={FirstPage}  initial/>
-          <Scene key="RepDetail" component={RepDetail}  />
+          <Scene key="FirstPage" component={FirstPage} />
+          <Scene key="RepDetail" component={RepDetail} />
           <Scene key="Homepage" component={Homepage} />
           <Scene key="RepsList" component={RepsList} />
           <Scene key="Loginpage" component={Loginpage}/>
@@ -48,7 +48,7 @@ export default class App extends Component {
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
           <Scene key="ClinicalData" component={ClinicalData}  />
-          <Scene key="RequestsPage" component={RequestsPage} />
+          <Scene key="RequestsPage" component={RequestsPage} initial />
           <Scene key="SelectedMedication" component={SelectedMedication} />
           <Scene key="MedsLibrary" component={MedsLibrary} />
         </Scene>
