@@ -35,8 +35,8 @@ export default class RequestsPage extends Component {
       bookingRequest: {
         resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
         graph: 'confirm_decline',
-        start: '2019-02-10T21:30:00-06:00',
-        end: '2019-02-10T22:15:00-07:00',
+        start: '2019-02-10T14:30:00-06:00',
+        end: '2019-02-10T15:00:00-07:00',
         what: 'NEW BOOKING',
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
@@ -119,8 +119,8 @@ export default class RequestsPage extends Component {
       timekit.createBooking({
         resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
         graph: 'confirm_decline',
-        start: '2019-02-10T21:30:00-06:00',
-        end: '2019-02-10T22:15:00-07:00',
+        start: '2019-02-10T14:30:00-06:00',
+        end: '2019-02-10T15:00:00-07:00',
         what: 'NEW BOOKING',
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
@@ -210,7 +210,6 @@ export default class RequestsPage extends Component {
                     onDateChange={this.setDate.bind(this)}
                     disabled={false}
                   />
-                  {console.log('selectedResource', this.state.selectedResource)}
                   {console.log('chosenDate', chosenDate)}
                   {console.log('this.state', this.state)}
                  </Item>

@@ -98,13 +98,23 @@ export const getBookings = async () => {
     const getBookings = await timekit.include('attributes').getBookings()
     let calendarData = {}
 
+
+    // const getSingleBooking = await timekit.include('attributes').getBooking('49e76801-613a-46c2-9a27-a71262a951b2')
+    // console.log('getSingleBooking', getSingleBooking)
+    // timekit.deleteBooking('49e76801-613a-46c2-9a27-a71262a951b2')
+
+
+
     const timeToString = (time) => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
     }
-
+    console.log('getBookings', getBookings)
     getBookings.data.forEach((x) => {
+      timekit.deleteBooking('49e76801-613a-46c2-9a27-a71262a951b2')
+      console.log('x', x)
       let event = x.attributes.event
+      console.log('event', event)
       const date = timeToString(event.start)
 
       // Cycles through and creates the objects for the timekit according
@@ -126,51 +136,51 @@ export const getBookings = async () => {
   }
 }
 
-// GET resources
-export const createNewBookingRequest1 = async () => {
+// // GET resources
+// export const createNewBookingRequest1 = async () => {
 
-}
-
-
+// }
 
 
-createNewBookingRequest = async () => {
-  console.log("Dummy Request Was Hit")
-  try {
-    timekit.configure({
-      // app: 'test-repsy-3078',
-      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
-      // Optional
-      project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
-      // el: '#bookingjs', // Which element should we the library load into
-      autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
-      debug: true, // Enable debugging mode to output useful state/step data in the console
-      disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
-    })
-    timekit.createBooking({
-      resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
-      graph: 'confirm_decline',
-      start: '2019-10-10T21:30:00-06:00',
-      end: '2019-10-10T22:15:00-07:00',
-      what: 'Tim Made A BOOKING... this is the WHAT field',
-      where: 'Courthouse, Hill Valley, CA 95420, USA',
-      description: 'Tim made a booking... this is the descrip field',
-      customer: {
-        name: 'Jimbo Martins',
-        email: 'tarmstrong1327@gmail.com',
-        phone: '(916) 555-4385',
-        voip: 'McFly',
-        timezone: 'America/Los_Angeles'
-      }
-    }).then(function (response) {
-      console.log("WORKED +++> ", response);
-    }).catch(function (response) {
-      console.log("DIED +++> ", response);
-    });
-  } catch (error) {
-    console.log(error)
-  }
-}
+
+
+// createNewBookingRequest = async () => {
+//   console.log("Dummy Request Was Hit")
+//   try {
+//     timekit.configure({
+//       // app: 'test-repsy-3078',
+//       appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+//       // Optional
+//       project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+//       // el: '#bookingjs', // Which element should we the library load into
+//       autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
+//       debug: true, // Enable debugging mode to output useful state/step data in the console
+//       disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
+//     })
+//     timekit.createBooking({
+//       resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+//       graph: 'confirm_decline',
+//       start: '2019-10-10T21:30:00-06:00',
+//       end: '2019-10-10T22:15:00-07:00',
+//       what: 'Tim Made A BOOKING... this is the WHAT field',
+//       where: 'Courthouse, Hill Valley, CA 95420, USA',
+//       description: 'Tim made a booking... this is the descrip field',
+//       customer: {
+//         name: 'Jimbo Martins',
+//         email: 'tarmstrong1327@gmail.com',
+//         phone: '(916) 555-4385',
+//         voip: 'McFly',
+//         timezone: 'America/Los_Angeles'
+//       }
+//     }).then(function (response) {
+//       console.log("WORKED +++> ", response);
+//     }).catch(function (response) {
+//       console.log("DIED +++> ", response);
+//     });
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 
 // // GET resources
@@ -236,3 +246,11 @@ createNewBookingRequest = async () => {
 
     // console.log('getResource', timekit.getResource( "72595f19-674f-46ab-9f77-eb34daf4bc68" ))
     // console.log('getResource', timekit.getEvent("72595f19-674f-46ab-9f77-eb34daf4bc68"))
+
+
+
+// curl--request PUT \
+// --url https://api.timekit.io/v2/bookings/49e76801-613a-46c2-9a27-a71262a951b2/confirm \
+// --header 'Content-Type: application/json' \
+// --user : test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX \
+// --datat '{}'
