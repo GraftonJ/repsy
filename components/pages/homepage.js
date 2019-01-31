@@ -48,29 +48,24 @@ export default class Homepage extends Component {
 onValueChange (value: string) {
   let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
   // console.log(chosen, chosen.id)
-  store.setState({
-    addedCondition: chosen,
-    selected: value,
-  })
+  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === chosen.name)
+
+  if(duplicate) {
+    store.setState({
+      addedCondition: null,
+      selected: '',
+    })
+  }
+
+  if(!duplicate) {
+    store.setState({
+      addedCondition: chosen,
+      selected: value,
+    })
 console.log('store.getState().addedCondition:', store.getState().addedCondition)
 console.log('this.state.user.id', this.state.user.id)
-
-  // store.setState({
-  //   selected: value,
-  //   doctorsConditions: chosenCondition,
-  // });
-  // console.log('++++++++++NEW CONDITION ADDED!!!!!', store.getState().doctorsConditions)
+  }
 }
-// const doctorConditions = async() => {
-//   // get all conditions
-//   let conditionsList = []
-//   conditionsList = await getConditions()
-//   let specificConditions = conditionsList.filter(condition => condition.specialties_id === this.state.user.specialties_id)
-//   this.setState({
-//     specialtyConditions: specificConditions,
-//     isLoading: false,
-//   })
-// }
 
 async getDocConditions () {
   //Get the conditions from the doctors_conditions route
@@ -124,12 +119,8 @@ async asyncTryAddCondition() {
     errorMessage: '',
   })
 
-let existing = this.state.doctorsConditions.filter(condition => condition.id === store.getState().addedCondition.id)
-if(existing) {
-  console.log('condition has already been added')
-  Alert.alert('You have already chosen this condition')
-  return
-}
+
+
   //get doctorsConditions array from the store
   //check to see if addedCondition.id is in that array
   //if it is, throw an error
@@ -201,8 +192,8 @@ onPressButton = (name) => {
 //on press for added condition to database
 onPressAddCondition = async () => {
   console.log('condition added to the DB!')
+    await this.asyncTryAddCondition()
 
-  await this.asyncTryAddCondition()
 }
 
 
