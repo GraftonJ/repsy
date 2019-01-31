@@ -31,7 +31,23 @@ export default class RequestsPage extends Component {
       calendarBookings: store.getState().calendarBookings,
       calendarResources: store.getState().calendarResources,
       isLookingForAppointment: false,
-      chosenDate: currentDate
+      chosenDate: currentDate,
+      bookingRequest: {
+        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+        graph: 'confirm_decline',
+        start: '2019-02-10T21:30:00-06:00',
+        end: '2019-02-10T22:15:00-07:00',
+        what: 'NEW BOOKING',
+        where: 'Courthouse, Hill Valley, CA 95420, USA',
+        description: 'New booking TEST',
+        customer: {
+          name: 'Jimbo Martins',
+          email: 'tarmstrong1327@gmail.com',
+          phone: '(916) 555-4385',
+          voip: 'McFly',
+          timezone: 'America/Los_Angeles'
+        }
+      }
     }
   }
 
@@ -73,7 +89,7 @@ export default class RequestsPage extends Component {
 
   onResourceValueChange(value: string) {
     this.setState({
-      selectedResource: value
+      bookingRequest: { resource_id: value }
     });
   }
 
