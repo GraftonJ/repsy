@@ -79,7 +79,7 @@ componentWillUnmount(){
             </Left>
             <Body>
               <Text style={{fontSize: 17, fontWeight: 'bold', textAlign: 'center'}}>
-                {reps[0].brand_name}
+                {reps[desired_info.repIdx].brand_name}
               </Text>
               <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[desired_info.repIdx].generic_name})</Text>
             </Body>
@@ -92,7 +92,7 @@ componentWillUnmount(){
               source={{uri: `${reps[desired_info.repIdx].reps_photo}`}}
             />
             <Text style={styles.repName}>
-              {reps[0].fname} {reps[desired_info.repIdx].lname}
+              {reps[desired_info.repIdx].fname} {reps[desired_info.repIdx].lname}
             </Text>
             <Text style={styles.companyName}>
               Representative for {reps[desired_info.repIdx].company}
@@ -104,7 +104,7 @@ componentWillUnmount(){
               Summary
             </Text>
             <Text style={styles.credentialsContent}>
-              {reps[0].credentials}
+              {reps[desired_info.repIdx].credentials}
             </Text>
             <View style={styles.buttonContainer}>
               <Button style={styles.scheduleButton}
