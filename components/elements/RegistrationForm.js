@@ -6,22 +6,6 @@ import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Ic
 import store, { URI } from '../../store'
 import { getSpecialties } from '../../utils/api'
 
-const doctor = {
-  fname: '',
-  lname: '',
-  specialties_id: '',
-  npi_num: '',
-  clinic_name: '',
-  clinic_address: '',
-  city: '',
-  state: '',
-  zip: 0,
-  email: '',
-  password: "",
-}
-
-
-
 export default class ConditionsPage extends Component {
   constructor(props) {
   super(props);
@@ -58,12 +42,18 @@ export default class ConditionsPage extends Component {
    4. sets specialties_id in state to specialty.id
 */
 onValueChange(value: string) {
-  let specialty = this.state.specialties.find(specialty => specialty.name === value)
+  let specialty = this.state.specialties.find(chSpecialty => chSpecialty.name === value)
   this.setState({
     selected: value,
-    specialties_id: specialty.id,
-    specialties: this.state.specialties,
-  });
+    specialties_id: specialty.id
+    // selectedSpecialty_id: specialty.id,
+  })
+  store.setState({
+    selectedSpecialty: value,
+    selectedSpecialty_id: specialty.id,
+  })
+  console.log('selected specialty:', store.getState().selectedSpecialty)
+  console.log('selectedSpecialty_id:', store.getState().selectedSpecialty_id)
 }
 
 /***********************************/
@@ -113,9 +103,8 @@ async asyncTryAddDoctor() {
       },
     })
 
-    const responseJson = await response.json();
-    // console.log(responseJson.doctor)
-    //{id: 8, fname: sherman, lname: potter...}
+    const responseJson = await response.json()
+    //responeJson = {id: 8, fname: sherman, lname: potter...}
 
     // if the new account fails, display error message
     if (!response.ok) {
@@ -129,7 +118,7 @@ async asyncTryAddDoctor() {
     // new account succeeded!
     if(response.ok) {
       console.log('++++++++++++ new account added!', responseJson)
-      //responsJson = {doctor: {doctor: { city: "city", fname: 'fname'...}}}
+
       store.setState({
         isLoggedIn: true,
         user: responseJson.doctor
@@ -138,13 +127,6 @@ async asyncTryAddDoctor() {
       console.log('******store user', store.getState().user)
       Actions.Homepage()
     }
-
-    // console.log("('==== new acct added!: ", responseJson);
-    // store.setState({
-    //   user: responseJson.user,
-    //   isLoggedIn: true,
-    // });
-
   }
   catch(err) {
     console.log("ERROR asyncTryAddUser fetch failed: ", err)
@@ -154,12 +136,9 @@ async asyncTryAddDoctor() {
 // /* ***Î****************************************** */
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
-  console.log('^^^^^^^^^^^^^^STATE', this.state)
   console.log('TRYING TO ADD DOCTOR')
   await this.asyncTryAddDoctor()
 }
-
-
 
   render() {
 
@@ -186,11 +165,11 @@ onpressSubmit = async () => {
              placeholder="Select a Specialty"
              placeholderStyle={{ color: "rgb(79, 79, 78)" }}
              note={false}
-             selectedValue={this.state.selected}
              onValueChange={this.onValueChange.bind(this)}
              headerStyle={{ backgroundColor: "#2874F0" }}
              headerBackButtonTextStyle={{ color: "#fff" }}
-             headerTitleStyle={{ color: "#fff" }}>
+             headerTitleStyle={{ color: "#fff" }}
+             selectedValue={this.state.selected}>
              {this.state.specialties.map((specialty, idx) => (
                <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
              ))}

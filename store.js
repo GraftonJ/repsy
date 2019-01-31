@@ -30,7 +30,11 @@ let state = {
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],
 
-  //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call
+  //sets value of dropdown on registration form
+  selectedSpecialty: '',
+  selectedSpecialty_id: '',
+
+  //med info for displaying a list of reps who are connected to that med. Dummy ID present to test the API call. id is med id.
   med_reps: {
     id: 1,
     generic_name: 'Ibuprofen',
@@ -40,15 +44,22 @@ let state = {
 
   // Gets the current information the user wants about the med
   desired_info: {
+    med_id: null,
+    pharma_company: '',
     condition_name: '',
     generic_name: '',
     brand_name: '',
     label: '',
-    linkkey: ''
+    linkkey: '',
+    repIdx: 0,
   },
 
   //Gets the conditions to list on the homepage
   doctorsConditions: [],
+
+  //gets specified conditions from homepage
+  addedCondition: null,
+  selected: '',
 
   //Store all the bookings
   items: [],

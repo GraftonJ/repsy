@@ -69,11 +69,7 @@ export default class ClinicalData extends Component {
   onPressBackButton = () => {
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
-        label: store.getState().desired_info.label,
-        linkkey: store.getState().desired_info.linkkey
+        ...store.getState().desired_info
       }
     });
     Actions.pop()

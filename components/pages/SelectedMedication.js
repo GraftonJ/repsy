@@ -1,12 +1,14 @@
 // React Native and Native modules for page
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
+import {Alert, Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Text, Picker, Form, Icon } from 'native-base'
 import ModalDropdown from 'react-native-modal-dropdown';
 
 // Accesses the store and api
 import { getMeds } from '../../utils/api'
+import { getRepsMed } from '../../utils/api'
+
 import store, { URI } from '../../store'
 
 // Imports the footer navbar at the bottom
@@ -18,6 +20,7 @@ export default class SelectedMedication extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      reps: store.getState().reps,
       meds: [],
       desired_info: store.getState().desired_info
     };
@@ -49,6 +52,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressDosing()');
     store.setState({
       desired_info: {
+        ...store.getState().desired_info,
         label: 'Dosing',
         linkkey: 'dosing'
       }
@@ -63,9 +67,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressTrialDesign()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Trial Design',
         linkkey: 'trial_design'
       }
@@ -80,9 +82,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressEfficacy()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Efficacy',
         linkkey: 'efficacy'
       }
@@ -97,9 +97,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressMechanismOfAction()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Mechanism of Action',
         linkkey: 'mechanism_of_action'
       }
@@ -114,9 +112,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressPatientTypes()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Patient Types',
         linkkey: 'patient_types'
       }
@@ -131,9 +127,7 @@ export default class SelectedMedication extends Component {
     console.log('onpressSafety()');
     store.setState({
       desired_info: {
-        condition_name: store.getState().desired_info.condition_name,
-        generic_name: store.getState().desired_info.generic_name,
-        brand_name: store.getState().desired_info.brand_name,
+        ...store.getState().desired_info,
         label: 'Safety',
         linkkey: 'safety'
       }
@@ -145,14 +139,44 @@ export default class SelectedMedication extends Component {
     onPressBackButton = () => {
       store.setState({
         desired_info: {
-          condition_name: store.getState().desired_info.condition_name,
-          generic_name: store.getState().desired_info.generic_name,
-          brand_name: store.getState().desired_info.brand_name,
-          label: store.getState().desired_info.label,
-          linkkey: store.getState().desired_info.linkkey
+          ...store.getState().desired_info,
         }
       });
       Actions.pop()
+    }
+
+    //Helper function to check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet. If no reps, Alert.
+    checkReps = () => {
+      let availReps = store.getState().reps.length
+      if(!availReps){
+        Alert.alert('Sorry, there are no representatives at this time')
+      }
+      else if(availReps > 1) {
+        Actions.RepsList()
+      }
+      else {
+        console.log('ELSE SELECTED MED STATEMENT>>>>>>');
+      //Set the repIdx in the store to 0 since there is only one rep in the array
+      store.setState({
+        desired_info: {
+          ...store.getState().desired_info,
+          repIdx: 0,
+          }
+        })
+      Actions.RepDetail()
+      }
+    }
+
+    async onPressScheduleButton(){
+      //Get the reps from the reps route
+      let repsList = []
+      repsList = await getRepsMed()
+      //Set the store state with the conditions. This should cause local state to update and re-render
+      store.setState({
+        reps: repsList,
+      })
+      //Check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet
+      this.checkReps()
     }
 
   // * *********************************** * //
@@ -222,7 +246,7 @@ export default class SelectedMedication extends Component {
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Patient Resources </Text>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Sales Representative </Text>
+          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }} onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
 
           <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Speaker Programs </Text>
         </Content>
