@@ -191,7 +191,7 @@ onPressButton = (name) => {
 }
 //on press for added condition to database
 onPressAddCondition = async () => {
-  console.log('condition added to the DB!')
+  console.log('Trying to add!')
     await this.asyncTryAddCondition()
 
 }
