@@ -44,6 +44,7 @@ export default class ConditionsPage extends Component {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
+        ...store.getState().desired_info,
         generic_name: genericName,
         brand_name: brandName,
         med_id: medId,

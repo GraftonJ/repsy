@@ -47,7 +47,7 @@ let state = {
     brand_name: '',
     label: '',
     linkkey: '',
-    repIdx: null
+    repIdx: 0,
   },
 
   //Gets the conditions to list on the homepage

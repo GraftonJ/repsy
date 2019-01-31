@@ -166,6 +166,7 @@ export default class SelectedMedication extends Component {
         store.setState({
           reps: repsList,
         })
+      //Check if there is more than one rep for the med. If so, render the list view. If not, go straight to the RepDetail componenet
         if(store.getState().reps.length > 1) {
           Actions.RepsList()
         }

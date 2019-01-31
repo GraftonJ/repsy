@@ -61,6 +61,7 @@ async componentDidMount(){
 onPressButton = (name) => {
   store.setState({
     desired_info: {
+      ...store.getState().desired_info,
       condition_name: name
     }
   });

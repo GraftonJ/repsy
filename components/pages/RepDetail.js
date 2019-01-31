@@ -95,10 +95,10 @@ componentWillUnmount(){
               {reps[0].fname} {reps[desired_info.repIdx].lname}
             </Text>
             <Text style={styles.companyName}>
-              Representative for {[desired_info.repIdx].company}
+              Representative for {reps[desired_info.repIdx].company}
             </Text>
             <Text style={styles.pharma}>
-              Expertise including {[desired_info.repIdx].brand_name} ({[desired_info.repIdx].generic_name})
+              Expertise including {reps[desired_info.repIdx].brand_name} ({reps[desired_info.repIdx].generic_name})
             </Text>
             <Text style={styles.credentials}>
               Summary

@@ -23,6 +23,7 @@ export default class RepsCard extends Component {
                 </Body>
                 <Right>
                   <Button transparent>
+                  {/* On pressing view, take the index of the rep that was clicked and set that value in desired_info in the store. This value is then used with the 'reps' state to render the correct rep in the RepDetail componenet */}
                     <Text onPress={() => {
                       store.setState({
                         desired_info: {
