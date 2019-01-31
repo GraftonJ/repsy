@@ -162,7 +162,7 @@ export default class SelectedMedication extends Component {
     checkReps = () => {
       let availReps = store.getState().reps.length
       if(!availReps){
-        Alert.alert('Sorry, None Available')
+        Alert.alert('Sorry, there are no representatives at this time')
       }
       else if(availReps > 1) {
         Actions.RepsList()
