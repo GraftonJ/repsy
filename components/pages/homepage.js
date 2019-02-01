@@ -35,10 +35,10 @@ export default class Homepage extends Component {
     user: store.getState().user,
     isLoggedIn: store.getState().isLoggedIn,
     errorMessage: '',
-    selected: null,
     chosenCondition_id: '',
     addedCondition: store.getState().addedCondition,
-    selected: store.getState().selected
+    selected: store.getState().selected,
+    toDelete: store.getState().toDelete,
   }
 }
 
@@ -138,9 +138,51 @@ async asyncTryAddCondition() {
 /************************************
   DELETE selected conditions function
 *************************************/
+// /* DELETE specified users record */
+// http delete  http://localhost:3000/doctors_conditions/2
+// id is the unique id of the join table reference
 
+  async tryDeleteCondition() {
+    console.log('----------------tryDeleteCondition()')
+    // console.log('join_id from store delete object:', store.getState().toDelete.join_id)
+    this.setState({
+      errorMessage: ''
+    })
 
+    const join_id = store.getState().toDelete.join_id
+    console.log('The join id from the store:', join_id)
+    const url = `${URI}/doctors_conditions/${join_id}`
+    console.log('this is the url for the delete request:', url)
 
+    try{
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        }
+      })
+      const responseJson = await response.json();
+
+        // if the new account fails, display error message
+        if (!response.ok) {
+          console.log('==== ', response.status, responseJson);
+          this.setState({
+            errorMessage: responseJson.error,
+          })
+          return
+        }
+        // delete condition succeeded!
+        if(response.ok) {
+          console.log('----------------- condition deleted!', responseJson)
+          
+          //this function gets called again to update homepage conditions buttons
+            this.getDocConditions()
+        }
+      }
+      catch(err) {
+        console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+      }
+    }
 // onDeleteClick = async (e) => {
 //   const deletedMessage = this.state.messages
 //   .filter(message => (message.id === parseInt(e.target.id)))[0]
@@ -163,12 +205,6 @@ async asyncTryAddCondition() {
 //     }, 500)
 //   }
 // }
-
-
-
-
-
-
 
 /******************************
   onValueChange for Drop Down
@@ -216,6 +252,22 @@ on press for added condition to database
 onPressAddCondition = async () => {
   console.log('trying to add')
     await this.asyncTryAddCondition()
+}
+
+/****************************************
+  onPress for deleting condition from "favorites"
+*****************************************/
+onPressDelete = async (id) => {
+  console.log('Delete button hooked up!')
+
+  //variable to isolate condition object user wants to delete
+  let toDel = this.state.doctorsConditions.find(cond => cond.id === id)
+
+  //sets store to hold the delete variable
+  store.setState({
+    toDelete: toDel
+  })
+  await this.tryDeleteCondition()
 }
 
 /******************************
@@ -298,7 +350,8 @@ componentWillUnmount(){
               onPress={() => this.onPressButton(condition.name)}>
               <Text style={styles.buttonText}>{condition.name}</Text>
             </Button>
-            <Button>
+            <Button
+              onPress={() => this.onPressDelete(condition.id)}>
               <Icon name='ios-trash' />
             </Button>
           </Content>

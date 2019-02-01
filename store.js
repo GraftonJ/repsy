@@ -61,6 +61,9 @@ let state = {
   addedCondition: null,
   selected: '',
 
+//gets id from condition to delete from homepage
+  toDelete: null,
+
   //Store all the bookings
   items: [],
   calendarBookings: {},
