@@ -141,6 +141,71 @@ export default class RequestsPage extends Component {
     }
   }
 
+  // Switch Statement for Confirm|Decline|Delete event Button
+  renderSwitch(item) {
+    switch (item.state) {
+      case 'tentative':
+        console.log('item tentative')
+        return <View>
+          <Button
+            title='Confirm'
+            id='confirm'
+            style={[styles.button]}
+            buttonTextStyle={{color: "#008000" }}
+            onPress={() => {
+              Toast.show({
+                text: "tentative appointment Confirmed!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+              getBookings()
+            }
+            }
+          >
+          </Button>
+          <Button
+            title='Decline'
+            onPress={() => {
+              // this will update a booking to a new status
+              timekit.updateBooking({
+                id: item.booking_id,
+                action: "decline" // or "decline" or "cancel"
+              })
+
+              Toast.show({
+                text: "tentative appointment Declined!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+            getBookings()
+          }}
+        >
+          </Button>
+        </View>
+        break;
+      case 'confirmed':
+        console.log('confirmed item canceled')
+        return <Button
+          title='Cancel'
+          onPress={() => {
+            Toast.show({
+              text: "Appointment Canceled!",
+              buttonText: "Okay",
+              buttonTextStyle: { color: "#008000" },
+              buttonStyle: { backgroundColor: "#5cb85c" }
+            })
+            getBookings()
+          }}
+        >
+        </Button>
+        break;
+      default:
+        return 
+    }
+  }
+
   render() {
     const {
       calendarBookings,
@@ -221,11 +286,7 @@ export default class RequestsPage extends Component {
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
               theme={{ agendaKnobColor: 'grey' }}
-              renderEmptyData={() => {
-                return (
-                  <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
-                )
-              }}
+              renderEmptyData={this.renderEmptyData.bind(this)}
             />
         }
       <Footer>
@@ -243,19 +304,19 @@ export default class RequestsPage extends Component {
     return (
       <View style={[styles.item, { height: item.height }]}>
         <Text>{item.name}</Text>
-        <Button
-          title='Toast'
-          onPress={() =>
-            Toast.show({
-              text: "Wrong password!",
-              buttonText: "Okay",
-              buttonTextStyle: { color: "#008000" },
-              buttonStyle: { backgroundColor: "#5cb85c" }
-            })}
-        >
-          <Text>Toast</Text>
-        </Button>
-      </View>    );
+        {console.log('item', item)}
+        <View>{this.renderSwitch(item)}</View>
+      </View>    
+    )
+  }
+
+  renderEmptyData(item) {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>No Events Today!</Text>
+        <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+      </View>
+    )
   }
 
   rowHasChanged(r1, r2) {
@@ -304,6 +365,9 @@ const styles = StyleSheet.create({
     height: 15,
     flex: 1,
     paddingTop: 30
+  },
+  button: {
+    color: 'red',
   }
 })
 

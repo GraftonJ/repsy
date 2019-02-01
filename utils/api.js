@@ -119,9 +119,9 @@ export const getBookings = async () => {
       // Cycles through and creates the objects for the timekit according
       // to the timekits desired format: {'Year-Month-Day': [{name: "Description"}]'}
       if (!calendarData[date]) {
-        calendarData[date] = [{ name: `${event.what}` }]
+        calendarData[date] = [{ name: `${event.what}`, state: `${x.state}`, booking_id: `${x.id}` }]
       } else {
-        calendarData[date].push({ name: `${event.what}` })
+        calendarData[date].push({ name: `${event.what}`, state: `${x.state}`, booking_id: `${x.id}` })
       }
     })
 
