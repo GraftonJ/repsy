@@ -30,6 +30,7 @@ onPressRep = () => {
   })
 }
   render() {
+    // First Determine type of account
     if(!this.state.doctor && !this.state.rep){
       return (
         <Container>
@@ -46,26 +47,32 @@ onPressRep = () => {
             <Right>
             </Right>
           </Header>
-          <Content>
-            <Text style={styles.welcome}>Welcome to Repsy!</Text>
-            <Button onPress={() => this.onPressRep()}>
-                <Text>
-                  Sales Representative
-                </Text>
-            </Button>
-            <Button onPress={() => this.onPressDoctor()}>
-                <Text>
-                  Doctor Account
-                </Text>
-              </Button>
-          </Content>
+          <View style={styles.contentContainer}>
+            <Content style={styles.content}>
+              <Text style={styles.welcome}>
+                Which Type of Account?
+              </Text>
+              <View style={styles.buttonContainer}>
+                <Button style={styles.typeButton} onPress={() => this.onPressRep()}>
+                    <Text style={styles.typeButtonText}>
+                      Sales
+                    </Text>
+                </Button>
+                <Button style={styles.typeButton} onPress={() => this.onPressDoctor()}>
+                    <Text style={styles.typeButtonText}>
+                      Doctor
+                    </Text>
+                </Button>
+              </View>
+            </Content>
+          </View>
           <Footer>
           </Footer>
         </Container>
       )
     }
-
   else {
+    //Show form fields for correct account type
     return (
       <Container>
         <Header>
@@ -84,32 +91,25 @@ onPressRep = () => {
           <Body>
           </Body>
           <Right>
-            {this.state.doctor
-              ? <Button onPress={() => this.onPressRep()}>
-                  <Text>
-                    Switch to Sales Representative
-                  </Text>
-                </Button>
-              : <Button onPress={() => this.onPressRep()}>
-                  <Text>
-                    Switch to Doctor
-                  </Text>
-                </Button>
-            }
           </Right>
         </Header>
-        <Content>
-          <Text style={styles.welcome}>Welcome to Repsy!</Text>
-          {this.state.doctor
-            ? <Text style={styles.h2}>Create a Doctor Account</Text>
-            : <Text style={styles.h2}>Create a Sales Rep Account</Text>
-          }
-
-          {this.state.doctor
-            ? <Registrationform />
-            : <RepRegistrationForm />
-          }
-        </Content>
+          <Content>
+            <Text style={styles.welcome}>
+              Welcome to Repsy!
+            </Text>
+            {this.state.doctor
+              ? <Text style={styles.h2}>
+                  Create a Doctor Account
+                </Text>
+              : <Text style={styles.h2}>
+                  Create a Sales Rep Account
+                </Text>
+            }
+            {this.state.doctor
+              ? <Registrationform />
+              : <RepRegistrationForm />
+            }
+          </Content>
         <Footer>
         </Footer>
       </Container>
@@ -125,6 +125,14 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  content: {
+    alignSelf: 'center'
+  },
   welcome: {
     fontFamily: 'Helvetica',
     fontSize: 25,
@@ -144,5 +152,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica-Bold',
     fontSize: 20,
     color: 'rgb(96, 29, 16)'
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  typeButton : {
+    width: '30%',
+    justifyContent: 'center'
+  },
+  typeButtonText: {
+    alignSelf: 'center'
   }
+
 });
