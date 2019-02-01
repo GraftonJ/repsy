@@ -83,9 +83,11 @@ export const getBookings = async () => {
   try {
     timekit.configure({
       // app: 'test-repsy-9311',
-      appKey: 'test_api_key_PX7kbsihWFfheH3CXbqlTycJazLsZEI2',
+      // appKey: 'test_api_key_PX7kbsihWFfheH3CXbqlTycJazLsZEI2', // REPSYscheduling@gmail.com
+      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX', //Tarmstrong1327@gmail.com
       // Optional
-      project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5', // Reference a project where you want to pull settings from and connect bookings to
+      // project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5', // REPSYscheduling@gmail.com
+      project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', //Tarmstrong1327@gmail.com
       // el: '#bookingjs', // Which element should we the library load into
       autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
       debug: true, // Enable debugging mode to output useful state/step data in the console

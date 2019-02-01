@@ -68,142 +68,9 @@ export default class RequestsPage extends Component {
     })
   }
 
-  //Request new Appointment function for create request button
-  requestAppointment = () => {
-    this.setState({
-      isLookingForAppointment: true,
-    })
-  }
-
-  viewAppointments = () => {
-    this.setState({
-      isLookingForAppointment: false,
-    })
-    getBookings()
-  }
-
   componentWillUnmount() {
     //disconnect from store notifications
     this.unsubscribe()
-  }
-
-  onResourceValueChange(value: string) {
-    // this.setState({
-    //   selectedResource: value
-    // });
-      this.setState({
-        bookingRequest: {
-          ...this.state.bookingRequest,
-          resource_id: value
-        }
-      })
-  }
-
-  setDate(newDate) {
-    this.setState({ chosenDate: newDate });
-  }
-
-  createNewBookingRequest = async () => {
-    console.log("Dummy Request Was Hit")
-    try {
-      timekit.configure({
-        // app: 'test-repsy-3078',
-        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
-        // Optional
-        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
-        // el: '#bookingjs', // Which element should we the library load into
-        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
-        debug: true, // Enable debugging mode to output useful state/step data in the console
-        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
-      })
-      timekit.createBooking({
-        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
-        graph: 'confirm_decline',
-        start: '2019-02-10T14:30:00-06:00',
-        end: '2019-02-10T15:00:00-07:00',
-        what: 'NEW BOOKING',
-        where: 'Courthouse, Hill Valley, CA 95420, USA',
-        description: 'New booking TEST',
-        customer: {
-          name: 'Jimbo Martins',
-          email: 'tarmstrong1327@gmail.com',
-          phone: '(916) 555-4385',
-          voip: 'McFly',
-          timezone: 'America/Denver'
-        }
-      }).then(function (response) {
-        console.log("WORKED +++> ", response);
-      }).catch(function (response) {
-        console.log("DIED +++> ", response);
-      });
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  // Switch Statement for Confirm|Decline|Delete event Button
-  renderSwitch(item) {
-    switch (item.state) {
-      case 'tentative':
-        console.log('item tentative')
-        return <View>
-          <Button
-            title='Confirm'
-            id='confirm'
-            style={[styles.button]}
-            buttonTextStyle={{color: "#008000" }}
-            onPress={() => {
-              Toast.show({
-                text: "tentative appointment Confirmed!",
-                buttonText: "Okay",
-                buttonTextStyle: { color: "#008000" },
-                buttonStyle: { backgroundColor: "#5cb85c" }
-              })
-              getBookings()
-            }
-            }
-          >
-          </Button>
-          <Button
-            title='Decline'
-            onPress={() => {
-              // this will update a booking to a new status
-              timekit.updateBooking({
-                id: item.booking_id,
-                action: "decline" // or "decline" or "cancel"
-              })
-
-              Toast.show({
-                text: "tentative appointment Declined!",
-                buttonText: "Okay",
-                buttonTextStyle: { color: "#008000" },
-                buttonStyle: { backgroundColor: "#5cb85c" }
-              })
-            getBookings()
-          }}
-        >
-          </Button>
-        </View>
-        break;
-      case 'confirmed':
-        console.log('confirmed item canceled')
-        return <Button
-          title='Cancel'
-          onPress={() => {
-            Toast.show({
-              text: "Appointment Canceled!",
-              buttonText: "Okay",
-              buttonTextStyle: { color: "#008000" },
-              buttonStyle: { backgroundColor: "#5cb85c" }
-            })
-            getBookings()
-          }}
-        >
-        </Button>
-        break;
-      default:
-        return 
-    }
   }
 
   render() {
@@ -300,6 +167,77 @@ export default class RequestsPage extends Component {
     ) // End of return
   } // End of render
 
+  //Request new Appointment function for create request button
+  requestAppointment = () => {
+    this.setState({
+      isLookingForAppointment: true,
+    })
+  }
+
+  // View Calendar onClick function with updated Booking Requests
+  viewAppointments = () => {
+    this.setState({
+      isLookingForAppointment: false,
+    })
+    getBookings()
+  }
+
+  // Set Current resource_id to State from Request Booking Form
+  onResourceValueChange(value: string) {
+    this.setState({
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        resource_id: value
+      }
+    })
+  }
+
+  // Set Current Date to State from Request Booking Form
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
+  }
+
+
+  // Create a new Booking Request to desired Resource
+  createNewBookingRequest = async () => {
+    console.log("Dummy Request Was Hit")
+    try {
+      timekit.configure({
+        // app: 'test-repsy-3078',
+        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+        // Optional
+        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+        // el: '#bookingjs', // Which element should we the library load into
+        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
+        debug: true, // Enable debugging mode to output useful state/step data in the console
+        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
+      })
+      timekit.createBooking({
+        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+        graph: 'confirm_decline',
+        start: '2019-02-10T14:30:00-06:00',
+        end: '2019-02-10T15:00:00-07:00',
+        what: 'NEW BOOKING',
+        where: 'Courthouse, Hill Valley, CA 95420, USA',
+        description: 'New booking TEST',
+        customer: {
+          name: 'Jimbo Martins',
+          email: 'tarmstrong1327@gmail.com',
+          phone: '(916) 555-4385',
+          voip: 'McFly',
+          timezone: 'America/Denver'
+        }
+      }).then(function (response) {
+        console.log("WORKED +++> ", response);
+      }).catch(function (response) {
+        console.log("DIED +++> ", response);
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
@@ -308,6 +246,78 @@ export default class RequestsPage extends Component {
         <View>{this.renderSwitch(item)}</View>
       </View>    
     )
+  }
+
+  // Switch Statement for Confirm|Decline|Delete event Button
+  renderSwitch(item) {
+    switch (item.state) {
+      case 'tentative':
+        console.log('item tentative')
+        return <View>
+          <Button
+            title='Confirm'
+            id='confirm'
+            style={[styles.button]}
+            buttonTextStyle={{ color: "#008000" }}
+            onPress={() => {
+              Toast.show({
+                text: "tentative appointment Confirmed!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+              getBookings()
+            }
+            }
+          >
+          </Button>
+          <Button
+            title='Decline'
+            onPress={() => {
+              // this will update a booking to a new status
+              timekit.updateBooking({
+                id: item.booking_id,
+                action: "decline" // or "decline" or "cancel"
+              })
+
+              getBookings()
+
+              Toast.show({
+                text: "tentative appointment Declined!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+            }
+            }
+          >
+          </Button>
+        </View>
+        break;
+      case 'confirmed':
+        console.log('confirmed item canceled')
+        return <Button
+          title='Cancel'
+          onPress={() => {
+            // this will update a booking to a new status
+            timekit.updateBooking({
+              id: item.booking_id,
+              action: "cancel" // or "decline" or "cancel"
+            })
+
+            Toast.show({
+              text: "Appointment Canceled!",
+              buttonText: "Okay",
+              buttonTextStyle: { color: "#008000" },
+              buttonStyle: { backgroundColor: "#5cb85c" }
+            })
+          }}
+        >
+        </Button>
+        break;
+      default:
+        return <Text>Appointment Declined</Text>
+    }
   }
 
   renderEmptyData(item) {
