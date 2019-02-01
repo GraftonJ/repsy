@@ -45,27 +45,28 @@ onPressRep = () => {
             <Body>
             </Body>
             <Right>
+              <Text style={styles.repsyHeader}>REPSY</Text>
             </Right>
           </Header>
-          <View style={styles.contentContainer}>
-            <Content style={styles.content}>
-              <Text style={styles.welcome}>
-                Which Type of Account?
-              </Text>
-              <View style={styles.buttonContainer}>
-                <Button style={styles.typeButton} onPress={() => this.onPressRep()}>
-                    <Text style={styles.typeButtonText}>
-                      Sales
-                    </Text>
-                </Button>
-                <Button style={styles.typeButton} onPress={() => this.onPressDoctor()}>
-                    <Text style={styles.typeButtonText}>
-                      Doctor
-                    </Text>
-                </Button>
+            <Content>
+              <View style={styles.contentContainer}>
+                <Text style={styles.welcome}>
+                  Which Type of Account?
+                </Text>
+                <View style={styles.buttonContainer}>
+                  <Button style={styles.typeButton} onPress={() => this.onPressRep()}>
+                      <Text style={styles.typeButtonText}>
+                        Sales
+                      </Text>
+                  </Button>
+                  <Button style={styles.typeButton} onPress={() => this.onPressDoctor()}>
+                      <Text style={styles.typeButtonText}>
+                        Doctor
+                      </Text>
+                  </Button>
+                </View>
               </View>
             </Content>
-          </View>
           <Footer>
           </Footer>
         </Container>
@@ -91,6 +92,7 @@ onPressRep = () => {
           <Body>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
           <Content>
@@ -126,12 +128,9 @@ const width = Dimensions.get('window').width
 // Put styles in here to format the page
 const styles = StyleSheet.create({
   contentContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  content: {
-    alignSelf: 'center'
+    height: height * .5
   },
   welcome: {
     fontFamily: 'Helvetica',
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 1,
     marginTop: 40,
+    marginBottom: 20,
   },
   h2: {
     fontFamily: 'Helvetica',
