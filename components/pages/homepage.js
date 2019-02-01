@@ -114,72 +114,65 @@ this.getDocConditions()
 //ADD SPECIALTY_CONDITION FUNCTION
 async asyncTryAddCondition() {
   console.log("---------- asyncTryAddCondition(): ")
-
+//set errorMessage to nothing to begin with
   this.setState({
-    errorMessage: '',
+    errorMessage: ''
   })
-
-
-
-  //get doctorsConditions array from the store
-  //check to see if addedCondition.id is in that array
-  //if it is, throw an error
-
-//POST request for doctorsConditions
-  // router.post('/', validatePostBody, (req, res, next) => {
-  //   const {id, doctors_id, conditions_id} = req.body
+//create variable for body of post
   const body = {
-    doctors_id: store.getState().user.id,
-    conditions_id: store.getState().addedCondition.id,
+    doctors_id: this.state.user.id,
+    conditions_id: store.getState().addedCondition.id
   }
+  console.log('THIS IS THE BODY FOR POST________', body)
+  //ROUTE to hit for DB
   const url = `${URI}/doctors_conditions`
+  //POST request to DB
 
-  try {
-    // call login route
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-
-    const responseJson = await response.json();
-    // console.log(responseJson.doctor)
-    //{id: 8, fname: sherman, lname: potter...}
-
-    // if the new account fails, display error message
-    if (!response.ok) {
-      console.log('==== ', response.status, responseJson);
-      this.setState({
-        errorMessage: responseJson.error,
-      })
-      return
-    }
-
-    // new condition succeeded!
-    if(response.ok) {
-      console.log('++++++++++++ new condition added!', responseJson)
-
-        this.getDocConditions()
-
-      // store.setState({
-      //   ...store.state,
-      //   doctorsConditions: responseJson
-      //
-    }
-  }
-  catch(err) {
-    console.log("ERROR asyncTryAddCondition fetch failed: ", err)
-  }
+  
+  // try {
+  //   const response = await fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(body),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //   })
+  //
+  //   const responseJson = await response.json();
+  //   console.log('^^^^^^^^^^^^^^responseJson', responseJson)
+  // }
+  // catch(err) {
+  //   console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+  // }
 }
 
 
 
 
+// async addMessage(message) {
+//    const response = await fetch(`${API}`, {
+//      method: 'POST',
+//      headers: {
+//        "Content-Type": "application/json; charset=utf-8"
+//      },
+//      body: JSON.stringify(message)
+//    })
+//    if(response.status === 200) {
+//      const json = await response.json()
+//      console.log("POST", json)
+//
+//      this.setState({ messages: [...this.state.messages, json], composing: false})
+//    }
+//    else {
+//      console.error("Could not post", response.statusText)
+//    }
+//  }
+
+
 
 // * *********************************** * //
+//on press for clicking conditions to go to treatments page
 onPressButton = (name) => {
   store.setState({
     desired_info: {
@@ -189,41 +182,13 @@ onPressButton = (name) => {
   });
   Actions.ConditionsPage()
 }
+
+/****************************************/
 //on press for added condition to database
 onPressAddCondition = async () => {
-  console.log('condition added to the DB!')
+  console.log('trying to add')
     await this.asyncTryAddCondition()
-
 }
-
-
-
-componentWillUnmount(){
-  //disconnect from store notifications
-  this.unsubscribe()
-}
-
-
-
-
-
-//DOCTORS CONDITONS BUTTON PULLED FROM render
-// this.state.doctorsConditions.map((condition, idx) => (
-//   <Button
-//     style={styles.button}
-//     key={idx} conditionId={condition.id}
-//     rounded style={styles.button}
-//     onPress={() => this.onPressButton(condition.name)}>
-//     <Text style={styles.buttonText}>{condition.name}</Text>
-//   </Button>
-// ))
-
-
-
-
-
-
-
 
 //******************************/
 //onPress logout
@@ -237,6 +202,12 @@ onPressLogout = () => {
   console.log('***********STORE LOGGEDIN', store.getState().isLoggedIn)
   Actions.FirstPage()
 }
+
+componentWillUnmount(){
+  //disconnect from store notifications
+  this.unsubscribe()
+}
+
   render() {
     //Show loading spinner if fetching data
     return (
