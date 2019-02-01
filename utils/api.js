@@ -249,7 +249,7 @@ export const getBookings = async () => {
 
 
 
-// curl--request PUT \
+// `curl--request PUT \
 // --url https://api.timekit.io/v2/bookings/49e76801-613a-46c2-9a27-a71262a951b2/confirm \
 // --header 'Content-Type: application/json' \
 // --user : test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX \
