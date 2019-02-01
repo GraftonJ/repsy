@@ -35,8 +35,8 @@ export default class RequestsPage extends Component {
       bookingRequest: {
         resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
         graph: 'confirm_decline',
-        start: '2019-02-10T21:30:00-06:00',
-        end: '2019-02-10T22:15:00-07:00',
+        start: '2019-02-10T14:30:00-06:00',
+        end: '2019-02-10T15:00:00-07:00',
         what: 'NEW BOOKING',
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
@@ -68,53 +68,21 @@ export default class RequestsPage extends Component {
     })
   }
 
-  //Request new Appointment function for create request button
-  requestAppointment = () => {
-    this.setState({
-      isLookingForAppointment: true,
-    })
-  }
-
-  viewAppointments = () => {
-    this.setState({
-      isLookingForAppointment: false,
-    })
-    getBookings()
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.calendarBookings !== this.state.calendarBookings) {
+  //     this.setState({
+  //       calendarBookings: this.state.calendarBookings
+  //     })
+  //   }
+  // }
 
   componentWillUnmount() {
     //disconnect from store notifications
     this.unsubscribe()
   }
 
-  onResourceValueChange(value: string) {
-    this.setState({
-      selectedResource: value
-    });
-  }
-
-  setDate(newDate) {
-    this.setState({ chosenDate: newDate });
-  }
-
-  //***************************************
-  createNewBookingRequest = async () => {
-    try {
-      timekit.createBooking(
-        this.state.bookingRequest
-      ).then(function (response) {
-        console.log("WORKED +++> ", response);
-      }).catch(function (response) {
-        console.log("DIED +++> ", response);
-      });
-    } catch (error) {
-      console.log(error)
-    }
-
-    this.viewAppointments()
-  }
-
   render() {
+    console.log('bookings', this.state.calendarBookings)
     const {
       calendarBookings,
       calendarResources,
@@ -162,11 +130,11 @@ export default class RequestsPage extends Component {
                       placeholder="Who do you want to Book?"
                       placeholderStyle={{ color: "#bfc6ea" }}
                       placeholderIconColor="#007aff"
-                      selectedValue={this.state.selectedResource}
+                      selectedValue={this.state.bookingRequest.resource_id}
                       onValueChange={this.onResourceValueChange.bind(this)}
                     >
                     {calendarResources.map((x, idx) => {
-                      return <Picker.Item key={idx} label={x.id} value={x.id} id={x.id} />
+                      return <Picker.Item key={idx} label={x.first_name + ' ' + x.last_name} value={x.id} id={x.id} />
                     })}
                 </Picker>
                 </Item>
@@ -183,7 +151,6 @@ export default class RequestsPage extends Component {
                     onDateChange={this.setDate.bind(this)}
                     disabled={false}
                   />
-                  {console.log('selectedResource', this.state.selectedResource)}
                   {console.log('chosenDate', chosenDate)}
                   {console.log('this.state', this.state)}
                  </Item>
@@ -195,11 +162,7 @@ export default class RequestsPage extends Component {
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
               theme={{ agendaKnobColor: 'grey' }}
-              renderEmptyData={() => {
-                return (
-                  <View style={styles.emptyDate}><Text>No Events Today!</Text><Button onPress={() => this.requestAppointment()} title="Create New Request" /></View>
-                )
-              }}
+              renderEmptyData={this.renderEmptyData.bind(this)}
             />
         }
       <Footer>
@@ -213,27 +176,164 @@ export default class RequestsPage extends Component {
     ) // End of return
   } // End of render
 
+  //Request new Appointment function for create request button
+  requestAppointment = () => {
+    this.setState({
+      isLookingForAppointment: true,
+    })
+  }
+
+  // View Calendar onClick function with updated Booking Requests
+  viewAppointments = () => {
+    this.setState({
+      isLookingForAppointment: false,
+    })
+    getBookings()
+  }
+
+  // Set Current resource_id to State from Request Booking Form
+  onResourceValueChange(value: string) {
+    this.setState({
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        resource_id: value
+      }
+    })
+  }
+
+  // Set Current Date to State from Request Booking Form
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
+  }
+
+
+  // Create a new Booking Request to desired Resource
+  createNewBookingRequest = async () => {
+    try {
+      // timekit.updateBooking({ id:'b53f8655-b52e-43b6-a811-e5e3b694866e', action: "confirm"})
+      timekit.createBooking(
+        this.state.bookingRequest
+      ).then(function (response) {
+        console.log("WORKED +++> ", response);
+      }).catch(function (response) {
+        console.log("DIED +++> ", response);
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+    getBookings()
+    this.viewAppointments()
+  }
+
+  // Switch Statement for Confirm|Decline|Delete event Button
+  renderSwitch(item) {
+    switch (item.state) {
+      case 'tentative':
+        console.log('item tentative')
+        return <View>
+          <Button
+            title='Confirm'
+            id='confirm'
+            style={[styles.button]}
+            buttonTextStyle={{ color: "#008000" }}
+            onPress={() => {
+              // this will update a booking to a new status
+              timekit.updateBooking({
+                id: item.booking_id,
+                action: "confirm" // or "decline" or "cancel"
+              })
+
+              Toast.show({
+                text: "tentative appointment Confirmed!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+              getBookings()
+            }
+            }
+          >
+          </Button>
+          <Button
+            title='Decline'
+            onPress={() => {
+              // this will update a booking to a new status
+              timekit.updateBooking({
+                id: item.booking_id,
+                action: "decline" // or "decline" or "cancel"
+              }).then((res) => {
+                getBookings()
+                console.log('res', res)
+                return res
+              }).catch((err) => {
+                console.log('error', err)
+              })
+
+              
+
+              Toast.show({
+                text: "tentative appointment Declined!",
+                buttonText: "Okay",
+                buttonTextStyle: { color: "#008000" },
+                buttonStyle: { backgroundColor: "#5cb85c" }
+              })
+            }
+            }
+          >
+          </Button>
+        </View>
+        break;
+      case 'confirmed':
+        console.log('confirmed item canceled')
+        return <Button
+          title='Cancel'
+          onPress={() => {
+            // this will update a booking to a new status
+            timekit.updateBooking({
+              id: item.booking_id,
+              action: "cancel" // or "decline" or "cancel"
+            })
+
+            Toast.show({
+              text: "Appointment Canceled!",
+              buttonText: "Okay",
+              buttonTextStyle: { color: "#008000" },
+              buttonStyle: { backgroundColor: "#5cb85c" }
+            })
+          }}
+        >
+        </Button>
+        break;
+      default:
+        return <Text>Appointment Declined</Text>
+    }
+  }
+
+  // Scheme for Rendering Bookings onto Agenda View
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
         <Text>{item.name}</Text>
-        <Button
-          title='Toast'
-          onPress={() =>
-            Toast.show({
-              text: "Wrong password!",
-              buttonText: "Okay",
-              buttonTextStyle: { color: "#008000" },
-              buttonStyle: { backgroundColor: "#5cb85c" }
-            })}
-        >
-          <Text>Toast</Text>
-        </Button>
-      </View>    );
+        {console.log('item', item)}
+        <View>{this.renderSwitch(item)}</View>
+      </View>
+    )
+  }
+
+  renderEmptyData(item) {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>No Events Today!</Text>
+        <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+      </View>
+    )
   }
 
   rowHasChanged(r1, r2) {
-    return r1.name !== r2.name
+    if(r1.name !== r2.name) {
+      getBookings()
+    }
   }
 
 
@@ -255,16 +355,15 @@ let currentDate = new Date()
 // const workout = { key: 'workout', color: 'red' };
 
 const htmlContent = `
-      <div id="bookingjs"></div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script >
-        <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
-        <script>
-          window.timekitBookingConfig = {
-            app_key: 'test_widget_key_gCUAuN91ij3fXpZJsJOeoAxZZ5Wgsklh',
-            project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68'
-          }
-      </script>
-    `
+  <div id="bookingjs"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+  <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
+  <script>
+  window.timekitBookingConfig = {
+    app_key: 'test_widget_key_Pgedqmou2J9S6qtxYEo4rnJBDJD3dLS1',
+    project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5'
+  }
+  </script>`
 
 const styles = StyleSheet.create({
   item: {
@@ -279,5 +378,8 @@ const styles = StyleSheet.create({
     height: 15,
     flex: 1,
     paddingTop: 30
+  },
+  button: {
+    color: 'red',
   }
 })
