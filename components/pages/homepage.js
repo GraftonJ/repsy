@@ -135,6 +135,41 @@ async asyncTryAddCondition() {
   }
 }
 
+/************************************
+  DELETE selected conditions function
+*************************************/
+
+
+
+// onDeleteClick = async (e) => {
+//   const deletedMessage = this.state.messages
+//   .filter(message => (message.id === parseInt(e.target.id)))[0]
+//
+//   const response = await fetch(`${API}/${deletedMessage.id}`, {
+//     method: "DELETE",
+//     headers: {
+//       "Content-Type": "application/json; charset=utf-8"
+//     }
+//   })
+//   if(response.status === 200) {
+//     const json = await response.json()
+//     const newMessages = this.state.messages
+//     .filter(message => (message.id !== parseInt(json.id)))
+//     setTimeout(() => {
+//       this.setState({
+//         ...this.state,
+//         messages: newMessages
+//       })
+//     }, 500)
+//   }
+// }
+
+
+
+
+
+
+
 /******************************
   onValueChange for Drop Down
 *****************************/
@@ -255,13 +290,18 @@ componentWillUnmount(){
             <Text>Logout</Text>
           </Button>
           {this.state.doctorsConditions.map((condition, idx) => (
+            <Content key={idx}>
             <Button
               style={styles.button}
-              key={idx} conditionId={condition.id}
+              conditionId={condition.id}
               rounded style={styles.button}
               onPress={() => this.onPressButton(condition.name)}>
               <Text style={styles.buttonText}>{condition.name}</Text>
             </Button>
+            <Button>
+              <Icon name='ios-trash' />
+            </Button>
+          </Content>
           ))}
         </Content>
         <Footer>
