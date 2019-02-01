@@ -42,31 +42,9 @@ export default class Homepage extends Component {
   }
 }
 
-/******************************/
-//onValueChange
-/*****************************/
-onValueChange (value: string) {
-  let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
-  // console.log(chosen, chosen.id)
-  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === chosen.name)
-
-  if(duplicate) {
-    store.setState({
-      addedCondition: null,
-      selected: '',
-    })
-  }
-
-  if(!duplicate) {
-    store.setState({
-      addedCondition: chosen,
-      selected: value,
-    })
-console.log('store.getState().addedCondition:', store.getState().addedCondition)
-console.log('this.state.user.id', this.state.user.id)
-  }
-}
-
+/*************************************
+  GET conditions for logged in user
+***************************************/
 async getDocConditions () {
   //Get the conditions from the doctors_conditions route
     let conditions = []
@@ -77,8 +55,9 @@ async getDocConditions () {
     })
 }
 
-
-//Subscribe doctorsConditions state to the store to update on change
+/************************************************************
+Subscribe doctorsConditions state to the store to update on change
+*************************************************************/
 async componentDidMount(){
   this.unsubscribe = store.onChange(() => {
     this.setState({
@@ -90,9 +69,10 @@ async componentDidMount(){
     })
   })
 
-this.getDocConditions()
+  //calls function to check for any updates to a user's conditions of interest
+  this.getDocConditions()
 
-  // get all conditions
+  // filter through conditions to only display conditions in drop down that are related to logged-in user's specialty
   let conditionsList = []
   conditionsList = await getConditions()
   let specificConditions = conditionsList.filter(condition => condition.specialties_id === this.state.user.specialties_id)
@@ -100,18 +80,11 @@ this.getDocConditions()
     specialtyConditions: specificConditions,
     isLoading: false,
   })
-  // console.log('+++++++++++++++Specialty Conditions', this.state.specialtyConditions)
 }
 
-
-// conditions_id: store.getState().addedCondition.id
-// checkAddedCondition() {
-  //get doctorsConditions array from the store
-  //check to see if addedCondition.id is in that array
-  //if it is, throw an error
-// }
-
-//ADD SPECIALTY_CONDITION FUNCTION
+/**********************************************
+  ADD SPECIALTY_CONDITION FUNCTION - POST to DB
+**********************************************/
 async asyncTryAddCondition() {
   console.log("---------- asyncTryAddCondition(): ")
 //set errorMessage to nothing to begin with
@@ -126,8 +99,8 @@ async asyncTryAddCondition() {
   console.log('THIS IS THE BODY FOR POST________', body)
   //ROUTE to hit for DB
   const url = `${URI}/doctors_conditions`
-  //POST request to DB
 
+  //POST request to DB
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -153,6 +126,7 @@ async asyncTryAddCondition() {
       if(response.ok) {
         console.log('++++++++++++ new condition added!', responseJson)
 
+        //this function gets called again to update homepage conditions buttons
           this.getDocConditions()
     }
   }
@@ -161,32 +135,36 @@ async asyncTryAddCondition() {
   }
 }
 
+/******************************
+  onValueChange for Drop Down
+*****************************/
+onValueChange (value: string) {
+  //chosen is the condition the user selects from the drop down
+  let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
 
+  //duplicate checks the conditions for a user to see if they one they have selected will be a duplicate
+  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === chosen.name)
 
+  //if duplicate is found, there will not be an option to add that condition
+  if(duplicate) {
+    store.setState({
+      addedCondition: null,
+      selected: '',
+    })
+  }
 
-// async addMessage(message) {
-//    const response = await fetch(`${API}`, {
-//      method: 'POST',
-//      headers: {
-//        "Content-Type": "application/json; charset=utf-8"
-//      },
-//      body: JSON.stringify(message)
-//    })
-//    if(response.status === 200) {
-//      const json = await response.json()
-//      console.log("POST", json)
-//
-//      this.setState({ messages: [...this.state.messages, json], composing: false})
-//    }
-//    else {
-//      console.error("Could not post", response.statusText)
-//    }
-//  }
+  //if duplicate is not found, the post will be able to continue
+  if(!duplicate) {
+    store.setState({
+      addedCondition: chosen,
+      selected: value,
+    })
+  }
+}
 
-
-
-// * *********************************** * //
-//on press for clicking conditions to go to treatments page
+/*******************************************************
+  on press for clicking conditions to go to treatments page
+************************************************************/
 onPressButton = (name) => {
   store.setState({
     desired_info: {
@@ -197,15 +175,17 @@ onPressButton = (name) => {
   Actions.ConditionsPage()
 }
 
-/****************************************/
-//on press for added condition to database
+/****************************************
+on press for added condition to database
+****************************************/
 onPressAddCondition = async () => {
   console.log('trying to add')
     await this.asyncTryAddCondition()
 }
 
-//******************************/
-//onPress logout
+/******************************
+  onPress logout
+*****************************/
 onPressLogout = () => {
   Alert.alert('Bye now! Thanks for using Repsy!')
   store.setState({
@@ -217,8 +197,10 @@ onPressLogout = () => {
   Actions.FirstPage()
 }
 
+/*************************************
+  disconnect from store notifications
+**************************************/
 componentWillUnmount(){
-  //disconnect from store notifications
   this.unsubscribe()
 }
 
