@@ -137,23 +137,27 @@ async asyncTryAddCondition() {
 
 /************************************
   DELETE selected conditions function
+    example from DB:
+    -DELETE specified users record
+    -http delete  http://localhost:3000/doctors_conditions/2
+    -id is the unique id of the join table reference
 *************************************/
-// /* DELETE specified users record */
-// http delete  http://localhost:3000/doctors_conditions/2
-// id is the unique id of the join table reference
-
   async tryDeleteCondition() {
     console.log('----------------tryDeleteCondition()')
-    // console.log('join_id from store delete object:', store.getState().toDelete.join_id)
+
+    //error message is blank to begin with
     this.setState({
       errorMessage: ''
     })
 
+    //variable to get unique id of join table reference
+    //'toDelete' is set in store as the object to be deleted
     const join_id = store.getState().toDelete.join_id
-    console.log('The join id from the store:', join_id)
-    const url = `${URI}/doctors_conditions/${join_id}`
-    console.log('this is the url for the delete request:', url)
 
+    //creates url to try the delete with
+    const url = `${URI}/doctors_conditions/${join_id}`
+
+    //DELETE request
     try{
       const response = await fetch(url, {
         method: 'DELETE',
@@ -163,48 +167,27 @@ async asyncTryAddCondition() {
       })
       const responseJson = await response.json();
 
-        // if the new account fails, display error message
-        if (!response.ok) {
-          console.log('==== ', response.status, responseJson);
-          this.setState({
-            errorMessage: responseJson.error,
-          })
-          return
-        }
-        // delete condition succeeded!
-        if(response.ok) {
-          console.log('----------------- condition deleted!', responseJson)
-          
-          //this function gets called again to update homepage conditions buttons
-            this.getDocConditions()
-        }
+        // if it fails to delete, display error message
+      if (!response.ok) {
+        console.log('==== ', response.status, responseJson);
+        this.setState({
+          errorMessage: responseJson.error,
+        })
+        return
       }
-      catch(err) {
-        console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+
+      // if delete succeeded
+      if(response.ok) {
+        console.log('----------------- condition deleted!', responseJson)
+
+      //this function gets called again to update homepage conditions buttons
+        this.getDocConditions()
       }
     }
-// onDeleteClick = async (e) => {
-//   const deletedMessage = this.state.messages
-//   .filter(message => (message.id === parseInt(e.target.id)))[0]
-//
-//   const response = await fetch(`${API}/${deletedMessage.id}`, {
-//     method: "DELETE",
-//     headers: {
-//       "Content-Type": "application/json; charset=utf-8"
-//     }
-//   })
-//   if(response.status === 200) {
-//     const json = await response.json()
-//     const newMessages = this.state.messages
-//     .filter(message => (message.id !== parseInt(json.id)))
-//     setTimeout(() => {
-//       this.setState({
-//         ...this.state,
-//         messages: newMessages
-//       })
-//     }, 500)
-//   }
-// }
+    catch(err) {
+      console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+    }
+  }
 
 /******************************
   onValueChange for Drop Down
