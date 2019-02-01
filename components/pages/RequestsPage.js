@@ -200,44 +200,24 @@ export default class RequestsPage extends Component {
 
   // Create a new Booking Request to desired Resource
   createNewBookingRequest = async () => {
-    console.log("Dummy Request Was Hit")
     try {
-      timekit.configure({
-        // app: 'test-repsy-3078',
-        appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
-        // Optional
-        project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
-        // el: '#bookingjs', // Which element should we the library load into
-        autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
-        debug: true, // Enable debugging mode to output useful state/step data in the console
-        disable_confirm_page: false, // Disable the confirmation page and use the "clickTimeslot" callback to receive selected timeslot
-      })
-      timekit.createBooking({
-        resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
-        graph: 'confirm_decline',
-        start: '2019-02-10T14:30:00-06:00',
-        end: '2019-02-10T15:00:00-07:00',
-        what: 'NEW BOOKING',
-        where: 'Courthouse, Hill Valley, CA 95420, USA',
-        description: 'New booking TEST',
-        customer: {
-          name: 'Jimbo Martins',
-          email: 'tarmstrong1327@gmail.com',
-          phone: '(916) 555-4385',
-          voip: 'McFly',
-          timezone: 'America/Denver'
-        }
-      }).then(function (response) {
+      // timekit.updateBooking({ id:'b53f8655-b52e-43b6-a811-e5e3b694866e', action: "confirm"})
+      timekit.createBooking(
+        this.state.bookingRequest
+      ).then(function (response) {
         console.log("WORKED +++> ", response);
       }).catch(function (response) {
         console.log("DIED +++> ", response);
-      });
+      })
     } catch (error) {
       console.log(error)
     }
+
+    getBookings()
+    this.viewAppointments()
   }
 
-  
+  // Scheme for Rendering Bookings onto Agenda View
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
@@ -260,6 +240,12 @@ export default class RequestsPage extends Component {
             style={[styles.button]}
             buttonTextStyle={{ color: "#008000" }}
             onPress={() => {
+              // this will update a booking to a new status
+              timekit.updateBooking({
+                id: item.booking_id,
+                action: "confirm" // or "decline" or "cancel"
+              })
+
               Toast.show({
                 text: "tentative appointment Confirmed!",
                 buttonText: "Okay",
@@ -278,9 +264,15 @@ export default class RequestsPage extends Component {
               timekit.updateBooking({
                 id: item.booking_id,
                 action: "decline" // or "decline" or "cancel"
+              }).then((res) => {
+                getBookings()
+                console.log('res', res)
+                return res
+              }).catch((err) => {
+                console.log('error', err)
               })
 
-              getBookings()
+              
 
               Toast.show({
                 text: "tentative appointment Declined!",
