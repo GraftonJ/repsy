@@ -191,7 +191,7 @@ onPressButton = (name) => {
 }
 //on press for added condition to database
 onPressAddCondition = async () => {
-  console.log('Trying to add!')
+  console.log('condition added to the DB!')
     await this.asyncTryAddCondition()
 
 }
@@ -202,6 +202,27 @@ componentWillUnmount(){
   //disconnect from store notifications
   this.unsubscribe()
 }
+
+
+
+
+
+//DOCTORS CONDITONS BUTTON PULLED FROM render
+// this.state.doctorsConditions.map((condition, idx) => (
+//   <Button
+//     style={styles.button}
+//     key={idx} conditionId={condition.id}
+//     rounded style={styles.button}
+//     onPress={() => this.onPressButton(condition.name)}>
+//     <Text style={styles.buttonText}>{condition.name}</Text>
+//   </Button>
+// ))
+
+
+
+
+
+
 
 
 //******************************/

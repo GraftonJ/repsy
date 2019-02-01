@@ -25,7 +25,7 @@ let state = {
      } */
      user: null,
   // convenience flag that is kept in sync with "user" key by Login
-  isLoggedIn: false,
+  isLoggedIn: true,
 
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],
