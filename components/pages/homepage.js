@@ -128,23 +128,37 @@ async asyncTryAddCondition() {
   const url = `${URI}/doctors_conditions`
   //POST request to DB
 
-  
-  // try {
-  //   const response = await fetch(url, {
-  //     method: 'POST',
-  //     body: JSON.stringify(body),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //   })
-  //
-  //   const responseJson = await response.json();
-  //   console.log('^^^^^^^^^^^^^^responseJson', responseJson)
-  // }
-  // catch(err) {
-  //   console.log("ERROR asyncTryAddCondition fetch failed: ", err)
-  // }
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+
+    const responseJson = await response.json();
+    console.log('^^^^^^^^^^^^^^responseJson', responseJson)
+
+    // if the new account fails, display error message
+      if (!response.ok) {
+        console.log('==== ', response.status, responseJson);
+        this.setState({
+          errorMessage: responseJson.error,
+        })
+        return
+      }
+      // new condition succeeded!
+      if(response.ok) {
+        console.log('++++++++++++ new condition added!', responseJson)
+
+          this.getDocConditions()
+    }
+  }
+  catch(err) {
+    console.log("ERROR asyncTryAddCondition fetch failed: ", err)
+  }
 }
 
 
