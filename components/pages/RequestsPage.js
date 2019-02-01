@@ -129,7 +129,7 @@ export default class RequestsPage extends Component {
           email: 'tarmstrong1327@gmail.com',
           phone: '(916) 555-4385',
           voip: 'McFly',
-          timezone: 'America/Los_Angeles'
+          timezone: 'America/Denver'
         }
       }).then(function (response) {
         console.log("WORKED +++> ", response);
@@ -281,16 +281,15 @@ let currentDate = new Date()
 // const workout = { key: 'workout', color: 'red' };
 
 const htmlContent = `
-      <div id="bookingjs"></div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script >
-        <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
-        <script>
-          window.timekitBookingConfig = {
-            app_key: 'test_widget_key_gCUAuN91ij3fXpZJsJOeoAxZZ5Wgsklh',
-            project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68'
-          }
-      </script>
-    `
+  <div id="bookingjs"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+  <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
+  <script>
+  window.timekitBookingConfig = {
+    app_key: 'test_widget_key_Pgedqmou2J9S6qtxYEo4rnJBDJD3dLS1',
+    project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5'
+  }
+  </script>`
 
 const styles = StyleSheet.create({
   item: {

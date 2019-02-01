@@ -82,10 +82,10 @@ export const getDoctorsConditions = async () => {
 export const getBookings = async () => {
   try {
     timekit.configure({
-      // app: 'test-repsy-3078',
-      appKey: 'test_api_key_K6TsbABl5OYvMIQgFz2lmcMiKcGg5bwX',
+      // app: 'test-repsy-9311',
+      appKey: 'test_api_key_PX7kbsihWFfheH3CXbqlTycJazLsZEI2',
       // Optional
-      project_id: '077f4cb9-445c-47f9-b87a-8564d4720f68', // Reference a project where you want to pull settings from and connect bookings to
+      project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5', // Reference a project where you want to pull settings from and connect bookings to
       // el: '#bookingjs', // Which element should we the library load into
       autoload: true, // Auto initialization if a windo.timekitBookingConfig variable is found
       debug: true, // Enable debugging mode to output useful state/step data in the console
@@ -111,7 +111,6 @@ export const getBookings = async () => {
     }
     console.log('getBookings', getBookings)
     getBookings.data.forEach((x) => {
-      timekit.deleteBooking('49e76801-613a-46c2-9a27-a71262a951b2')
       console.log('x', x)
       let event = x.attributes.event
       console.log('event', event)
