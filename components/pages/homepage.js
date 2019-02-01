@@ -319,13 +319,16 @@ componentWillUnmount(){
             onPress={this.onPressAddCondition}>
             <Text>Add Condition</Text>
           </Button>
-          <Button
-            onPress={this.onPressLogout}
-            dark>
-            <Text>Logout</Text>
-          </Button>
           {this.state.doctorsConditions.map((condition, idx) => (
-            <Content key={idx}>
+            <View
+              style={{flexDirection: "row", justifyContent: 'center'}}
+              key={idx}>
+
+              <Icon
+                style={styles.trashButton}
+                onPress={() => this.onPressDelete(condition.id)}
+                name='trash' />
+
             <Button
               style={styles.button}
               conditionId={condition.id}
@@ -333,12 +336,14 @@ componentWillUnmount(){
               onPress={() => this.onPressButton(condition.name)}>
               <Text style={styles.buttonText}>{condition.name}</Text>
             </Button>
-            <Button
-              onPress={() => this.onPressDelete(condition.id)}>
-              <Icon name='ios-trash' />
-            </Button>
-          </Content>
+          </View>
           ))}
+          <Button
+            style={styles.logoutButton}
+            transparent
+            onPress={this.onPressLogout}>
+            <Text>Logout</Text>
+          </Button>
         </Content>
         <Footer>
           <FooterMenu/>
@@ -364,14 +369,20 @@ const styles = StyleSheet.create({
     button: {
       flexDirection: "row",
       justifyContent: "center",
-      margin: 15,
+      marginTop: 15,
+      margin: 3,
       width: '80%',
-      alignSelf: 'center',
+      alignSelf: 'flex-end',
     },
     buttonText: {
       fontFamily: 'Helvetica',
       fontSize: 20,
       justifyContent: 'center'
+    },
+    trashButton: {
+      marginTop: 25,
+      marginRight: 8,
+      height: '40%',
     },
     title: {
       fontSize: 35,
@@ -382,5 +393,9 @@ const styles = StyleSheet.create({
     },
     spinner: {
       height: height
+    },
+    logoutButton: {
+      alignSelf: 'center',
+      marginTop: '20%',
     }
 });
