@@ -68,12 +68,21 @@ export default class RequestsPage extends Component {
     })
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.calendarBookings !== this.state.calendarBookings) {
+  //     this.setState({
+  //       calendarBookings: this.state.calendarBookings
+  //     })
+  //   }
+  // }
+
   componentWillUnmount() {
     //disconnect from store notifications
     this.unsubscribe()
   }
 
   render() {
+    console.log('bookings', this.state.calendarBookings)
     const {
       calendarBookings,
       calendarResources,
@@ -322,7 +331,9 @@ export default class RequestsPage extends Component {
   }
 
   rowHasChanged(r1, r2) {
-    return r1.name !== r2.name
+    if(r1.name !== r2.name) {
+      getBookings()
+    }
   }
 
 
