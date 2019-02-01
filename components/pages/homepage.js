@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, Alert} from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 import store, { URI } from '../../store'
 import { getDoctorsConditions, getConditions } from '../../utils/api'
 import {
@@ -18,6 +21,7 @@ import {
   Spinner,
   Picker,
   Form,
+  StyleProvider
 } from 'native-base'
 
 import FooterMenu from '../elements/FooterMenu'
@@ -277,6 +281,7 @@ componentWillUnmount(){
   render() {
     //Show loading spinner if fetching data
     return (
+      <StyleProvider style={getTheme(platform)}>
       <Container>
         <Header>
           <Left>
@@ -289,7 +294,8 @@ componentWillUnmount(){
           </Right>
         </Header>
         <Content>
-          <Text style={styles.title}>Selected Conditions</Text>
+          <Text style={styles.title}>Conditions</Text>
+          <Text style={styles.underline}>_______________</Text>
           { //Check if state is loading to show spinner
             (this.state.isLoading)
             ? <Spinner color='red' />
@@ -297,13 +303,13 @@ componentWillUnmount(){
             <Form>
             <Picker
               mode="dropdown"
-              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-              style={{ width: undefined }}
+              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "rgb(84, 157, 191)", fontSize: 25 }} />}
+              style={styles.dropDown}
               placeholder="Select Conditions of Interest"
-              placeholderStyle={{ color: "rgb(79, 79, 78)" }}
+              placeholderStyle={{ color: "rgb(96, 29, 16)" }}
               note={false}
               onValueChange={this.onValueChange.bind(this)}
-              headerStyle={{ backgroundColor: "#2874F0" }}
+              headerStyle={{ backgroundColor: "rgb(84, 157, 191)" }}
               headerBackButtonTextStyle={{ color: "#fff" }}
               headerTitleStyle={{ color: "#fff" }}
               selectedValue={store.getState().selected}
@@ -316,8 +322,9 @@ componentWillUnmount(){
           </Form>
           }
           <Button
+            style={styles.addCondition}
             onPress={this.onPressAddCondition}>
-            <Text>Add Condition</Text>
+            <Text>Add</Text>
           </Button>
           {this.state.doctorsConditions.map((condition, idx) => (
             <View
@@ -349,6 +356,7 @@ componentWillUnmount(){
           <FooterMenu/>
         </Footer>
       </Container>
+    </StyleProvider>
       ) // End of return
 
   } // End of render
@@ -365,6 +373,33 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica-Bold',
     fontSize: 20,
     color: 'rgb(96, 29, 16)'
+  },
+  title: {
+    fontSize: 35,
+    fontFamily: 'Hoefler Text',
+    letterSpacing: 2, 
+    marginTop: "15%",
+    alignSelf: 'center',
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+  },
+  underline: {
+    fontSize: 20,
+    fontFamily: 'Hoefler Text',
+    marginTop: -5,
+    marginBottom: '5%',
+    alignSelf: 'center',
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+  },
+  dropDown: {
+    alignSelf: 'center',
+  },
+  addCondition: {
+    alignSelf: 'center',
+    marginTop: 8,
+    marginBottom: 15,
+
   },
     button: {
       flexDirection: "row",
@@ -383,13 +418,6 @@ const styles = StyleSheet.create({
       marginTop: 25,
       marginRight: 8,
       height: '40%',
-    },
-    title: {
-      fontSize: 35,
-      fontFamily: 'Hoefler Text',
-      marginTop: "15%",
-      marginBottom: '5%',
-      alignSelf: 'center',
     },
     spinner: {
       height: height

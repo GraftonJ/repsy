@@ -100,7 +100,7 @@ export default {
   CheckboxIconSize: 16,
   CheckboxIconMarginTop: 1,
   CheckboxFontSize: 17,
-  checkboxBgColor: "#039BE5",
+  checkboxBgColor: "rgb(84, 157, 191)",
   checkboxSize: 20,
   checkboxTickColor: "#fff",
 
@@ -143,7 +143,7 @@ export default {
   tabBarTextColor: "#bfc6ea",
   tabBarTextSize: 11,
   activeTab: "#fff",
-  sTabBarActiveTextColor: "#007aff",
+  sTabBarActiveTextColor: "rgb(84, 157, 191)",
   tabBarActiveTextColor: "#fff",
   tabActiveBgColor: "#3F51B5",
 
