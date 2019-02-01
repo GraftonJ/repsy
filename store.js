@@ -23,7 +23,7 @@ let state = {
        dogNames: ""Luna"",
        authHeader: "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE1NDUxNTYxMjMsImV4cCI6MTU0NTc2MDkyM30.xWToQs1ECfLF9wyKbs4uQTZnvzTFnrA4atKIRxU0bzI", // JWT from server to pass back in subsequebnt fetch's
      } */
-     user: null,
+  user: null,
   // convenience flag that is kept in sync with "user" key by Login
   isLoggedIn: true,
 

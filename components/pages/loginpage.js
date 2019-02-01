@@ -4,39 +4,117 @@ import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon } from 'native-base'
 
 import Registrationform from '../elements/RegistrationForm'
+import RepRegistrationForm from '../elements/RepRegistrationForm'
 
 
 
 export default class Loginpage extends Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    doctor: false,
+    rep: false
+  }
+}
 
-
+onPressDoctor = () => {
+  this.setState({
+    doctor: true,
+    rep: false
+  })
+}
+onPressRep = () => {
+  this.setState({
+    doctor: false,
+    rep: true
+  })
+}
   render() {
+    if(!this.state.doctor && !this.state.rep){
+      return (
+        <Container>
+          <Header>
+            <Left>
+              <Button
+                onPress={() => { Actions.pop() }}
+                transparent>
+                <Icon name="arrow-back" />
+                </Button>
+            </Left>
+            <Body>
+            </Body>
+            <Right>
+            </Right>
+          </Header>
+          <Content>
+            <Text style={styles.welcome}>Welcome to Repsy!</Text>
+            <Button onPress={() => this.onPressRep()}>
+                <Text>
+                  Sales Representative
+                </Text>
+            </Button>
+            <Button onPress={() => this.onPressDoctor()}>
+                <Text>
+                  Doctor Account
+                </Text>
+              </Button>
+          </Content>
+          <Footer>
+          </Footer>
+        </Container>
+      )
+    }
 
+  else {
     return (
       <Container>
         <Header>
           <Left>
             <Button
-              onPress={() => { Actions.pop() }}
-              transparent>
+              onPress={() => {
+                this.setState({
+                  doctor: false,
+                  rep: false,
+                })
+              }
+            } transparent>
               <Icon name="arrow-back" />
               </Button>
           </Left>
           <Body>
           </Body>
           <Right>
-            <Text style={styles.repsyHeader}>REPSY</Text>
+            {this.state.doctor
+              ? <Button onPress={() => this.onPressRep()}>
+                  <Text>
+                    Switch to Sales Representative
+                  </Text>
+                </Button>
+              : <Button onPress={() => this.onPressRep()}>
+                  <Text>
+                    Switch to Doctor
+                  </Text>
+                </Button>
+            }
           </Right>
         </Header>
         <Content>
           <Text style={styles.welcome}>Welcome to Repsy!</Text>
-          <Text style={styles.h2}>Create an Account</Text>
-          <Registrationform />
+          {this.state.doctor
+            ? <Text style={styles.h2}>Create a Doctor Account</Text>
+            : <Text style={styles.h2}>Create a Sales Rep Account</Text>
+          }
+
+          {this.state.doctor
+            ? <Registrationform />
+            : <RepRegistrationForm />
+          }
         </Content>
         <Footer>
         </Footer>
       </Container>
-    ) // End of return
+      ) // End of Else return
+    }//End of Else
   } // End of render
 
 } // End of componenet
