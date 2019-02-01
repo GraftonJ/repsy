@@ -254,7 +254,8 @@ componentWillUnmount(){
               headerStyle={{ backgroundColor: "#2874F0" }}
               headerBackButtonTextStyle={{ color: "#fff" }}
               headerTitleStyle={{ color: "#fff" }}
-              selectedValue={store.getState().selected}>
+              selectedValue={store.getState().selected}
+              >
 
               {this.state.specialtyConditions.map((specCond, idx) => (
                 <Picker.Item key={idx} label={specCond.name} value={specCond.name} id={specCond.id}/>
