@@ -14,7 +14,7 @@ let state = {
   //   lname: 'Smith',
   //   id: 2,
   // },
-  isLoggedIn: true,
+  // isLoggedIn: true,
   // Logged in user set by Login
   // Null when user is not logged in
   /* { id: 2,
@@ -25,7 +25,7 @@ let state = {
      } */
      user: null,
   // convenience flag that is kept in sync with "user" key by Login
-  // isLoggedIn: true,
+  isLoggedIn: false,
 
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],

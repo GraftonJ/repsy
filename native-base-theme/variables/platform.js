@@ -122,7 +122,7 @@ export default {
 
   // Font
   DefaultFontSize: 16,
-  fontFamily: platform === "ios" ? "System" : "Roboto",
+  fontFamily: platform === "ios" ? "Helvetica" : "Roboto",
   fontSizeBase: 15,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
@@ -219,7 +219,7 @@ export default {
   // Segment
   segmentBackgroundColor: platform === "ios" ? "#F8F8F8" : "#3F51B5",
   segmentActiveBackgroundColor: platform === "ios" ? "rgb(84, 157, 191)" : "#fff",
-  segmentTextColor: platform === "ios" ? "rgb(84, 157, 191)" : "#fff",
+  segmentTextColor: platform === "ios" ? "rgb(96, 29, 16)" : "#fff",
   segmentActiveTextColor: platform === "ios" ? "#fff" : "#3F51B5",
   segmentBorderColor: platform === "ios" ? "rgb(84, 157, 191)" : "#fff",
   segmentBorderColorMain: platform === "ios" ? "#a7a6ab" : "#3F51B5",
@@ -240,7 +240,7 @@ export default {
   tabFontSize: 15,
 
   // Text
-  textColor: "#000",
+  textColor: "rgb(96, 29, 16)",
   inverseTextColor: "#fff",
   noteFontSize: 14,
   get defaultTextColor() {
@@ -248,7 +248,7 @@ export default {
   },
 
   // Title
-  titleFontfamily: platform === "ios" ? "System" : "Roboto_medium",
+  titleFontfamily: platform === "ios" ? "Helvetica" : "Roboto_medium",
   titleFontSize: platform === "ios" ? 17 : 19,
   subTitleFontSize: platform === "ios" ? 11 : 14,
   subtitleColor: platform === "ios" ? "#8e8e93" : "#FFF",
@@ -258,7 +258,7 @@ export default {
   borderRadiusBase: platform === "ios" ? 5 : 2,
   borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
   contentPadding: 10,
-  dropdownLinkColor: "#414142",
+  dropdownLinkColor: "rgb(96, 29, 16)",
   inputLineHeight: 24,
   deviceWidth,
   deviceHeight,

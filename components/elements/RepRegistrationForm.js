@@ -4,75 +4,42 @@ import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
 
 import store, { URI } from '../../store'
-import { getSpecialties } from '../../utils/api'
 
-export default class DoctorRegistrationForm extends Component {
+export default class RepRegistrationForm extends Component {
   constructor(props) {
   super(props);
   this.state = {
       // local state
       // ---------------
-    selected: undefined,
-    specialties: [],
     errorMessage: '',
     // Field keys match db table fields
       fname: '', // holds the form value
       lname: '',
-      specialties_id: '',
-      npi_num: '',
-      clinic_name: '',
-      clinic_address: '',
+      company: '',
+      credentials: '',
       city: '',
       state: '',
       zip: 0,
       email: '',
-      password: "",
+      password: '',
+      reps_photo: '',
       isLoggedIn: store.getState().isLoggedIn,
-      user: store.getState().user,
-
+      user: store.getState.user
   }
 }
 
 
-/************************************/
-//ON CHANGE EVENT FOR SELECT SPECIALTY
-/* 1. gets value (specialty.name) from the dropdown
-   2. finds the individual specialty object where value and specialty.name match
-   3. sets selected in state to the value (specialty name)
-   4. sets specialties_id in state to specialty.id
-*/
-onValueChange(value: string) {
-  let specialty = this.state.specialties.find(chSpecialty => chSpecialty.name === value)
-  this.setState({
-    selected: value,
-    specialties_id: specialty.id
-    // selectedSpecialty_id: specialty.id,
-  })
-  store.setState({
-    selectedSpecialty: value,
-    selectedSpecialty_id: specialty.id,
-  })
-  console.log('selected specialty:', store.getState().selectedSpecialty)
-  console.log('selectedSpecialty_id:', store.getState().selectedSpecialty_id)
-}
-
 /***********************************/
-//LOADS SPECIALTIES FROM DATABASE
-// [{id, name, create_at, updated_at},{...}...]
 async componentDidMount(){
-  console.log('******************component mounted')
-  //get data from the API
-  const response = await fetch(`${URI}/specialties`)
-  const json = await getSpecialties()
-  this.setState({specialties: json})
+
+
 }
 
 
 // /************************************/
-//ADD DOCTOR FUNCTION
-async asyncTryAddDoctor() {
-  console.log("---------- asyncTryAddDoct(): ")
-
+//ADD Rep FUNCTION
+async asyncTryAddRep() {
+  console.log("---------- asyncTryAddRep(): ")
   this.setState({
     errorMessage: '',
   })
@@ -80,17 +47,16 @@ async asyncTryAddDoctor() {
   const body = {
     fname: this.state.fname,
     lname: this.state.lname,
-    specialties_id: this.state.specialties_id,
-    npi_num: this.state.npi_num,
-    clinic_name: this.state.clinic_name,
-    clinic_address: this.state.clinic_address,
+    company: this.state.company,
+    credentials: this.state.credentials,
     city: this.state.city,
     state: this.state.state,
     zip: this.state.zip,
     email: this.state.email,
     password: this.state.password,
+    //reps_photo: this.state.reps_photo
   }
-  const url = `${URI}/doctors`
+  const url = `${URI}/reps`
 
   try {
     // call login route
@@ -118,10 +84,9 @@ async asyncTryAddDoctor() {
     // new account succeeded!
     if(response.ok) {
       console.log('++++++++++++ new account added!', responseJson)
-
       store.setState({
         isLoggedIn: true,
-        user: responseJson.doctor
+        user: responseJson
       })
       console.log('*****store isLoggedIn', store.getState().isLoggedIn)
       console.log('******store user', store.getState().user)
@@ -136,8 +101,8 @@ async asyncTryAddDoctor() {
 // /* ***Î****************************************** */
 onpressSubmit = async () => {
   console.log('************onpressSubmit()')
-  console.log('TRYING TO ADD DOCTOR')
-  await this.asyncTryAddDoctor()
+  console.log('TRYING TO ADD Rep')
+  await this.asyncTryAddRep()
 }
 
   render() {
@@ -158,39 +123,23 @@ onpressSubmit = async () => {
                 onChangeText={(text) => this.setState({lname: text})}
                 placeholder="Last Name" />
             </Item>
-           <Picker
-             mode="dropdown"
-             iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-             style={{ width: undefined }}
-             placeholder="Select a Specialty"
-             placeholderStyle={{ color: "rgb(79, 79, 78)" }}
-             note={false}
-             onValueChange={this.onValueChange.bind(this)}
-             headerStyle={{ backgroundColor: "#2874F0" }}
-             headerBackButtonTextStyle={{ color: "#fff" }}
-             headerTitleStyle={{ color: "#fff" }}
-             selectedValue={store.getState().selectedSpecialty}>
-             {this.state.specialties.map((specialty, idx) => (
-               <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
-             ))}
-           </Picker>
            <Item>
              <Input
                autoCorrect={false}
-               onChangeText={(text) => this.setState({npi_num: text})}
-               placeholder="NPI #" />
+               onChangeText={(text) => this.setState({company: text})}
+               placeholder="Company" />
            </Item>
            <Item>
              <Input
                autoCorrect={false}
-               onChangeText={(text) => this.setState({clinic_name: text})}
-               placeholder="Clinic Name" />
+               onChangeText={(text) => this.setState({credentials: text})}
+               placeholder="Credentials" />
            </Item>
            <Item>
              <Input
                autoCorrect={false}
-               onChangeText={(text) => this.setState({clinic_address: text})}
-               placeholder="Clinic Address" />
+               onChangeText={(text) => this.setState({reps_photo: text})}
+               placeholder="Photo URL" />
            </Item>
            <Item>
              <Input
