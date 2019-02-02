@@ -435,8 +435,10 @@ const styles = StyleSheet.create({
   },
   addText: {
     marginTop: 10,
-    fontFamily: 'Hoefler Text',
-    fontSize: 20,
+    marginBottom: 20,
+    fontFamily: 'Helvetica',
+    fontSize: 18,
+    fontWeight: 'bold',
     overflow: 'hidden',
   },
   addIcon: {
