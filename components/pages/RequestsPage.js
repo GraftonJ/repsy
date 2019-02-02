@@ -31,12 +31,12 @@ export default class RequestsPage extends Component {
       calendarBookings: store.getState().calendarBookings,
       calendarResources: store.getState().calendarResources,
       isLookingForAppointment: false,
-      chosenDate: currentDate,
+      chosenDate: new Date(),
       bookingRequest: {
         resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
         graph: 'confirm_decline',
-        start: '2019-02-10T14:30:00-06:00',
-        end: '2019-02-10T15:00:00-07:00',
+        start: moment(this.chosenDate).format(),
+        end: moment(this.chosenDate).add(1, 'hour').format(),
         what: 'NEW BOOKING',
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
@@ -140,23 +140,11 @@ export default class RequestsPage extends Component {
                  <Item>
                   <View style={styles.container}>
                     <DatePickerIOS
-                      date={this.state.chosenDate}
+                      date={chosenDate}
                       onDateChange={this.setDate}
                       minuteInterval={15}
                     />
                   </View>
-                  {/* <DatePicker
-                    defaultDate={currentDate}
-                    locale={"en"}
-                    timeZoneOffsetInMinutes={undefined}
-                    modalTransparent={false}
-                    animationType={"fade"}
-                    placeHolderText={currentDate + 'or Select Date'}
-                    textStyle={{ color: "green" }}
-                    placeHolderTextStyle={{ color: "#d3d3d3" }}
-                    onDateChange={this.setDate.bind(this)}
-                    disabled={false}
-                  /> */}
                   {console.log('chosenDate', chosenDate)}
                   {console.log('this.state', this.state)}
                  </Item>
@@ -164,7 +152,7 @@ export default class RequestsPage extends Component {
             </Content>
             : <Agenda
               items={calendarBookings}
-              selected={currentDate}
+              selected={new Date()}
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
               theme={{ agendaKnobColor: 'grey' }}
@@ -349,14 +337,7 @@ const width = Dimensions.get('window').width
 
 //  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
 //  const strTime = this.timeToString(time);
-let currentDate = new Date()
-// let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
-let tomorrowDate = moment().format()
-// let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
-// const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
-// const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
-// const workout = { key: 'workout', color: 'red' };
+
 
 const htmlContent = `
   <div id="bookingjs"></div>
