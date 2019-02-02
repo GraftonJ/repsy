@@ -132,6 +132,7 @@ async asyncTryAddCondition() {
         store.setState({
           addedCondition: null,
         })
+        this.onValueChange()
         //this function gets called again to update homepage conditions buttons
           this.getDocConditions()
     }
