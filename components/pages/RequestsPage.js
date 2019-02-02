@@ -34,17 +34,6 @@ import {
 } from 'native-base'
 
 
-// import { LocaleConfig } from 'react-native-calendars';
-
-// LocaleConfig.locales['fr'] = {
-//   monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-//   monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-//   dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-//   dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.']
-// };
-
-// LocaleConfig.defaultLocale = 'fr';
-
 export default class RequestsPage extends Component {
 
   constructor(props) {
@@ -98,6 +87,12 @@ export default class RequestsPage extends Component {
   //     this.setState({
   //       calendarBookings: this.state.calendarBookings
   //     })
+  //   }
+  // }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(this.state, nextState)
+  //   if (nextState !== this.state) {
+  //     return true
   //   }
   // }
 
@@ -360,7 +355,7 @@ export default class RequestsPage extends Component {
   // Checks to See if Agenda has changed to refresh data
   rowHasChanged(r1, r2) {
     if(r1.name !== r2.name) {
-      // getBookings()
+      getBookings()
     }
   }
 
