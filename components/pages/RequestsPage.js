@@ -49,6 +49,7 @@ export default class RequestsPage extends Component {
         }
       }
     }
+    this.setDate = this.setDate.bind(this)
   }
 
   componentDidMount() {
@@ -88,8 +89,6 @@ export default class RequestsPage extends Component {
       calendarResources,
       chosenDate
     } = this.state
-
-    // this.createNewBookingRequest()
 
     return (
       <Container>
@@ -143,6 +142,7 @@ export default class RequestsPage extends Component {
                     <DatePickerIOS
                       date={this.state.chosenDate}
                       onDateChange={this.setDate}
+                      minuteInterval={15}
                     />
                   </View>
                   {/* <DatePicker
