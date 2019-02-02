@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, Button } from 'react-native';
+import { Platform, StyleSheet, View, Text, Dimensions, Button, DatePickerIOS } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon, DatePicker } from 'native-base'
 import { WebView } from 'react-native-webview'
@@ -139,7 +139,13 @@ export default class RequestsPage extends Component {
                 </Picker>
                 </Item>
                  <Item>
-                  <DatePicker
+                  <View style={styles.container}>
+                    <DatePickerIOS
+                      date={this.state.chosenDate}
+                      onDateChange={this.setDate}
+                    />
+                  </View>
+                  {/* <DatePicker
                     defaultDate={currentDate}
                     locale={"en"}
                     timeZoneOffsetInMinutes={undefined}
@@ -150,7 +156,7 @@ export default class RequestsPage extends Component {
                     placeHolderTextStyle={{ color: "#d3d3d3" }}
                     onDateChange={this.setDate.bind(this)}
                     disabled={false}
-                  />
+                  /> */}
                   {console.log('chosenDate', chosenDate)}
                   {console.log('this.state', this.state)}
                  </Item>
@@ -348,7 +354,7 @@ const width = Dimensions.get('window').width
 //  const strTime = this.timeToString(time);
 let currentDate = new Date()
 // let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
-// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
+let tomorrowDate = moment().format()
 // let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
 // const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
 // const massage = { key: 'massage', color: 'orange', selectedDotColor: 'orange' };
@@ -381,5 +387,9 @@ const styles = StyleSheet.create({
   },
   button: {
     color: 'red',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
   }
 })
