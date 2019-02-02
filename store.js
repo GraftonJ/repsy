@@ -14,7 +14,7 @@ let state = {
   //   lname: 'Smith',
   //   id: 2,
   // },
-  isLoggedIn: true,
+  // isLoggedIn: true,
   // Logged in user set by Login
   // Null when user is not logged in
   /* { id: 2,
@@ -23,9 +23,9 @@ let state = {
        dogNames: ""Luna"",
        authHeader: "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE1NDUxNTYxMjMsImV4cCI6MTU0NTc2MDkyM30.xWToQs1ECfLF9wyKbs4uQTZnvzTFnrA4atKIRxU0bzI", // JWT from server to pass back in subsequebnt fetch's
      } */
-  user: null,
+     user: null,
   // convenience flag that is kept in sync with "user" key by Login
-  // isLoggedIn: true,
+  isLoggedIn: false,
 
   //List of reps for a particular treatment. Default data type should be an array
   reps: [],
