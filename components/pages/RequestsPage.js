@@ -1,14 +1,38 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, Dimensions, Button, DatePickerIOS } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Left, Right, Body, Toast, Form, Item, Input, Label, Picker, Icon, DatePicker } from 'native-base'
+import React, { Component } from 'react'
+import { Actions } from 'react-native-router-flux'
 import { WebView } from 'react-native-webview'
-import { Calendar, CalendarList, Agenda, Arrow } from 'react-native-calendars'
+import { Agenda } from 'react-native-calendars'
 import { getBookings } from '../../utils/api'
-
 import store, { URI } from '../../store'
 import timekit from 'timekit-sdk'
 import moment from 'moment'
+import { 
+  Platform, 
+  StyleSheet, 
+  View, 
+  Text, 
+  Dimensions, 
+  Button, 
+  DatePickerIOS 
+} from 'react-native'
+import { 
+  Container, 
+  Header, 
+  Content, 
+  Footer, 
+  Left, 
+  Right, 
+  Body, 
+  Toast, 
+  Form, 
+  Item, 
+  Input, 
+  Label, 
+  Picker, 
+  Icon, 
+  Textarea 
+} from 'native-base'
+
 
 // import { LocaleConfig } from 'react-native-calendars';
 
@@ -113,32 +137,34 @@ export default class RequestsPage extends Component {
             // <WebView source={{ html: htmlContent }} />
             <Content>
               <Form>
-                <Item floatingLabel>
-                  <Label>Resource</Label>
-                  <Input />
-                </Item>
-                <Item floatingLabel last>
-                  <Label>Password</Label>
-                  <Input secureTextEntry/>
-                </Item>
                 <Item picker>
-                    <Picker
-                      mode="dropdown"
-                      iosIcon={<Icon name="arrow-down" />}
-                      style={{ width: undefined }}
-                      placeholder="Who do you want to Book?"
-                      placeholderStyle={{ color: "#bfc6ea" }}
-                      placeholderIconColor="#007aff"
-                      selectedValue={this.state.bookingRequest.resource_id}
-                      onValueChange={this.onResourceValueChange.bind(this)}
-                    >
+                <Label>Pharma Rep</Label>
+                  <Picker
+                    mode="dropdown"
+                    iosIcon={<Icon name="arrow-down" />}
+                    style={{ width: undefined }}
+                    placeholder="Who do you want to Book?"
+                    placeholderStyle={{ color: "#bfc6ea" }}
+                    placeholderIconColor="#007aff"
+                    selectedValue={this.state.bookingRequest.resource_id}
+                    onValueChange={this.onResourceValueChange.bind(this)}
+                  >
                     {calendarResources.map((x, idx) => {
                       return <Picker.Item key={idx} label={x.first_name + ' ' + x.last_name} value={x.id} id={x.id} />
                     })}
-                </Picker>
+                  </Picker>
                 </Item>
-                 <Item>
+                <Item>
+                  <Icon active name='ios-call' />
+                  <Input placeholder='Contact Number' />
+                </Item>
+                <Item stackedLabel>
+                  <Label>Reason For Appointment</Label>
+                  <Textarea rowSpan={5} width={340} bordered />
+                </Item>
+                <Item>
                   <View style={styles.container}>
+                    <Label>Appointment Time/Date (MST)</Label>
                     <DatePickerIOS
                       date={chosenDate}
                       onDateChange={this.setDate}
@@ -223,7 +249,6 @@ export default class RequestsPage extends Component {
   renderSwitch(item) {
     switch (item.state) {
       case 'tentative':
-        console.log('item tentative')
         return <View>
           <Button
             title='Confirm'
@@ -305,13 +330,25 @@ export default class RequestsPage extends Component {
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
-        <Text>{item.name}</Text>
+        <Label>Doctor: {item.customer_name}</Label>
+        <Label>Pharma Rep: {/*store.getState().user.name?*/}</Label>  
+        <Text>{item.event_name}</Text>
+        <Item style={{ width: 200 }}>
+          <Icon active name='ios-time' />
+          <Text style={{ textAlign: 'center' }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm:ss a')}-{moment(item.event_end).format('MMMM Do YYYY, h:mm:ss a')}</Text>
+        </Item>
+        <Item style={{ width: 200 }}>
+          <Icon active name='ios-navigate' />
+          <Text style={{ textAlign: 'center' }}>{item.event_location}</Text>
+        </Item>
         {console.log('item', item)}
-        <View>{this.renderSwitch(item)}</View>
+        <Icon active name='ios-filing' />
+        
+        <View >{this.renderSwitch(item)}</View>
       </View>
     )
   }
-
+  // Scheme for Rendering Empty Agenda Days
   renderEmptyData(item) {
     return (
       <View style={styles.emptyDate}>
@@ -320,25 +357,18 @@ export default class RequestsPage extends Component {
       </View>
     )
   }
-
+  // Checks to See if Agenda has changed to refresh data
   rowHasChanged(r1, r2) {
     if(r1.name !== r2.name) {
       // getBookings()
     }
   }
 
-
 } // End of componenet
 
 // Variables to change the height and width dynamically for all screens
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
-
-
-//  const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-//  const strTime = this.timeToString(time);
-
-
 const htmlContent = `
   <div id="bookingjs"></div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>

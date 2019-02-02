@@ -115,15 +115,16 @@ export const getBookings = async () => {
     getBookings.data.forEach((x) => {
       console.log('x', x)
       let event = x.attributes.event
-      console.log('event', event)
+      let customer = x.attributes.customer
+      // console.log('event', event)
       const date = timeToString(event.start)
 
       // Cycles through and creates the objects for the timekit according
       // to the timekits desired format: {'Year-Month-Day': [{name: "Description"}]'}
       if (!calendarData[date]) {
-        calendarData[date] = [{ name: `${event.what}`, state: `${x.state}`, booking_id: `${x.id}` }]
+        calendarData[date] = [{ event_name: `${event.what}`, event_location: `${event.where}`, event_start: `${event.start}`, event_end: `${event.end}`, state: `${x.state}`, booking_id: `${x.id}`, customer_email: `${customer.email}`, customer_name: `${customer.name}` }]
       } else {
-        calendarData[date].push({ name: `${event.what}`, state: `${x.state}`, booking_id: `${x.id}` })
+        calendarData[date].push({ event_name: `${event.what}`, event_location: `${event.where}`, event_start: `${event.start}`, event_end: `${event.end}`, state: `${x.state}`, booking_id: `${x.id}`, customer_email: `${customer.email}`, customer_name: `${customer.name}` })
       }
     })
 
