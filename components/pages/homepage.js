@@ -132,9 +132,12 @@ async asyncTryAddCondition() {
         store.setState({
           addedCondition: null,
         })
+
+        //clears dropdown selected value
         this.onValueChange()
+
         //this function gets called again to update homepage conditions buttons
-          this.getDocConditions()
+        this.getDocConditions()
     }
   }
   catch(err) {
@@ -309,10 +312,12 @@ componentWillUnmount(){
               headerBackButtonTextStyle={{ color: "#fff" }}
               headerTitleStyle={{ color: "#fff" }}
               selectedValue={store.getState().selected}
+              textStyle={{ color: "rgb(96, 29, 16)" }}
               >
 
               {this.state.specialtyConditions.map((specCond, idx) => (
                 <Picker.Item
+
                   style={styles.pickerItem}
                   key={idx}
                   label={specCond.name}
@@ -328,6 +333,7 @@ componentWillUnmount(){
             <TouchableOpacity style={styles.addButton} onPress={this.onPressAddCondition}>
               <Text
                 numberOfLines={1}
+                ellipsizeMode='middle'
                 style={styles.addText}>
                 Add {store.getState().addedCondition.name} to your list
               </Text>
@@ -355,7 +361,10 @@ componentWillUnmount(){
               conditionId={condition.id}
               rounded style={styles.button}
               onPress={() => this.onPressButton(condition.name)}>
-              <Text style={styles.buttonText}>{condition.name}</Text>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode='tail'
+                style={styles.buttonText}>{condition.name}</Text>
             </Button>
           </View>
           ))}
@@ -418,12 +427,9 @@ const styles = StyleSheet.create({
   dropDown: {
     alignSelf: 'center',
   },
-  pickerItem: {
-    color: 'rgb(96, 29, 16)',
-  },
   addButton: {
-    marginRight: 10,
-    marginLeft: 10,
+    marginRight: 40,
+    marginLeft: 40,
     flexDirection: 'row',
     justifyContent: 'center'
   },
