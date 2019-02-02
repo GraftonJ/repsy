@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions, Alert} from 'react-native';
+import { Platform, StyleSheet, View, Dimensions, Alert, TouchableOpacity} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import getTheme from '../../native-base-theme/components'
 import material from '../../native-base-theme/variables/material'
@@ -129,7 +129,9 @@ async asyncTryAddCondition() {
       // new condition succeeded!
       if(response.ok) {
         console.log('++++++++++++ new condition added!', responseJson)
-
+        store.setState({
+          addedCondition: null,
+        })
         //this function gets called again to update homepage conditions buttons
           this.getDocConditions()
     }
@@ -185,7 +187,7 @@ async asyncTryAddCondition() {
         console.log('----------------- condition deleted!', responseJson)
 
       //this function gets called again to update homepage conditions buttons
-        this.getDocConditions()
+          this.getDocConditions()
       }
     }
     catch(err) {
@@ -200,24 +202,10 @@ onValueChange (value: string) {
   //chosen is the condition the user selects from the drop down
   let chosen = this.state.specialtyConditions.find(chCondition => chCondition.name === value)
 
-  //duplicate checks the conditions for a user to see if they one they have selected will be a duplicate
-  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === chosen.name)
-
-  //if duplicate is found, there will not be an option to add that condition
-  if(duplicate) {
-    store.setState({
-      addedCondition: null,
-      selected: '',
-    })
-  }
-
-  //if duplicate is not found, the post will be able to continue
-  if(!duplicate) {
     store.setState({
       addedCondition: chosen,
       selected: value,
     })
-  }
 }
 
 /*******************************************************
@@ -238,7 +226,14 @@ on press for added condition to database
 ****************************************/
 onPressAddCondition = async () => {
   console.log('trying to add')
+  let duplicate = store.getState().doctorsConditions.find(condition => condition.name === store.getState().addedCondition.name)
+
+  if(duplicate) {
+    Alert.alert('You have already added this condition')
+  }
+  else {
     await this.asyncTryAddCondition()
+  }
 }
 
 /****************************************
@@ -285,7 +280,7 @@ componentWillUnmount(){
       <Container>
         <Header>
           <Left>
-            <Text>Hello {this.state.userName}</Text>
+            <Text style={styles.headerName}>Hello {this.state.userName}</Text>
           </Left>
           <Body>
           </Body>
@@ -316,19 +311,37 @@ componentWillUnmount(){
               >
 
               {this.state.specialtyConditions.map((specCond, idx) => (
-                <Picker.Item key={idx} label={specCond.name} value={specCond.name} id={specCond.id}/>
+                <Picker.Item
+                  style={styles.pickerItem}
+                  key={idx}
+                  label={specCond.name}
+                  value={specCond.name}
+                  id={specCond.id}/>
               ))}
             </Picker>
           </Form>
           }
-          <Button
-            style={styles.addCondition}
-            onPress={this.onPressAddCondition}>
-            <Text>Add</Text>
-          </Button>
+          {store.getState().addedCondition
+            ?
+          <View>
+            <TouchableOpacity style={styles.addButton} onPress={this.onPressAddCondition}>
+              <Text
+                numberOfLines={1}
+                style={styles.addText}>
+                Add {store.getState().addedCondition.name} to your list
+              </Text>
+              <Icon
+                style={styles.addIcon}
+                name="add-circle"
+              />
+            </TouchableOpacity>
+          </View>
+          :
+          <View></View>
+        }
           {this.state.doctorsConditions.map((condition, idx) => (
             <View
-              style={{flexDirection: "row", justifyContent: 'center'}}
+              style={styles.view}
               key={idx}>
 
               <Icon
@@ -345,18 +358,18 @@ componentWillUnmount(){
             </Button>
           </View>
           ))}
-          <Button
-            style={styles.logoutButton}
-            transparent
+          <TouchableOpacity
+
             onPress={this.onPressLogout}>
-            <Text>Logout</Text>
-          </Button>
+            <Text style={styles.logoutButton}>Logout</Text>
+          </TouchableOpacity>
         </Content>
         <Footer>
           <FooterMenu/>
         </Footer>
       </Container>
     </StyleProvider>
+
       ) // End of return
 
   } // End of render
@@ -374,14 +387,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'rgb(96, 29, 16)'
   },
+  headerName: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 15,
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+  },
   title: {
     fontSize: 35,
     fontFamily: 'Hoefler Text',
-    letterSpacing: 2, 
+    letterSpacing: 2,
     marginTop: "15%",
     alignSelf: 'center',
     color: 'rgb(96, 29, 16)',
     fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
   },
   underline: {
     fontSize: 20,
@@ -395,11 +417,29 @@ const styles = StyleSheet.create({
   dropDown: {
     alignSelf: 'center',
   },
+  pickerItem: {
+    color: 'rgb(96, 29, 16)',
+  },
+  addButton: {
+    marginRight: 10,
+    marginLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  addText: {
+    marginTop: 10,
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+    overflow: 'hidden',
+  },
+  addIcon: {
+    marginTop: 5,
+    marginLeft: 5,
+  },
   addCondition: {
     alignSelf: 'center',
     marginTop: 8,
     marginBottom: 15,
-
   },
     button: {
       flexDirection: "row",
@@ -422,8 +462,17 @@ const styles = StyleSheet.create({
     spinner: {
       height: height
     },
+    view: {
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
     logoutButton: {
       alignSelf: 'center',
-      marginTop: '20%',
+      marginTop: '15%',
+      fontFamily: 'Helvetica',
+      fontSize: 20,
+      fontWeight: 'bold',
+      letterSpacing: 1,
+      color: 'rgb(84, 157, 191)',
     }
 });

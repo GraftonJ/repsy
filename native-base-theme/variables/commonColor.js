@@ -34,7 +34,7 @@ export default {
   badgePadding: platform === "ios" ? 3 : 0,
 
   // Button
-  btnFontFamily: platform === "ios" ? "System" : "Roboto_medium",
+  btnFontFamily: platform === "ios" ? "Helvetica" : "Roboto_medium",
   btnDisabledBg: "#b5b5b5",
   buttonPadding: 6,
   get btnPrimaryBg() {
@@ -116,7 +116,7 @@ export default {
   containerBgColor: "#fff",
 
   //Date Picker
-  datePickerTextColor: "#000",
+  datePickerTextColor: "rgb(96, 29, 16)",
   datePickerBg: "transparent",
 
   // Font
