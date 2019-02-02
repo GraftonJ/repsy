@@ -228,7 +228,6 @@ export default class RequestsPage extends Component {
       console.log(error)
     }
 
-    getBookings()
     this.viewAppointments()
   }
 
@@ -275,8 +274,6 @@ export default class RequestsPage extends Component {
               }).catch((err) => {
                 console.log('error', err)
               })
-
-              
 
               Toast.show({
                 text: "tentative appointment Declined!",
@@ -338,7 +335,7 @@ export default class RequestsPage extends Component {
 
   rowHasChanged(r1, r2) {
     if(r1.name !== r2.name) {
-      getBookings()
+      // getBookings()
     }
   }
 
@@ -354,6 +351,7 @@ const width = Dimensions.get('window').width
 //  const strTime = this.timeToString(time);
 let currentDate = new Date()
 // let yesterdayDate = new Date().setDate(currentDate.getDate() - 1)
+// let tomorrowDate = new Date().setDate(currentDate.getDate() + 1)
 let tomorrowDate = moment().format()
 // let nextMonthDate = new Date().setMonth(currentDate.getMonth() + 1)
 // const vacation = { key: 'vacation', color: 'blue', selectedDotColor: 'blue' };
