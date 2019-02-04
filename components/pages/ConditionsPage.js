@@ -2,8 +2,12 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Image, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon, Text, ListItem, List, Picker, Form } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon, Text, ListItem, List, Picker, Form, StyleProvider } from 'native-base'
 import { WebView } from 'react-native-webview';
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 // Accesses the store and api
 import store, { URI } from '../../store'
@@ -63,6 +67,7 @@ export default class ConditionsPage extends Component {
   // * *********************************** * //
   render() {
     return (
+      <StyleProvider style={getTheme(platform)}>
       <Container>
         <Header>
           <Left>
@@ -98,6 +103,7 @@ export default class ConditionsPage extends Component {
           <FooterMenu />
         </Footer>
       </Container>
+    </StyleProvider>
     )
   }
 }

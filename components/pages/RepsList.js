@@ -3,6 +3,11 @@ import { Platform, StyleSheet, View, Dimensions} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
 import { getRepsMed } from '../../utils/api'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
+
 import {
   Container,
   Header,
@@ -16,6 +21,7 @@ import {
   Right,
   Body,
   Spinner,
+  StyleProvider
 } from 'native-base'
 import FooterMenu from '../elements/FooterMenu'
 import RepsCard from '../elements/RepsCard'
@@ -63,6 +69,7 @@ render() {
   const { isLoading, reps} = this.state
   //Show loading spinner if fetching data
   return (
+    <StyleProvider style={getTheme(platform)}>
     <Container>
       <Header>
         <Left>
@@ -96,6 +103,7 @@ render() {
         <FooterMenu/>
       </Footer>
     </Container>
+  </StyleProvider>
     ) // End of return
 
   } // End of render

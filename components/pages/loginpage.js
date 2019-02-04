@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Icon, StyleProvider } from 'native-base'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 import Registrationform from '../elements/RegistrationForm'
 import RepRegistrationForm from '../elements/RepRegistrationForm'
@@ -33,6 +37,7 @@ onPressRep = () => {
     // First Determine type of account
     if(!this.state.doctor && !this.state.rep){
       return (
+        <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header>
             <Left>
@@ -70,6 +75,7 @@ onPressRep = () => {
           <Footer>
           </Footer>
         </Container>
+      </StyleProvider>
       )
     }
   else {

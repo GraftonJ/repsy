@@ -16,7 +16,12 @@ import {
   Right,
   Body,
   Spinner,
+  StyleProvider
 } from 'native-base'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 import FooterMenu from '../elements/FooterMenu'
 
@@ -68,6 +73,7 @@ componentWillUnmount(){
     }
     else {
       return (
+        <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header>
             <Left>
@@ -118,6 +124,7 @@ componentWillUnmount(){
             <FooterMenu/>
           </Footer>
         </Container>
+      </StyleProvider>
         ) // End of return
       }
     } // End of render

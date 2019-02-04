@@ -2,8 +2,12 @@
 import React, { Component } from 'react';
 import {Alert, Platform, StyleSheet, Image, View, Dimensions, AsyncStorage, FlatList} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Text, Picker, Form, Icon } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Text, Picker, Form, Icon, StyleProvider } from 'native-base'
 import ModalDropdown from 'react-native-modal-dropdown';
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 // Accesses the store and api
 import { getMeds } from '../../utils/api'
@@ -183,6 +187,7 @@ export default class SelectedMedication extends Component {
   render() {
 
     return (
+      <StyleProvider style={getTheme(platform)}>
       <Container>
         <Header>
           <Left>
@@ -254,6 +259,7 @@ export default class SelectedMedication extends Component {
           <FooterMenu />
         </Footer>
       </Container>
+    </StyleProvider>
     ) // End of return
   } // End of render
 

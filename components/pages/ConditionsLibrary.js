@@ -2,7 +2,11 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner } from 'native-base'
+import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner, StyleProvider } from 'native-base'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 // Accesses the store and api
 import store, { URI } from '../../store'
@@ -67,6 +71,7 @@ export default class ConditionsLibrary extends Component {
       }
     else {
     return (
+      <StyleProvider style={getTheme(platform)}>
       <Container>
         <Header searchBar rounded>
           <Item>
@@ -93,6 +98,7 @@ export default class ConditionsLibrary extends Component {
           <FooterMenu/>
         </Footer>
       </Container>
+    </StyleProvider>
     ) // End of return
   } // End of render
 }

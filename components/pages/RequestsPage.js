@@ -6,31 +6,37 @@ import { getBookings } from '../../utils/api'
 import store, { URI } from '../../store'
 import timekit from 'timekit-sdk'
 import moment from 'moment'
-import { 
-  Platform, 
-  StyleSheet, 
-  View, 
-  Text, 
-  Dimensions, 
-  Button, 
-  DatePickerIOS 
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
+
+import {
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Button,
+  DatePickerIOS
 } from 'react-native'
-import { 
-  Container, 
-  Header, 
-  Content, 
-  Footer, 
-  Left, 
-  Right, 
-  Body, 
-  Toast, 
-  Form, 
-  Item, 
-  Input, 
-  Label, 
-  Picker, 
-  Icon, 
-  Textarea 
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  Left,
+  Right,
+  Body,
+  Toast,
+  Form,
+  Item,
+  Input,
+  Label,
+  Picker,
+  Icon,
+  Textarea,
+  StyleProvider
 } from 'native-base'
 
 
@@ -110,6 +116,7 @@ export default class RequestsPage extends Component {
     } = this.state
 
     return (
+      <StyleProvider style={getTheme(platform)}>
       <Container>
         <Header>
           <Left>
@@ -188,6 +195,7 @@ export default class RequestsPage extends Component {
           }
       </Footer>
       </Container>
+    </StyleProvider>
     ) // End of return
   } // End of render
 
@@ -326,7 +334,7 @@ export default class RequestsPage extends Component {
     return (
       <View style={[styles.item, { height: item.height }]}>
         <Label>Doctor: {item.customer_name}</Label>
-        <Label>Pharma Rep: {/*store.getState().user.name?*/}</Label>  
+        <Label>Pharma Rep: {/*store.getState().user.name?*/}</Label>
         <Text>{item.event_name}</Text>
         <Item style={{ width: 200 }}>
           <Icon active name='ios-time' />
@@ -338,7 +346,7 @@ export default class RequestsPage extends Component {
         </Item>
         {console.log('item', item)}
         <Icon active name='ios-filing' />
-        
+
         <View >{this.renderSwitch(item)}</View>
       </View>
     )
