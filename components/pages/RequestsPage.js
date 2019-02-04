@@ -89,6 +89,7 @@ export default class RequestsPage extends Component {
   //     })
   //   }
   // }
+  
   // shouldComponentUpdate(nextProps, nextState) {
   //   console.log(this.state, nextState)
   //   if (nextState !== this.state) {
@@ -276,9 +277,7 @@ export default class RequestsPage extends Component {
                 id: item.booking_id,
                 action: "decline" // or "decline" or "cancel"
               }).then((res) => {
-                getBookings()
                 console.log('res', res)
-                return res
               }).catch((err) => {
                 console.log('error', err)
               })
