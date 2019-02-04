@@ -106,7 +106,7 @@ export const getBookings = async () => {
       const date = new Date(time)
       return date.toISOString().split('T')[0]
     }
-    // console.log('getBookings', getBookings)
+    console.log('getBookings', getBookings)
     getBookings.data.forEach((x) => {
       // console.log('x', x)
       let event = x.attributes.event

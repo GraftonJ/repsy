@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions, Alert, Image} from 'react-native';
+import { Platform, StyleSheet, View, Dimensions, Alert, Image, DatePickerIOS} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import store, { URI } from '../../store'
-import { getRepsMed } from '../../utils/api'
+import { getRepsMed, getBookings } from '../../utils/api'
+import timekit from 'timekit-sdk'
+import moment from 'moment'
 import {
   Container,
   Header,
@@ -16,7 +18,12 @@ import {
   Right,
   Body,
   Spinner,
-  StyleProvider
+  StyleProvider,
+  Form,
+  Item,
+  Input,
+  Label,
+  Textarea,
 } from 'native-base'
 
 import getTheme from '../../native-base-theme/components'
@@ -32,8 +39,33 @@ export default class RepDetail extends Component {
     reps: store.getState().reps,
     desired_info: store.getState().desired_info,
     isLoading: true,
+    chosenDate: new Date(),
+    isLookingForAppointment: false,
+    bookingRequest: {
+      resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
+      graph: 'confirm_decline',
+      start: '',
+      end: '',
+      what: 'NEW BOOKING',
+      where: 'Courthouse, Hill Valley, CA 95420, USA',
+      description: 'New booking TEST',
+      customer: {
+        name: 'Jimbo Martins',
+        email: 'tarmstrong1327@gmail.com',
+        phone: '(916) 555-4385',
+        voip: 'McFly',
+        timezone: 'America/Los_Angeles'
+      }
+    }
   }
+  this.setDate = this.setDate.bind(this)
 }
+  // Request New Appointment 
+  requestAppointment = () => {
+    this.setState({
+      isLookingForAppointment: true,
+    })
+  }
 
 //Subscribe reps state to the store to update on change
 async componentDidMount(){
@@ -65,12 +97,13 @@ componentWillUnmount(){
 //******************************/
 
   render() {
-    const { reps, desired_info } = this.state
+    const { reps, desired_info, chosenDate } = this.state
     if(this.state.isLoading) {
       return (
         <Spinner color='red' style={styles.spinner}/>
       )
     }
+    
     else {
       return (
         <StyleProvider style={getTheme(platform)}>
@@ -93,35 +126,63 @@ componentWillUnmount(){
             <Right>
             </Right>
           </Header>
-          <Content>
-            <Image
-              style={{width: '100%', height: 300}}
-              source={{uri: `${reps[desired_info.repIdx].reps_photo}`}}
-            />
-            <Text style={styles.repName}>
-              {reps[desired_info.repIdx].fname} {reps[desired_info.repIdx].lname}
-            </Text>
-            <Text style={styles.companyName}>
-              Representative for {reps[desired_info.repIdx].company}
-            </Text>
-            <Text style={styles.pharma}>
-              Expertise including {reps[desired_info.repIdx].brand_name} ({reps[desired_info.repIdx].generic_name})
-            </Text>
-            <Text style={styles.credentials}>
-              Summary
-            </Text>
-            <Text style={styles.credentialsContent}>
-              {reps[desired_info.repIdx].credentials}
-            </Text>
-            <View style={styles.buttonContainer}>
-              <Button style={styles.scheduleButton} onClick={this.scheduleAppointment}
-                title='Schedule Appointment'>
-                <Text> Schedule Appointment </Text>
-              </Button>
-            </View>
-          </Content>
+            {(this.state.isLookingForAppointment)
+              ? <Content>
+                <Form>
+                  <Item picker>
+                    <Label>Pharma Rep:</Label>
+                  </Item>
+                  <Item>
+                    <Icon active name='ios-call' />
+                    <Input placeholder='Contact Number' />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label>Reason For Appointment</Label>
+                    <Textarea rowSpan={5} width={340} bordered onChange={this.setReason} />
+                  </Item>
+                  <Item>
+                    <View style={styles.container}>
+                      <Label>Appointment Time/Date (MST)</Label>
+                      <DatePickerIOS
+                        date={chosenDate}
+                        onDateChange={this.setDate}
+                        minuteInterval={15}
+                      />
+                    </View>
+                  </Item>
+                </Form>
+              </Content> 
+              : <Content>
+                  <Image
+                    style={{width: '100%', height: 300}}
+                    source={{uri: `${reps[desired_info.repIdx].reps_photo}`}}
+                  />
+                  <Text style={styles.repName}>
+                    {reps[desired_info.repIdx].fname} {reps[desired_info.repIdx].lname}
+                  </Text>
+                  <Text style={styles.companyName}>
+                    Representative for {reps[desired_info.repIdx].company}
+                  </Text>
+                  <Text style={styles.pharma}>
+                    Expertise including {reps[desired_info.repIdx].brand_name} ({reps[desired_info.repIdx].generic_name})
+                  </Text>
+                  <Text style={styles.credentials}>
+                    Summary
+                  </Text>
+                  <Text style={styles.credentialsContent}>
+                    {reps[desired_info.repIdx].credentials}
+                  </Text>
+                  <View style={styles.buttonContainer}>
+                  <Button style={styles.scheduleButton} onPress={() => this.requestAppointment()}
+                      title='Schedule Appointment'>
+                      <Text> Schedule Appointment </Text>
+                    </Button>
+                  </View>
+                </Content>}
           <Footer>
-            <FooterMenu/>
+            {(this.state.isLookingForAppointment)
+              ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request"><Text>Submit New Request</Text></Button>
+              : <FooterMenu />}
           </Footer>
         </Container>
       </StyleProvider>
@@ -129,7 +190,45 @@ componentWillUnmount(){
       }
     } // End of render
 
-  } // End of componenet
+  // Set Current Date to State from Request Booking Form
+  setDate(newDate) {
+    console.log('this.state', this.state)
+    this.setState({
+      chosenDate: newDate,
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        start: moment(newDate).format(),
+        end: moment(newDate).add(1, 'hour').format()
+      }
+    })
+  }
+
+  // Create a new Booking Request to desired Resource
+  createNewBookingRequest = async () => {
+    try {
+      timekit.createBooking(
+        this.state.bookingRequest
+      ).then(function (response) {
+        console.log("WORKED +++> ", response);
+      }).catch(function (response) {
+        console.log("DIED +++> ", response);
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+    this.viewAppointments()
+  }
+
+  // View Calendar onClick function with updated Booking Requests
+  viewAppointments = () => {
+    this.setState({
+      isLookingForAppointment: false,
+    })
+    getBookings()
+  }
+
+} // End of componenet
 
 // Variables to changes the height and width dynamically for all screens
 const height = Dimensions.get('window').height
