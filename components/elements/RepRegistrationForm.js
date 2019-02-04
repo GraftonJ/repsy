@@ -178,8 +178,13 @@ onpressSubmit = async () => {
                onChangeText={(text) => this.setState({password: text})}
                placeholder="Password" />
            </Item>
-           <Button  onPress={this.onpressSubmit} type="submit" block>
-             <Text>Submit</Text>
+           <Button
+             block
+             onPress={this.onpressSubmit}
+             type="submit"
+             style={styles.submitButton}>
+             <Text
+               style={styles.submitText}>Submit</Text>
           </Button>
         </Form>
         </Content>
@@ -195,5 +200,16 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  submitButton: {
+    marginTop: '5%',
 
+  },
+  submitText: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    color: 'white',
+    marginTop: 6,
+  }
 });
