@@ -6,6 +6,7 @@ import { getBookings } from '../../utils/api'
 import store, { URI } from '../../store'
 import timekit from 'timekit-sdk'
 import moment from 'moment'
+import RequestForm from './RequestForm'
 
 import getTheme from '../../native-base-theme/components'
 import material from '../../native-base-theme/variables/material'
@@ -138,48 +139,49 @@ export default class RequestsPage extends Component {
         {
           (this.state.isLookingForAppointment)
             ?
+            <RequestForm />
             // <WebView source={{ html: htmlContent }} />
-            <Content>
-              <Form>
-                <Item picker>
-                <Label>Pharma Rep</Label>
-                  <Picker
-                    mode="dropdown"
-                    iosIcon={<Icon name="arrow-down" />}
-                    style={{ width: undefined }}
-                    placeholder="Who do you want to Book?"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.bookingRequest.resource_id}
-                    onValueChange={this.onResourceValueChange.bind(this)}
-                  >
-                    {calendarResources.map((x, idx) => {
-                      return <Picker.Item key={idx} label={x.first_name + ' ' + x.last_name} value={x.id} id={x.id} />
-                    })}
-                  </Picker>
-                </Item>
-                <Item>
-                  <Icon active name='ios-call' />
-                  <Input placeholder='Contact Number' />
-                </Item>
-                <Item stackedLabel>
-                  <Label>Reason For Appointment</Label>
-                    <Textarea rowSpan={5} width={340} bordered onValueChange={this.onAppointmentReasonChange.bind(this)}/>
-                </Item>
-                <Item>
-                  <View style={styles.container}>
-                    <Label>Appointment Time/Date (MST)</Label>
-                    <DatePickerIOS
-                      date={chosenDate}
-                      onDateChange={this.setDate}
-                      minuteInterval={15}
-                    />
-                  </View>
-                  {console.log('chosenDate', chosenDate)}
-                  {console.log('this.state', this.state)}
-                 </Item>
-              </Form>
-            </Content>
+            // <Content>
+            //   <Form>
+            //     <Item picker>
+            //     <Label>Pharma Rep</Label>
+            //       <Picker
+            //         mode="dropdown"
+            //         iosIcon={<Icon name="arrow-down" />}
+            //         style={{ width: undefined }}
+            //         placeholder="Who do you want to Book?"
+            //         placeholderStyle={{ color: "#bfc6ea" }}
+            //         placeholderIconColor="#007aff"
+            //         selectedValue={this.state.bookingRequest.resource_id}
+            //         onValueChange={this.onResourceValueChange.bind(this)}
+            //       >
+            //         {calendarResources.map((x, idx) => {
+            //           return <Picker.Item key={idx} label={x.first_name + ' ' + x.last_name} value={x.id} id={x.id} />
+            //         })}
+            //       </Picker>
+            //     </Item>
+            //     <Item>
+            //       <Icon active name='ios-call' />
+            //       <Input placeholder='Contact Number' />
+            //     </Item>
+            //     <Item stackedLabel>
+            //       <Label>Reason For Appointment</Label>
+            //         <Textarea rowSpan={5} width={340} bordered onChange={this.setReason.bind(this)}/>
+            //     </Item>
+            //     <Item>
+            //       <View style={styles.container}>
+            //         <Label>Appointment Time/Date (MST)</Label>
+            //         <DatePickerIOS
+            //           date={chosenDate}
+            //           onDateChange={this.setDate}
+            //           minuteInterval={15}
+            //         />
+            //       </View>
+            //       {console.log('chosenDate', chosenDate)}
+            //       {console.log('this.state', this.state)}
+            //      </Item>
+            //   </Form>
+            // </Content>
             : <Agenda
               items={calendarBookings}
               selected={new Date()}
@@ -226,15 +228,6 @@ export default class RequestsPage extends Component {
     })
   }
 
-  onAppointmentReasonChange(string) {
-    this.setState({
-      bookingRequest: {
-        ...this.state.bookingRequest,
-        what: value
-      }
-    })
-  }
-
   // Set Current Date to State from Request Booking Form
   setDate(newDate) {
     this.setState({
@@ -244,6 +237,16 @@ export default class RequestsPage extends Component {
         start: moment(newDate).format(),
         end: moment(newDate).add(1, 'hour').format()
       }  
+    })
+  }
+
+  setReason(string) {
+    console.log('string', string.target)
+    this.setState({
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        what: string,
+      }
     })
   }
 
