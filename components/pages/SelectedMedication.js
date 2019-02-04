@@ -231,7 +231,7 @@ export default class SelectedMedication extends Component {
               onPress={() => this.onpressMechanismOfAction() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Mechism of Action</Text>
+              <Icon name="arrow-dropright" /><Text>Mechanism of Action</Text>
             </Button>
             <Button
               onPress={() => this.onpressPatientTypes() }
