@@ -164,7 +164,7 @@ export default class RequestsPage extends Component {
                 </Item>
                 <Item stackedLabel>
                   <Label>Reason For Appointment</Label>
-                  <Textarea rowSpan={5} width={340} bordered />
+                    <Textarea rowSpan={5} width={340} bordered onValueChange={this.onAppointmentReasonChange.bind(this)}/>
                 </Item>
                 <Item>
                   <View style={styles.container}>
@@ -222,6 +222,15 @@ export default class RequestsPage extends Component {
       bookingRequest: {
         ...this.state.bookingRequest,
         resource_id: value
+      }
+    })
+  }
+
+  onAppointmentReasonChange(string) {
+    this.setState({
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        what: value
       }
     })
   }
