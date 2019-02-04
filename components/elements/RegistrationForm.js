@@ -160,13 +160,13 @@ onpressSubmit = async () => {
             </Item>
            <Picker
              mode="dropdown"
-             iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+             iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "rgb(84, 157, 191)", fontSize: 25 }} />}
              style={{ width: undefined }}
              placeholder="Select a Specialty"
              placeholderStyle={{ color: "rgb(79, 79, 78)" }}
              note={false}
              onValueChange={this.onValueChange.bind(this)}
-             headerStyle={{ backgroundColor: "#2874F0" }}
+             headerStyle={{ backgroundColor: "rgb(84, 157, 191)" }}
              headerBackButtonTextStyle={{ color: "#fff" }}
              headerTitleStyle={{ color: "#fff" }}
              selectedValue={store.getState().selectedSpecialty}>
