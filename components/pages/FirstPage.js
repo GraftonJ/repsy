@@ -114,14 +114,7 @@ onPressLogin = async () => {
   if (!value) {
     return
   }
-  // if(this.state.loginErrorMessage){
-  //   console.log()
-  //   this.setState({
-  //     isLoading: false,
-  //   })
-  //   Toast.show({text: 'wrong', buttonText: 'okay'})
-  //Toast.show({text: 'wrong', buttonText: 'okay', duration: 4000})
-  // }
+
 
   const success = await this.asyncTryLogin(email, password)
   if (success) {

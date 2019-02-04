@@ -10,6 +10,8 @@ import platform from '../../native-base-theme/variables/platform'
 import Registrationform from '../elements/RegistrationForm'
 import RepRegistrationForm from '../elements/RepRegistrationForm'
 
+import { Image } from 'react-native'
+
 
 
 export default class Loginpage extends Component {
@@ -54,6 +56,8 @@ onPressRep = () => {
             </Right>
           </Header>
             <Content>
+              <Image style={styles.image} source={require('../../medicalStaff.png')} />
+              <Text style={styles.repsyH1}>REPSY</Text>
               <View style={styles.contentContainer}>
                 <Text style={styles.welcome}>
                   Which Type of Account?
@@ -169,6 +173,23 @@ const styles = StyleSheet.create({
   },
   typeButtonText: {
     alignSelf: 'center'
-  }
+  },
+  repsyH1: {
+    fontFamily: 'Helvetica',
+    fontSize: 55,
+    textAlign: 'center',
+    letterSpacing: 10,
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
+  },
+  image: {
+    alignSelf: 'center',
+    width: 100,
+    height: 110,
+    marginTop: '25%'
+  },
 
 });
