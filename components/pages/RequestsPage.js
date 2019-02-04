@@ -252,22 +252,6 @@ export default class RequestsPage extends Component {
   // Create a new Booking Request to desired Resource
   createNewBookingRequest = async () => {
     try {
-      // // TO FIX AN INITIALIZED BOOKING SUB IN Initialized Booking ID and run request
-      // timekit.updateBooking({
-      //   id: '70a5e3b1-7114-46bf-b58c-3d7ca36e9095',
-      //   action: "create",
-      //   event: {
-      //     calendar_id: "b7f0db96-819c-4460-bcba-4fc2d2522484",
-      //     end: "2019-01-27T22:15:00-07:00",
-      //     start: "2019-01-27T21:30:00-06:00",
-      //     what: "NEW BOOKING",
-      //     where: "Courthouse, Hill Valley, CA 95420, USA"
-      //   },
-      //   customer: {
-      //     name: 'Jimbo Martins',
-      //     email: 'tarmstrong1327@gmail.com'
-      //   }
-      // })
       timekit.createBooking(
         this.state.bookingRequest
       ).then(function (response) {
@@ -278,7 +262,7 @@ export default class RequestsPage extends Component {
     } catch (error) {
       console.log(error)
     }
-
+    // this.forceUpdate()
     this.viewAppointments()
   }
 
