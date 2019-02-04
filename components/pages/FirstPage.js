@@ -191,7 +191,7 @@ onPressLogin = async () => {
               </Item>
             </Form>
             <Button
-              dark
+              bordered dark
               onPress={this.onPressLogin}
               style={styles.loginButton}
             >
