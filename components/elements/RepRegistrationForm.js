@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, InputText, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Icon, Picker, Item, Input, StyleProvider } from 'native-base'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 import store, { URI } from '../../store'
 
@@ -108,6 +112,7 @@ onpressSubmit = async () => {
   render() {
 
     return (
+      <StyleProvider style={getTheme(platform)}>
         <Content>
           <Form >
             <Item>
@@ -173,11 +178,17 @@ onpressSubmit = async () => {
                onChangeText={(text) => this.setState({password: text})}
                placeholder="Password" />
            </Item>
-           <Button  onPress={this.onpressSubmit} type="submit" block>
-             <Text>Submit</Text>
+           <Button
+             block
+             onPress={this.onpressSubmit}
+             type="submit"
+             style={styles.submitButton}>
+             <Text
+               style={styles.submitText}>Submit</Text>
           </Button>
         </Form>
         </Content>
+      </StyleProvider>
     ) // End of return
   } // End of render
 
@@ -189,5 +200,16 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  submitButton: {
+    marginTop: '5%',
 
+  },
+  submitText: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    color: 'white',
+    marginTop: 6,
+  }
 });
