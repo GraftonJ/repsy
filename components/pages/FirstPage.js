@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View, Text, Dimensions, Alert, Image } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner, Toast } from 'native-base'
+import { Container, Header, Content, Footer, Button, Left, Right, Body, Form, Item, Input, Spinner, Toast, StyleProvider } from 'native-base'
 import { colors } from '../../utils/colors'
 import Registrationform from '../elements/RegistrationForm'
+
+import getTheme from '../../native-base-theme/components'
+import material from '../../native-base-theme/variables/material'
+import platform from '../../native-base-theme/variables/platform'
 
 import store, { URI } from '../../store'
 
@@ -143,104 +147,106 @@ onPressLogin = async () => {
 
   render() {
       return (
-      <Container>
-        <Header>
-          <Left>
-          </Left>
-          <Body>
-          </Body>
-          <Right>
-            <Text style={styles.repsyHeader}>REPSY</Text>
-          </Right>
-        </Header>
-        <Content scrollEnabled={false}>
-          <Image style={styles.image} source={require('../../medicalStaff.png')} />
-          <Text style={styles.repsyH1}>REPSY</Text>
-          <Text style={styles.h2}>Connecting Doctors & Reps</Text>
-          {(this.state.isLoading)
-            ?
-            <Spinner color='red' />
-            :
-          (this.state.error)
-            ?
-          <Container>
-          <Form>
-            <Text
-              style={styles.validationMessage}>Incorrect Email or Password</Text>
-            <Item error>
-              <Input
-                autoCorrect={false}
-                autoCapitalize="none"
-                style={styles.inputText}
-                placeholder="Email"
-                onChangeText={(text) => this.setState({email: text})}/>
-            </Item>
-            <Item error>
-              <Input
-                autoCorrect={false}
-                autoCapitalize="none"
-                secureTextEntry={true}
-                style={styles.inputText}
-                placeholder="Password"
-                onChangeText={(text) => this.setState({password: text})}/>
-            </Item>
-          </Form>
+      <StyleProvider style={getTheme(platform)}>
+        <Container>
+          <Header>
+            <Left>
+            </Left>
+            <Body>
+            </Body>
+            <Right>
+              <Text style={styles.repsyHeader}>REPSY</Text>
+            </Right>
+          </Header>
+          <Content scrollEnabled={false}>
+            <Image style={styles.image} source={require('../../medicalStaff.png')} />
+            <Text style={styles.repsyH1}>REPSY</Text>
+            <Text style={styles.h2}>Connecting Doctors & Reps</Text>
+            {(this.state.isLoading)
+              ?
+              <Spinner color='red' />
+              :
+            (this.state.error)
+              ?
+            <Container>
+            <Form>
+              <Text
+                style={styles.validationMessage}>Incorrect Email or Password</Text>
+              <Item error>
+                <Input
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  style={styles.inputText}
+                  placeholder="Email"
+                  onChangeText={(text) => this.setState({email: text})}/>
+              </Item>
+              <Item error>
+                <Input
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                  style={styles.inputText}
+                  placeholder="Password"
+                  onChangeText={(text) => this.setState({password: text})}/>
+              </Item>
+            </Form>
+            <Button
+              dark
+              onPress={this.onPressLogin}
+              style={styles.loginButton}
+            >
+            <Text style={styles.loginButtonText}>Login</Text>
+          </Button>
+          <Text style={styles.Or}>or</Text>
           <Button
-            dark
-            onPress={this.onPressLogin}
+            onPress={this.onPressCreateAccount}
             style={styles.loginButton}
-          >
-          <Text style={styles.loginButtonText}>Login</Text>
-        </Button>
-        <Text style={styles.Or}>or</Text>
-        <Button
-          onPress={this.onPressCreateAccount}
-          style={styles.loginButton}
-          transparent>
-        <Text style={styles.createAccountText}>Create Account</Text>
-       </Button>
-       </Container>
-       :
-       <Container>
-       <Form>
-         <Item >
-           <Input
-             autoCorrect={false}
-             autoCapitalize="none"
-             style={styles.inputText}
-             placeholder="Email"
-             onChangeText={(text) => this.setState({email: text})}/>
-         </Item>
-         <Item last>
-           <Input
-             autoCorrect={false}
-             autoCapitalize="none"
-             secureTextEntry={true}
-             style={styles.inputText}
-             placeholder="Password"
-             onChangeText={(text) => this.setState({password: text})}/>
-         </Item>
-       </Form>
-       <Button
-         bordered dark
-         onPress={this.onPressLogin}
-         style={styles.loginButton}
-       >
-       <Text style={styles.loginButtonText}>Login</Text>
-     </Button>
-     <Text style={styles.Or}>or</Text>
-     <Button
-       onPress={this.onPressCreateAccount}
-       style={styles.loginButton}
-       transparent>
-     <Text style={styles.createAccountText}>Create Account</Text>
-    </Button>
-    </Container>
-       }
-        </Content>
-        <Footer>
-        </Footer>
-      </Container>
+            transparent>
+          <Text style={styles.createAccountText}>Create Account</Text>
+         </Button>
+         </Container>
+         :
+           <Container>
+           <Form>
+             <Item >
+               <Input
+                 autoCorrect={false}
+                 autoCapitalize="none"
+                 style={styles.inputText}
+                 placeholder="Email"
+                 onChangeText={(text) => this.setState({email: text})}/>
+             </Item>
+             <Item last>
+               <Input
+                 autoCorrect={false}
+                 autoCapitalize="none"
+                 secureTextEntry={true}
+                 style={styles.inputText}
+                 placeholder="Password"
+                 onChangeText={(text) => this.setState({password: text})}/>
+             </Item>
+           </Form>
+           <Button
+             bordered dark
+             onPress={this.onPressLogin}
+             style={styles.loginButton}
+           >
+           <Text style={styles.loginButtonText}>Login</Text>
+           </Button>
+           <Text style={styles.Or}>or</Text>
+           <Button
+             onPress={this.onPressCreateAccount}
+             style={styles.loginButton}
+             transparent>
+           <Text style={styles.createAccountText}>Create Account</Text>
+          </Button>
+          </Container>
+         }
+          </Content>
+          <Footer>
+          </Footer>
+        </Container>
+      </StyleProvider>
     ) // End of return
   } // End of render
 
