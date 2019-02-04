@@ -260,7 +260,6 @@ onPressDelete = async (id) => {
   onPress logout
 *****************************/
 onPressLogout = () => {
-  Alert.alert('Bye now! Thanks for using Repsy!')
   store.setState({
     user: null,
     isLoggedIn: false
