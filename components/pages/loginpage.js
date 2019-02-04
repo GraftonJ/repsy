@@ -63,12 +63,12 @@ onPressRep = () => {
                   Which Type of Account?
                 </Text>
                 <View style={styles.buttonContainer}>
-                  <Button style={styles.typeButton} onPress={() => this.onPressRep()}>
+                  <Button block style={styles.typeButton} onPress={() => this.onPressRep()}>
                       <Text style={styles.typeButtonText}>
                         Sales
                       </Text>
                   </Button>
-                  <Button style={styles.typeButton} onPress={() => this.onPressDoctor()}>
+                  <Button block style={styles.typeButton} onPress={() => this.onPressDoctor()}>
                       <Text style={styles.typeButtonText}>
                         Doctor
                       </Text>
@@ -137,18 +137,18 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
-  contentContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: height * .5
-  },
+  // contentContainer: {
+  //   flexDirection: 'column',
+  //   justifyContent: 'center',
+  //   // height: height * .5
+  // },
   welcome: {
-    fontFamily: 'Helvetica',
-    fontSize: 25,
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 18,
     textAlign: 'center',
-    letterSpacing: 1,
-    marginTop: 40,
-    marginBottom: 20,
+    // letterSpacing: 1,
+    color: 'rgb(96, 29, 16)',
+    marginBottom: '8%',
   },
   h2: {
     fontFamily: 'Helvetica',
@@ -161,22 +161,31 @@ const styles = StyleSheet.create({
   repsyHeader: {
     fontFamily: 'Helvetica-Bold',
     fontSize: 20,
-    color: 'rgb(96, 29, 16)'
+    color: 'rgb(96, 29, 16)',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
+  // buttonContainer: {
+  //   flexDirection: 'column',
+  //   justifyContent: 'center',
+  //   // alignItems: 'center'
+  // },
   typeButton : {
-    width: '30%',
+    marginBottom: '5%',
+    width: '90%',
+    height: '30%',
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   typeButtonText: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    fontFamily: 'Hoefler Text',
+    fontSize: 25,
+    letterSpacing: 2,
   },
   repsyH1: {
     fontFamily: 'Helvetica',
-    fontSize: 55,
+    fontSize: 35,
     textAlign: 'center',
     letterSpacing: 10,
     color: 'rgb(96, 29, 16)',
@@ -184,12 +193,12 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5,
+    marginBottom: '15%',
   },
   image: {
     alignSelf: 'center',
-    width: 100,
-    height: 110,
-    marginTop: '25%'
+    width: 80,
+    height: 90,
+    marginTop: '10%'
   },
-
 });
