@@ -6,12 +6,9 @@ import { getBookings } from '../../utils/api'
 import store, { URI } from '../../store'
 import timekit from 'timekit-sdk'
 import moment from 'moment'
-import RequestForm from './RequestForm'
-
 import getTheme from '../../native-base-theme/components'
 import material from '../../native-base-theme/variables/material'
 import platform from '../../native-base-theme/variables/platform'
-
 import {
   Platform,
   StyleSheet,
@@ -61,7 +58,7 @@ export default class RequestsPage extends Component {
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
         customer: {
-          name: 'Jimbo Martins',
+          name: store.getState().user.fname,
           email: 'tarmstrong1327@gmail.com',
           phone: '(916) 555-4385',
           voip: 'McFly',
@@ -111,7 +108,7 @@ export default class RequestsPage extends Component {
   }
 
   render() {
-    console.log('bookings', this.state.calendarBookings)
+    // console.log('bookings', this.state.calendarBookings)
     const {
       calendarBookings,
       calendarResources,
@@ -175,8 +172,8 @@ export default class RequestsPage extends Component {
                         minuteInterval={15}
                       />
                     </View>
-                    {console.log('chosenDate', chosenDate)}
-                    {console.log('this.state', this.state)}
+                    {/* {console.log('chosenDate', chosenDate)}
+                    {console.log('this.state', this.state)} */}
                   </Item>
                 </Form>
               </Content>
@@ -239,7 +236,7 @@ export default class RequestsPage extends Component {
   }
 
   setReason(string) {
-    console.log('string', string.target)
+    // console.log('string', string.target)
     this.setState({
       bookingRequest: {
         ...this.state.bookingRequest,
@@ -254,9 +251,9 @@ export default class RequestsPage extends Component {
     try {
       timekit.createBooking(
         this.state.bookingRequest
-      ).then(function (response) {
+      ).then((response) => {
         console.log("WORKED +++> ", response);
-      }).catch(function (response) {
+      }).catch((response) => {
         console.log("DIED +++> ", response);
       })
     } catch (error) {
@@ -270,7 +267,7 @@ export default class RequestsPage extends Component {
   renderSwitch(item) {
     switch (item.state) {
       case 'tentative':
-        return <View>
+        return <View style={styles.view}>
           <Button
             title='Confirm'
             id='confirm'
@@ -302,7 +299,7 @@ export default class RequestsPage extends Component {
                 id: item.booking_id,
                 action: "decline" // or "decline" or "cancel"
               }).then((res) => {
-                console.log('hello')
+                // console.log('hello')
               }).catch((err) => {
                 console.log('error', err)
               })
@@ -348,20 +345,19 @@ export default class RequestsPage extends Component {
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
-        <Label>Doctor: {item.customer_name}</Label>
-        <Label>Pharma Rep: {/*store.getState().user.name?*/}</Label>
+        <Label>Request From: {item.customer_name}</Label>
+        <Label>Pharma Rep: Samantha</Label>
         <Text>{item.event_name}</Text>
         <Item style={{ width: 200 }}>
           <Icon active name='ios-time' />
-          <Text style={{ textAlign: 'center' }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm:ss a')}-{moment(item.event_end).format('MMMM Do YYYY, h:mm:ss a')}</Text>
+          <Text style={{ textAlign: 'center' }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm a')}-{moment(item.event_end).format('MMMM Do YYYY, h:mm a')}</Text>
         </Item>
         <Item style={{ width: 200 }}>
           <Icon active name='ios-navigate' />
           <Text style={{ textAlign: 'center' }}>{item.event_location}</Text>
         </Item>
-        {/* {console.log('item', item)} */}
-        <Icon active name='ios-filing' />
-
+        {/* {console.log('item', item)}
+        <Icon active name='ios-filing' /> */}
         <View >{this.renderSwitch(item)}</View>
       </View>
     )
@@ -379,25 +375,10 @@ export default class RequestsPage extends Component {
   rowHasChanged(r1, r2) {
     if(r1.name !== r2.name) {
       getBookings()
-      console.log('hello rows have changed')
     }
   }
 
 } // End of componenet
-
-// Variables to change the height and width dynamically for all screens
-const height = Dimensions.get('window').height
-const width = Dimensions.get('window').width
-const htmlContent = `
-  <div id="bookingjs"></div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
-  <script src="https://cdn.timekit.io/booking-js/v2/booking.min.js" defer></script>
-  <script>
-  window.timekitBookingConfig = {
-    app_key: 'test_widget_key_Pgedqmou2J9S6qtxYEo4rnJBDJD3dLS1',
-    project_id: '990a0b41-9ec1-4549-81fc-e82ae3403fc5'
-  }
-  </script>`
 
 const styles = StyleSheet.create({
   item: {
@@ -419,5 +400,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+  },
+  view: {
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 })
