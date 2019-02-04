@@ -114,7 +114,7 @@ componentWillUnmount(){
               {reps[desired_info.repIdx].credentials}
             </Text>
             <View style={styles.buttonContainer}>
-              <Button style={styles.scheduleButton}
+              <Button style={styles.scheduleButton} onClick={this.scheduleAppointment}
                 title='Schedule Appointment'>
                 <Text> Schedule Appointment </Text>
               </Button>

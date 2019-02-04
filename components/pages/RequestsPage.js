@@ -54,8 +54,8 @@ export default class RequestsPage extends Component {
       bookingRequest: {
         resource_id: 'e4b663d4-8ea8-44ab-8685-dfbf5cf4b699',
         graph: 'confirm_decline',
-        start: moment(this.chosenDate).format(),
-        end: moment(this.chosenDate).add(1, 'hour').format(),
+        start: '',
+        end: '',
         what: 'NEW BOOKING',
         where: 'Courthouse, Hill Valley, CA 95420, USA',
         description: 'New booking TEST',
@@ -90,14 +90,16 @@ export default class RequestsPage extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.calendarBookings !== this.state.calendarBookings) {
+  //     getBookings()
   //     this.setState({
   //       calendarBookings: this.state.calendarBookings
   //     })
   //   }
   // }
+  
   // shouldComponentUpdate(nextProps, nextState) {
   //   console.log(this.state, nextState)
-  //   if (nextState !== this.state) {
+  //   if (nextState.calendarBookings !== this.state.calendarBookings) {
   //     return true
   //   }
   // }
@@ -226,7 +228,14 @@ export default class RequestsPage extends Component {
 
   // Set Current Date to State from Request Booking Form
   setDate(newDate) {
-    this.setState({ chosenDate: newDate });
+    this.setState({
+      chosenDate: newDate, 
+      bookingRequest: {
+        ...this.state.bookingRequest,
+        start: moment(newDate).format(),
+        end: moment(newDate).add(1, 'hour').format()
+      }  
+    })
   }
 
 
@@ -284,9 +293,7 @@ export default class RequestsPage extends Component {
                 id: item.booking_id,
                 action: "decline" // or "decline" or "cancel"
               }).then((res) => {
-                getBookings()
-                console.log('res', res)
-                return res
+                console.log('hello')
               }).catch((err) => {
                 console.log('error', err)
               })
@@ -344,7 +351,7 @@ export default class RequestsPage extends Component {
           <Icon active name='ios-navigate' />
           <Text style={{ textAlign: 'center' }}>{item.event_location}</Text>
         </Item>
-        {console.log('item', item)}
+        {/* {console.log('item', item)} */}
         <Icon active name='ios-filing' />
 
         <View >{this.renderSwitch(item)}</View>
@@ -364,6 +371,7 @@ export default class RequestsPage extends Component {
   rowHasChanged(r1, r2) {
     if(r1.name !== r2.name) {
       getBookings()
+      console.log('hello rows have changed')
     }
   }
 

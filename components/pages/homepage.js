@@ -485,3 +485,5 @@ const styles = StyleSheet.create({
       color: 'rgb(84, 157, 191)',
     }
 });
+
+console.disableYellowBox = true
