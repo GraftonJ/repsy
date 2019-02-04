@@ -130,7 +130,7 @@ componentWillUnmount(){
               ? <Content>
                 <Form>
                   <Item picker>
-                    <Label>Pharma Rep:</Label>
+                    <Label>Pharma Rep: {reps[desired_info.repIdx].fname}</Label>
                   </Item>
                   <Item>
                     <Icon active name='ios-call' />
