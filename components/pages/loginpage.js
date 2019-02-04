@@ -55,7 +55,7 @@ onPressRep = () => {
               <Text style={styles.repsyHeader}>REPSY</Text>
             </Right>
           </Header>
-            <Content>
+            <Content scrollEnabled={false}>
               <Image style={styles.image} source={require('../../medicalStaff.png')} />
               <Text style={styles.repsyH1}>REPSY</Text>
               <View style={styles.contentContainer}>
@@ -106,7 +106,7 @@ onPressRep = () => {
           </Right>
         </Header>
           <Content>
-            <Text style={styles.welcome}>
+            <Text style={styles.formWelcome}>
               Welcome to Repsy!
             </Text>
             {this.state.doctor
@@ -150,13 +150,27 @@ const styles = StyleSheet.create({
     color: 'rgb(96, 29, 16)',
     marginBottom: '8%',
   },
-  h2: {
+  formWelcome: {
     fontFamily: 'Helvetica',
-    fontSize: 15,
+    fontSize: 35,
     textAlign: 'center',
     letterSpacing: 1,
-    marginTop: -2,
-    marginBottom: 30
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+    marginTop: '15%',
+  },
+  h2: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    // letterSpacing: 1,
+    marginTop: '5%',
+    marginBottom: 30,
+    color: 'rgb(84, 157, 191)',
   },
   repsyHeader: {
     fontFamily: 'Helvetica-Bold',
@@ -171,7 +185,7 @@ const styles = StyleSheet.create({
   typeButton : {
     marginBottom: '5%',
     width: '90%',
-    height: '30%',
+    height: '28%',
     alignSelf: 'center',
     justifyContent: 'center'
   },
@@ -180,7 +194,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     fontFamily: 'Hoefler Text',
-    fontSize: 25,
+    fontSize: 22,
+    fontWeight: 'bold',
     letterSpacing: 2,
   },
   repsyH1: {
