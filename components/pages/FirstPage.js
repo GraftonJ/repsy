@@ -165,7 +165,8 @@ onPressLogin = async () => {
             ?
           <Container>
           <Form>
-            <Text>Incorrect Email or Password</Text>
+            <Text
+              style={styles.validationMessage}>Incorrect Email or Password</Text>
             <Item error>
               <Input
                 autoCorrect={false}
@@ -285,6 +286,12 @@ const styles = StyleSheet.create({
   inputText: {
     fontFamily: 'Helvetica',
     fontSize: 20,
+  },
+  validationMessage: {
+    fontFamily: 'Helvetica',
+    fontSize: 15,
+    color: 'rgb(96, 29, 16)',
+    alignSelf: 'center',
   },
   loginButton: {
     justifyContent: 'center',
