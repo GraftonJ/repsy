@@ -9,6 +9,13 @@ export default class FooterMenu extends Component {
     return (
       <FooterTab>
         <Button
+          onPress={() => { Actions.Homepage() }}
+          vertical
+        >
+          <Icon active name="home" />
+          <Text style={{fontSize: 11}} >Home</Text>
+        </Button>
+        <Button
           onPress={() => { Actions.ConditionsLibrary() }}
           vertical
         >
@@ -21,13 +28,6 @@ export default class FooterMenu extends Component {
         >
           <Icon name="medkit" />
           <Text style={{fontSize: 11}} >Treatments</Text>
-        </Button>
-        <Button
-          onPress={() => { Actions.Homepage() }}
-          vertical
-        >
-          <Icon active name="home" />
-          <Text style={{fontSize: 11}} >Home</Text>
         </Button>
         <Button
           onPress={() => { Actions.RequestsPage() }}

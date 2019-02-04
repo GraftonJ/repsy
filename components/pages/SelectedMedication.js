@@ -195,7 +195,7 @@ export default class SelectedMedication extends Component {
               onPress={() => { this.onPressBackButton() }}
               transparent
             >
-              <Icon name="arrow-back" />
+              <Icon name="arrow-back" style={{ color: "rgb(84, 157, 191)" }}/>
             </Button>
           </Left>
           <Body>
