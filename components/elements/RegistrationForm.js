@@ -166,7 +166,7 @@ onpressSubmit = async () => {
            <Picker
              mode="dropdown"
              iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "rgb(84, 157, 191)", fontSize: 25 }} />}
-             style={{ width: undefined }}
+             style={{ width: undefined, color: 'rgb(96, 29, 16)' }}
              placeholder="Select a Specialty"
              placeholderStyle={{ color: "rgb(79, 79, 78)" }}
              note={false}
@@ -174,9 +174,10 @@ onpressSubmit = async () => {
              headerStyle={{ backgroundColor: "rgb(84, 157, 191)" }}
              headerBackButtonTextStyle={{ color: "#fff" }}
              headerTitleStyle={{ color: "#fff" }}
-             selectedValue={store.getState().selectedSpecialty}>
+             selectedValue={store.getState().selectedSpecialty }
+             textStyle={{ color: "rgb(96, 29, 16)" }}>
              {this.state.specialties.map((specialty, idx) => (
-               <Picker.Item key={idx} label={specialty.name} value={specialty.name} id={specialty.id}/>
+               <Picker.Item  key={idx} label={specialty.name} value={specialty.name} id={specialty.id} />
              ))}
            </Picker>
            <Item>
