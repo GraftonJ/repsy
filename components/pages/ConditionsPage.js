@@ -79,24 +79,27 @@ export default class ConditionsPage extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{fontSize: 17, fontWeight: 'bold', textAlign: 'center'}}>{this.state.desired_info.condition_name}</Text>
+            <Text style={{fontSize: 17, fontWeight: 'bold' }}>{this.state.desired_info.condition_name}</Text>
           </Body>
           <Right>
           </Right>
         </Header>
         <Content>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Treatments </Text>
-          <List>
+          <Text style={styles.treatmentsText}>  Treatments </Text>
             {this.state.meds.map((med, idx) => (
-              <ListItem key={idx}>
-                <TouchableOpacity onPress={() => this.onPressButton(med.generic_name, med.brand_name, med.id, med.pharma_company)}>
+              <View
+                style={styles.view}
+                key={idx}>
+                <Button
+                  rounded style={styles.button}
+                  style={styles.button}
+                  onPress={() => this.onPressButton(med.generic_name, med.brand_name, med.id, med.pharma_company)}>
                   <Text>{`   ${med.brand_name} (${med.generic_name})`}</Text>
-                </TouchableOpacity>
-              </ListItem>
+                </Button>
+              </View>
             ))}
-          </List>
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Clinical Guidelines </Text>
+          <Text style={styles.guidelinesText}>  Clinical Guidelines </Text>
 
         </Content>
         <Footer>
@@ -114,5 +117,34 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
-
+  treatmentsText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: '8%',
+    alignSelf: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+  },
+  guidelinesText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    alignSelf: 'center',
+    marginTop: '5%',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+    margin: 3,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  view: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
 });
