@@ -113,7 +113,7 @@ export const getBookings = async () => {
     }
     console.log('getBookings', getBookings)
     getBookings.data.forEach((x) => {
-      console.log('x', x)
+      // console.log('x', x)
       let event = x.attributes.event
       let customer = x.attributes.customer
       // console.log('event', event)
