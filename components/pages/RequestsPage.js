@@ -120,9 +120,7 @@ export default class RequestsPage extends Component {
       <Container>
         <Header>
           <Left>
-            <Button
-              onPress={() => { Actions.Homepage() }} title='Home Page'>
-            </Button>
+            <Icon name="arrow-back" style={{ color: "rgb(84, 157, 191)" }} onPress={() => { Actions.pop() }}/>
           </Left>
           <Body>
             <Text>Requests</Text>
