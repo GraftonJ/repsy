@@ -120,9 +120,7 @@ export default class RequestsPage extends Component {
       <Container>
         <Header>
           <Left>
-            <Button
-              onPress={() => { Actions.Homepage() }} title='Home Page'>
-            </Button>
+            <Icon name="arrow-back" style={{ color: "rgb(84, 157, 191)" }} onPress={() => { Actions.pop() }}/>
           </Left>
           <Body>
             <Text>Requests</Text>
@@ -138,8 +136,8 @@ export default class RequestsPage extends Component {
             ?
               <Content>
                 <Form>
-                  <Item picker>
-                    <Label>Pharma Rep</Label>
+                  <Item picker style={styles.section}>
+                    <Label style={styles.heading}>Pharma Rep</Label>
                     <Picker
                       mode="dropdown"
                       iosIcon={<Icon name="arrow-down" />}
@@ -155,17 +153,19 @@ export default class RequestsPage extends Component {
                       })}
                     </Picker>
                   </Item>
-                  <Item>
+                  <Item style={styles.section}>
                     <Icon active name='ios-call' />
                     <Input placeholder='Contact Number' />
                   </Item>
-                  <Item stackedLabel>
-                    <Label>Reason For Appointment</Label>
+                  <Item stackedLabel style={styles.section}>
+                    <View style={styles.container}>
+                      <Label style={styles.heading}>Reason For Appointment</Label>
+                    </View>
                     <Textarea rowSpan={5} width={340} bordered onChange={this.setReason.bind(this)} />
                   </Item>
-                  <Item>
+                  <Item style={styles.section}>
                     <View style={styles.container}>
-                      <Label>Appointment Time/Date (MST)</Label>
+                      <Label style={styles.heading}>Appointment Time/Date (MST)</Label>
                       <DatePickerIOS
                         date={chosenDate}
                         onDateChange={this.setDate}
@@ -404,5 +404,15 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  heading: {
+    color: 'rgb(96, 29, 16)',
+    fontFamily: 'Helvetica',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  section: {
+    marginTop: 20
   }
 })
