@@ -85,7 +85,8 @@ export default class ConditionsPage extends Component {
           </Right>
         </Header>
         <Content>
-
+          <Image style={styles.image} source={require('../../medicalStaff.png')} />
+          <Text style={styles.repsy}>REPSY</Text>
           <Text style={styles.treatmentsText}>  Treatments </Text>
             {this.state.meds.map((med, idx) => (
               <View
@@ -120,11 +121,12 @@ const styles = StyleSheet.create({
   treatmentsText: {
     fontSize: 30,
     fontWeight: "bold",
-    marginTop: '8%',
+    marginTop: '10%',
     alignSelf: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 2,
+    letterSpacing: 1,
   },
   guidelinesText: {
     fontSize: 30,
@@ -147,4 +149,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  image: {
+    alignSelf: 'center',
+    width: 60,
+    height: 70,
+    marginTop: '8%'
+  },
+  repsy: {
+    fontFamily: 'Helvetica',
+    fontSize: 20,
+    textAlign: 'center',
+    letterSpacing: 10,
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+  },
+
 });
