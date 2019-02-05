@@ -178,15 +178,19 @@ componentWillUnmount(){
                   <View style={styles.buttonContainer}>
                   <Button style={styles.scheduleButton} onPress={() => this.requestAppointment()}
                       title='Schedule Appointment'>
-                      <Text> Schedule Appointment </Text>
+                      <Text
+                        style={styles.scheduleText}>Schedule Appointment</Text>
                     </Button>
                   </View>
                 </Content>}
           <Footer>
             {(this.state.isLookingForAppointment)
               ? <Button onPress={() => {this.createNewBookingRequest();
-              alert('Thank You For Submitting A Request. Please Check Your E-mail For Confirmation')}} title="Submit New Request"><Text>Submit New Request</Text></Button>
-              : <FooterMenu />}
+              alert('Thank You For Submitting A Request. Please Check Your E-mail For Confirmation')}} title="Submit New Request">
+                <Text
+                  style={styles.scheduleText}>Submit New Request</Text>
+                  </Button>
+          : <FooterMenu />}
           </Footer>
         </Container>
       </StyleProvider>
@@ -308,6 +312,10 @@ const styles = StyleSheet.create({
     scheduleButton: {
       marginTop: 10,
     },
+    scheduleText: {
+      fontFamily: 'Helvetica',
+      letterSpacing: 1,
+    },
     spinner: {
       height: height
     },
@@ -322,6 +330,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
       textAlign: 'center',
+      letterSpacing: .5,
     },
     item: {
       marginTop: 20
