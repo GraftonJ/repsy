@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, View, Text, Dimensions, InputText, Alert, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, List, ListItem, Thumbnail, Left, Body, Right, Button } from 'native-base'
+import { Container, Header, Content, List, ListItem, Thumbnail, Left, Body, Right, Button, Icon } from 'native-base'
 import store, { URI } from '../../store'
 
 export default class RepsCard extends Component {
@@ -12,7 +12,16 @@ export default class RepsCard extends Component {
       const {reps, index} = this.props
       return (
             <List>
-              <ListItem thumbnail>
+              <ListItem
+                onPress={() => {
+                  store.setState({
+                    desired_info: {
+                      ...store.getState().desired_info,
+                      repIdx: index,
+                    }
+                  })
+                  Actions.RepDetail() }}
+                thumbnail>
                 <Left>
                   <Thumbnail
                     style={styles.image}
@@ -30,18 +39,18 @@ export default class RepsCard extends Component {
                     numberOfLines={1}>Company: {reps[index].company}</Text>
                 </Body>
                 <Right>
-                  <Button transparent>
-                  {/* On pressing view, take the index of the rep that was clicked and set that value in desired_info in the store. This value is then used with the 'reps' state to render the correct rep in the RepDetail componenet */}
-                    <Text onPress={() => {
+                  <Button
+                    onPress={() => {
                       store.setState({
                         desired_info: {
                           ...store.getState().desired_info,
                           repIdx: index,
                         }
                       })
-                      Actions.RepDetail() }}>
-                      View
-                      </Text>
+                      Actions.RepDetail() }}
+                    transparent
+                  >
+                    <Icon name="arrow-forward" style={{ color: "rgb(84, 157, 191)" }}/>
                   </Button>
                 </Right>
               </ListItem>
@@ -60,7 +69,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'rgb(96, 29, 16)',
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Helvetica',
     marginBottom: 5,
   },
   image: {
