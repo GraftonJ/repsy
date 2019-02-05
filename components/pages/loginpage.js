@@ -76,8 +76,6 @@ onPressRep = () => {
                 </View>
               </View>
             </Content>
-          <Footer>
-          </Footer>
         </Container>
       </StyleProvider>
       )
@@ -122,8 +120,6 @@ onPressRep = () => {
               : <RepRegistrationForm />
             }
           </Content>
-        <Footer>
-        </Footer>
       </Container>
       ) // End of Else return
     }//End of Else
