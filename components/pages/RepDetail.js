@@ -185,7 +185,8 @@ componentWillUnmount(){
                 </Content>}
           <Footer>
             {(this.state.isLookingForAppointment)
-              ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request"><Text>Submit New Request</Text></Button>
+              ? <Button onPress={() => {this.createNewBookingRequest();
+              alert('Thank You For Submitting A Request. Please Check Your E-mail For Confirmation')}} title="Submit New Request"><Text>Submit New Request</Text></Button>
               : <FooterMenu />}
           </Footer>
         </Container>
