@@ -206,54 +206,65 @@ export default class SelectedMedication extends Component {
           </Right>
         </Header>
         <Content>
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Clinical Data </Text>
+          <Image style={styles.image} source={require('../../medicalStaff.png')} />
+          <Text style={styles.repsy}>REPSY</Text>
+          <Text style={styles.h1}>  Clinical Data </Text>
 
-          <View style={{padding: 2}}>
+          <View style={styles.view}>
             <Button
               onPress={() => this.onpressDosing() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Dosing</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}> Dosing </Text>
             </Button>
             <Button
               onPress={() => this.onpressTrialDesign() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Trial Design</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}>Trial Design</Text>
             </Button>
             <Button
               onPress={() => this.onpressEfficacy() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Efficacy</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}>Efficacy</Text>
             </Button>
             <Button
               onPress={() => this.onpressMechanismOfAction() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Mechanism of Action</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}>Mechanism of Action</Text>
             </Button>
             <Button
               onPress={() => this.onpressPatientTypes() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Patient Types</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}>Patient Types</Text>
             </Button>
             <Button
               onPress={() => this.onpressSafety() }
               transparent
             >
-              <Icon name="arrow-dropright" /><Text>Safety</Text>
+              <Icon name="arrow-dropright" />
+              <Text style={styles.dataButtonText}>Safety</Text>
             </Button>
           </View>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Coverage </Text>
+          <Text style={styles.h1}>Other Resources</Text>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Patient Resources </Text>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }} onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
+          <Text> Coverage </Text>
 
-          <Text style={{ fontSize: 24, fontWeight: "bold", paddingTop: 20 }}>  Speaker Programs </Text>
+          <Text> Patient Resources </Text>
+
+          <Text onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
+
+          <Text> Speaker Programs </Text>
         </Content>
         <Footer>
           <FooterMenu />
@@ -271,5 +282,44 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
-
+  h1: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: '8%',
+    marginBottom: '2%',
+    alignSelf: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+    letterSpacing: 1,
+  },
+  // view: {
+  //   alignSelf: 'center'
+  // },
+  dataButtonText: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+    letterSpacing: 1,
+    fontWeight: 'bold',
+  },
+  image: {
+    alignSelf: 'center',
+    // width: '25%',
+    // height: '10%',
+    width: 60,
+    height: 70,
+    marginTop: '8%'
+  },
+  repsy: {
+    fontFamily: 'Helvetica',
+    fontSize: 20,
+    textAlign: 'center',
+    letterSpacing: 10,
+    color: 'rgb(96, 29, 16)',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+    // marginTop: '5%'
+  },
 });
