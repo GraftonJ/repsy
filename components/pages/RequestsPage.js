@@ -246,7 +246,7 @@ export default class RequestsPage extends Component {
   createNewBookingRequest = async () => {
     try {
       // timekit.updateBooking({
-      //   id: 'b1334e4f-deb9-417a-baae-2f7e50163c0e',
+      //   id: 'd231f1b4-b1d5-4d96-ad21-823944c2fc05',
       //   action: "create",
       //   event: {
       //     calendar_id: "b7f0db96-819c-4460-bcba-4fc2d2522484",
