@@ -260,25 +260,30 @@ export default class SelectedMedication extends Component {
           <Button
             style={styles.button}
             rounded>
-            <Text> Coverage </Text>
+            <Text
+              style={styles.resourceButtonTxt}> Coverage </Text>
           </Button>
 
           <Button
             style={styles.button}
             rounded>
-            <Text> Patient Resources </Text>
+            <Text
+              style={styles.resourceButtonTxt}> Patient Resources </Text>
           </Button>
 
           <Button
             style={styles.button}
             rounded>
-            <Text onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
+            <Text
+              style={styles.resourceButtonTxt}
+              onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
           </Button>
 
           <Button
             style={styles.button}
             rounded>
-            <Text> Speaker Programs </Text>
+            <Text
+              style={styles.resourceButtonTxt}> Speaker Programs </Text>
           </Button>
         </Content>
         <Footer>
@@ -345,4 +350,8 @@ const styles = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
   },
+  resourceButtonTxt: {
+    fontFamily: 'Hoefler Text',
+    fontSize: 20,
+  }
 });
