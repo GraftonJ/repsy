@@ -195,7 +195,9 @@ export default class SelectedMedication extends Component {
               onPress={() => { this.onPressBackButton() }}
               transparent
             >
-              <Icon name="arrow-back" style={{ color: "rgb(84, 157, 191)" }}/>
+              <Icon
+                name="arrow-back"
+                style={{ color: "rgb(84, 157, 191)" }}/>
             </Button>
           </Left>
           <Body>
@@ -305,7 +307,7 @@ const styles = StyleSheet.create({
   h1: {
     fontSize: 30,
     fontWeight: "bold",
-    marginTop: '8%',
+    marginTop: '10%',
     marginBottom: '2%',
     alignSelf: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -324,8 +326,6 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    // width: '25%',
-    // height: '10%',
     width: 60,
     height: 70,
     marginTop: '8%'
@@ -340,7 +340,6 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 2,
-    // marginTop: '5%'
   },
   button: {
     flexDirection: "row",
