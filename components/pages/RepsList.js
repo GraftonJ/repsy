@@ -66,7 +66,7 @@ componentWillUnmount(){
 }
 
 render() {
-  const { isLoading, reps} = this.state
+  const { isLoading, reps } = this.state
   //Show loading spinner if fetching data
   return (
     <StyleProvider style={getTheme(platform)}>
@@ -83,12 +83,13 @@ render() {
         <Body>
         </Body>
         <Right>
+          <Text style={styles.repsyHeader}>REPSY</Text>
         </Right>
       </Header>
       <Content>
         { //Check if state is loading to show spinner
           (isLoading)
-          ? <Spinner color='red' />
+          ? <Spinner style={styles.spinner} color='red'/>
           : reps.map((rep, idx) => (
             <RepsCard
             index={idx}
@@ -108,3 +109,20 @@ render() {
 
   } // End of render
 }
+
+// Variables to changes the height and width dynamically for all screens
+const height = Dimensions.get('window').height
+const width = Dimensions.get('window').width
+
+// Put styles in here to format the page
+const styles = StyleSheet.create({
+    spinner: {
+      height: height *.8,
+
+    },
+    repsyHeader: {
+      fontFamily: 'Helvetica-Bold',
+      fontSize: 20,
+      color: 'rgb(96, 29, 16)'
+    },
+});
