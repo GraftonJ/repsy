@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
   otherRes: {
     fontSize: 30,
     fontWeight: "bold",
-    marginTop: '5%',
+    marginTop: '3%',
     marginBottom: '2%',
     alignSelf: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -343,16 +343,19 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   dataButtonText: {
-    fontFamily: 'Hoefler Text',
-    fontSize: 20,
+    fontFamily: 'Helvetica',
+    fontSize: 18,
     letterSpacing: 1,
     fontWeight: 'bold',
+    textShadowColor: 'rgba(189, 191, 193, 0.5)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 1,
   },
   image: {
     alignSelf: 'center',
     width: 60,
     height: 70,
-    marginTop: '8%'
+    marginTop: '5%'
   },
   repsy: {
     fontFamily: 'Helvetica',

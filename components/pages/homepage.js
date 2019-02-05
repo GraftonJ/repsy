@@ -477,11 +477,14 @@ const styles = StyleSheet.create({
     logoutButton: {
       alignSelf: 'center',
       marginTop: '15%',
-      fontFamily: 'Helvetica',
-      fontSize: 20,
+      fontFamily: 'Hoefler Text',
+      fontSize: 22,
       fontWeight: 'bold',
       letterSpacing: 1,
       color: 'rgb(84, 157, 191)',
+      textShadowColor: 'rgba(189, 191, 193, 0.75)',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 1,
     }
 });
 

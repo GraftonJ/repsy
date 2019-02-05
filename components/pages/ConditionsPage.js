@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 60,
     height: 70,
-    marginTop: '8%'
+    marginTop: '5%'
   },
   repsy: {
     fontFamily: 'Helvetica',
