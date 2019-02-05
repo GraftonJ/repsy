@@ -14,12 +14,20 @@ export default class RepsCard extends Component {
             <List>
               <ListItem thumbnail>
                 <Left>
-                  <Thumbnail square source={{ uri: `${reps[index].reps_photo}` }} />
+                  <Thumbnail
+                    style={styles.image}
+                    square
+                    source={{ uri: `${reps[index].reps_photo}` }} />
                 </Left>
                 <Body>
-                  <Text>{reps[index].fname} {reps[index].lname}</Text>
-                  <Text>{reps[index].city}, {reps[index].state}</Text>
-                  <Text note numberOfLines={1}>Company: {reps[index].company}</Text>
+                  <Text
+                    style={styles.name}>{reps[index].fname} {reps[index].lname}</Text>
+                  <Text
+                    style={styles.text}>{reps[index].city}, {reps[index].state}</Text>
+                  <Text
+                    style={styles.text}
+                    note
+                    numberOfLines={1}>Company: {reps[index].company}</Text>
                 </Body>
                 <Right>
                   <Button transparent>
@@ -41,3 +49,22 @@ export default class RepsCard extends Component {
       );
     }
 }
+
+const styles = StyleSheet.create({
+  name: {
+    letterSpacing: 1,
+    color: 'rgb(96, 29, 16)',
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  text: {
+    color: 'rgb(96, 29, 16)',
+    fontFamily: 'Helvetica-Bold',
+    marginBottom: 5,
+  },
+  image: {
+    height: 90,
+    width: 90,
+  }
+})

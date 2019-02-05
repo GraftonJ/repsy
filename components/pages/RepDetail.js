@@ -60,7 +60,7 @@ export default class RepDetail extends Component {
   }
   this.setDate = this.setDate.bind(this)
 }
-  // Request New Appointment 
+  // Request New Appointment
   requestAppointment = () => {
     this.setState({
       isLookingForAppointment: true,
@@ -103,7 +103,7 @@ componentWillUnmount(){
         <Spinner color='red' style={styles.spinner}/>
       )
     }
-    
+
     else {
       return (
         <StyleProvider style={getTheme(platform)}>
@@ -124,6 +124,7 @@ componentWillUnmount(){
               <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[desired_info.repIdx].generic_name})</Text>
             </Body>
             <Right>
+              <Text style={styles.repsyHeader}>REPSY</Text>
             </Right>
           </Header>
             {(this.state.isLookingForAppointment)
@@ -155,7 +156,7 @@ componentWillUnmount(){
                     </View>
                   </Item>
                 </Form>
-              </Content> 
+              </Content>
               : <Content>
                   <Image
                     style={{width: '100%', height: 300}}
@@ -239,6 +240,11 @@ const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
     repName: {
       fontSize: 30,
       marginLeft: 10,
