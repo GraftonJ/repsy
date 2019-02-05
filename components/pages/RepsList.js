@@ -86,7 +86,8 @@ render() {
           <Text style={styles.repsyHeader}>REPSY</Text>
         </Right>
       </Header>
-      <Content>
+      <Content style={styles.content}>
+        <Text style={styles.reps}>Representatives</Text>
         { //Check if state is loading to show spinner
           (isLoading)
           ? <Spinner style={styles.spinner} color='red'/>
@@ -96,6 +97,7 @@ render() {
             key={idx}
             reps={reps}
             id={reps.id}
+            style={styles.card}
             />
           ))
         }
@@ -118,11 +120,25 @@ const width = Dimensions.get('window').width
 const styles = StyleSheet.create({
     spinner: {
       height: height *.8,
-
     },
     repsyHeader: {
       fontFamily: 'Helvetica-Bold',
       fontSize: 20,
       color: 'rgb(96, 29, 16)'
+    },
+    card: {
+      marginTop: '5%',
+      padding: '5%',
+    },
+    reps: {
+      fontSize: 30,
+      fontWeight: "bold",
+      marginTop: '10%',
+      marginBottom: '7%',
+      alignSelf: 'center',
+      textShadowColor: 'rgba(0, 0, 0, 0.75)',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 2,
+      letterSpacing: 1,
     },
 });
