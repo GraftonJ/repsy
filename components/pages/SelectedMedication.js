@@ -257,14 +257,29 @@ export default class SelectedMedication extends Component {
 
           <Text style={styles.h1}>Other Resources</Text>
 
+          <Button
+            style={styles.button}
+            rounded>
+            <Text> Coverage </Text>
+          </Button>
 
-          <Text> Coverage </Text>
+          <Button
+            style={styles.button}
+            rounded>
+            <Text> Patient Resources </Text>
+          </Button>
 
-          <Text> Patient Resources </Text>
+          <Button
+            style={styles.button}
+            rounded>
+            <Text onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
+          </Button>
 
-          <Text onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
-
-          <Text> Speaker Programs </Text>
+          <Button
+            style={styles.button}
+            rounded>
+            <Text> Speaker Programs </Text>
+          </Button>
         </Content>
         <Footer>
           <FooterMenu />
@@ -321,5 +336,13 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 2,
     // marginTop: '5%'
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+    margin: 3,
+    width: '80%',
+    alignSelf: 'center',
   },
 });
