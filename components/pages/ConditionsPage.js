@@ -82,11 +82,12 @@ export default class ConditionsPage extends Component {
             <Text style={{fontSize: 17, fontWeight: 'bold' }}>{this.state.desired_info.condition_name}</Text>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
         <Content>
           <Image style={styles.image} source={require('../../medicalStaff.png')} />
-          <Text style={styles.repsy}>REPSY</Text>
+
           <Text style={styles.treatmentsText}>  Treatments </Text>
             {this.state.meds.map((med, idx) => (
               <View
@@ -118,10 +119,15 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
   treatmentsText: {
     fontSize: 30,
     fontWeight: "bold",
-    marginTop: '10%',
+    // marginTop: '10%',
     alignSelf: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},

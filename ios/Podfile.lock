@@ -1,7 +1,7 @@
 PODS:
   - React (0.57.8):
     - React/Core (= 0.57.8)
-  - react-native-webview (3.2.1):
+  - react-native-webview (3.2.2):
     - React
   - React/Core (0.57.8):
     - yoga (= 0.57.8.React)

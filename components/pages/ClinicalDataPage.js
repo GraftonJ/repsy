@@ -108,6 +108,7 @@ export default class ClinicalData extends Component {
             <Text style={{fontSize: 12, fontWeight: 'bold', textAlign: 'center'}}> {this.state.desired_info.label} </Text>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
         <WebView
@@ -129,5 +130,10 @@ const width = Dimensions.get('window').width
 const styles = StyleSheet.create({
     spinner: {
       height: height
-    }
+    },
+    repsyHeader: {
+      fontFamily: 'Helvetica-Bold',
+      fontSize: 20,
+      color: 'rgb(96, 29, 16)'
+    },
 });

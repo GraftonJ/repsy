@@ -128,21 +128,25 @@ componentWillUnmount(){
           </Header>
             {(this.state.isLookingForAppointment)
               ? <Content>
-                <Form>
-                  <Item picker>
-                    <Label>Pharma Rep: {reps[desired_info.repIdx].fname}</Label>
+                <Form style={styles.container}>
+                  <Item picker style={styles.item}>
+                    <View style={styles.container}>
+                      <Label style={styles.heading}>Pharma Rep: {reps[desired_info.repIdx].fname}</Label>
+                    </View>
                   </Item>
-                  <Item>
+                  <Item style={styles.item}>
                     <Icon active name='ios-call' />
                     <Input placeholder='Contact Number' />
                   </Item>
-                  <Item stackedLabel>
-                    <Label>Reason For Appointment</Label>
+                  <Item stackedLabel style={styles.item}>
+                    <View style={styles.container}>
+                      <Label style={styles.heading}>Reason For Appointment</Label>
+                    </View>
                     <Textarea rowSpan={5} width={340} bordered onChange={this.setReason} />
                   </Item>
-                  <Item>
+                  <Item style={styles.item}>
                     <View style={styles.container}>
-                      <Label>Appointment Time/Date (MST)</Label>
+                      <Label style={styles.heading}>Appointment Time/Date (MST)</Label>
                       <DatePickerIOS
                         date={chosenDate}
                         onDateChange={this.setDate}
@@ -267,6 +271,20 @@ const styles = StyleSheet.create({
     },
     spinner: {
       height: height
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      textAlign: 'center'
+    },
+    heading: {
+      color: 'rgb(96, 29, 16)',
+      fontFamily: 'Helvetica',
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'center'
+    },
+    item: {
+      marginTop: 20
     }
-
 });

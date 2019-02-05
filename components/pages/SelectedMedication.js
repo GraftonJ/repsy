@@ -217,12 +217,12 @@ export default class SelectedMedication extends Component {
             <Text style={{fontSize: 8, textAlign: 'center'}}>({this.state.desired_info.generic_name})</Text>
           </Body>
           <Right>
+            <Text style={styles.repsyHeader}>REPSY</Text>
           </Right>
         </Header>
         <Content>
           <Image style={styles.image} source={require('../../medicalStaff.png')} />
-          <Text style={styles.repsy}>REPSY</Text>
-          <Text style={styles.h1}>  Clinical Data </Text>
+          <Text style={styles.clinicalData}>Clinical Data</Text>
 
           <View style={styles.view}>
             <Button
@@ -230,7 +230,7 @@ export default class SelectedMedication extends Component {
               transparent
             >
               <Icon name="arrow-dropright" />
-              <Text style={styles.dataButtonText}> Dosing </Text>
+              <Text style={styles.dataButtonText}>Dosing</Text>
             </Button>
             <Button
               onPress={() => this.onpressTrialDesign() }
@@ -269,20 +269,20 @@ export default class SelectedMedication extends Component {
             </Button>
           </View>
 
-          <Text style={styles.h1}>Other Resources</Text>
+          <Text style={styles.otherRes}>Other Resources</Text>
 
           <Button
             style={styles.button}
             rounded>
             <Text
-              style={styles.resourceButtonTxt}> Coverage </Text>
+              style={styles.resourceButtonTxt}>Coverage</Text>
           </Button>
 
           <Button
             style={styles.button}
             rounded>
             <Text
-              style={styles.resourceButtonTxt}> Patient Resources </Text>
+              style={styles.resourceButtonTxt}>Patient Resources</Text>
           </Button>
 
           <Button
@@ -290,14 +290,14 @@ export default class SelectedMedication extends Component {
             rounded>
             <Text
               style={styles.resourceButtonTxt}
-              onPress={() => this.onPressScheduleButton() }>  Sales Representative </Text>
+              onPress={() => this.onPressScheduleButton() }>Sales Representative</Text>
           </Button>
 
           <Button
             style={styles.button}
             rounded>
             <Text
-              style={styles.resourceButtonTxt}> Speaker Programs </Text>
+              style={styles.resourceButtonTxt}>Speaker Programs</Text>
           </Button>
         </Content>
         <Footer>
@@ -316,10 +316,14 @@ const width = Dimensions.get('window').width
 
 // Put styles in here to format the page
 const styles = StyleSheet.create({
-  h1: {
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
+  clinicalData: {
     fontSize: 30,
     fontWeight: "bold",
-    marginTop: '10%',
     marginBottom: '2%',
     alignSelf: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -327,9 +331,17 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
     letterSpacing: 1,
   },
-  // view: {
-  //   alignSelf: 'center'
-  // },
+  otherRes: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: '5%',
+    marginBottom: '2%',
+    alignSelf: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 2,
+    letterSpacing: 1,
+  },
   dataButtonText: {
     fontFamily: 'Hoefler Text',
     fontSize: 20,
