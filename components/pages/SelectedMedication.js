@@ -52,7 +52,7 @@ export default class SelectedMedication extends Component {
   // * *********************************** * //
   // Handles when the user presses Dosing
   // Has to update old object keys into state to keep data across pages
-  onpressDosing = () => {
+  async onpressDosing() {
     console.log('onpressDosing()');
     store.setState({
       desired_info: {
@@ -61,13 +61,13 @@ export default class SelectedMedication extends Component {
         linkkey: 'dosing'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
   // * *********************************** * //
   // Handles when the user presses Trial Design
   // Has to update old object keys into state to keep data across pages
-  onpressTrialDesign = () => {
+  async onpressTrialDesign() {
     console.log('onpressTrialDesign()');
     store.setState({
       desired_info: {
@@ -76,7 +76,7 @@ export default class SelectedMedication extends Component {
         linkkey: 'trial_design'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
   // * *********************************** * //
@@ -91,13 +91,13 @@ export default class SelectedMedication extends Component {
         linkkey: 'efficacy'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
   // * *********************************** * //
   // Handles when the user presses Mechanism of Action
   // Has to update old object keys into state to keep data across pages
-  onpressMechanismOfAction = () => {
+  async onpressMechanismOfAction() {
     console.log('onpressMechanismOfAction()');
     store.setState({
       desired_info: {
@@ -106,7 +106,7 @@ export default class SelectedMedication extends Component {
         linkkey: 'mechanism_of_action'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
   // * *********************************** * //
@@ -121,13 +121,13 @@ export default class SelectedMedication extends Component {
         linkkey: 'patient_types'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
   // * *********************************** * //
   // Handles when the user presses Safety
   // Has to update old object keys into state to keep data across pages
-  onpressSafety = () => {
+  async onpressSafety() {
     console.log('onpressSafety()');
     store.setState({
       desired_info: {
@@ -136,7 +136,7 @@ export default class SelectedMedication extends Component {
         linkkey: 'safety'
       }
     });
-    Actions.ClinicalData()
+    this.checkMeds()
   }
 
     // * *********************************** * //
@@ -168,6 +168,18 @@ export default class SelectedMedication extends Component {
           }
         })
       Actions.RepDetail()
+      }
+    }
+
+    // * *********************************** * //
+    // Function to make sure the medication is in our database
+    checkMeds = () => {
+      let currentMed = store.getState().desired_info.brand_name
+      console.log(currentMed)
+      if(currentMed === "Kadcyla" || currentMed === "Opdivo" || currentMed === "Xtandi") {
+        Actions.ClinicalData()
+      } else {
+        Alert.alert("This medication's information is not yet added.")
       }
     }
 
