@@ -113,7 +113,7 @@ export default class RequestsPage extends Component {
             <Button
               onPress={() => { this.viewAppointments() }}
             >
-              <Text>Appointments</Text>
+              <Text>Calendar</Text>
             </Button>
           </Right>
         </Header>
@@ -176,10 +176,12 @@ export default class RequestsPage extends Component {
           {
             (this.state.isLookingForAppointment)
               ? <Button
+                style={{marginTop: 7}}
                 onPress={() => this.createNewBookingRequest()}
                 ><Text>Submit New Request</Text>
               </Button>
               : <Button
+                style={{marginTop: 7}}
                 onPress={() => this.requestAppointment()}
                 >
                   <Text>Create New Request</Text>
@@ -277,9 +279,8 @@ export default class RequestsPage extends Component {
       case 'tentative':
         return <View style={styles.view}>
           <Button
-            title='Confirm'
             id='confirm'
-            style={[styles.button]}
+            style={[styles.button], {marginRight: 20, marginTop: 5}}
             buttonTextStyle={{ color: "#008000" }}
             onPress={() => {
               // this will update a booking to a new status
@@ -298,9 +299,10 @@ export default class RequestsPage extends Component {
             }
             }
           >
+            <Text>Confirm</Text>
           </Button>
           <Button
-            title='Decline'
+            style={{marginTop: 5}}
             onPress={() => {
               // this will update a booking to a new status
               timekit.updateBooking({
@@ -321,31 +323,35 @@ export default class RequestsPage extends Component {
             }
             }
           >
+            <Text>Decline</Text>
           </Button>
         </View>
         break;
       case 'confirmed':
-        return <Button
-          title='Cancel'
-          onPress={() => {
-            // this will update a booking to a new status
-            timekit.updateBooking({
-              id: item.booking_id,
-              action: "cancel" // or "decline" or "cancel"
-            })
+        return <View style={styles.view}>
+            <Button
+              style={{marginTop: 5}}
+              onPress={() => {
+                // this will update a booking to a new status
+                timekit.updateBooking({
+                  id: item.booking_id,
+                  action: "cancel" // or "decline" or "cancel"
+                })
 
-            Toast.show({
-              text: "Appointment Canceled!",
-              buttonText: "Okay",
-              buttonTextStyle: { color: "#008000" },
-              buttonStyle: { backgroundColor: "#5cb85c" }
-            })
-          }}
-        >
-        </Button>
+                Toast.show({
+                  text: "Appointment Canceled!",
+                  buttonText: "Okay",
+                  buttonTextStyle: { color: "#008000" },
+                  buttonStyle: { backgroundColor: "#5cb85c" }
+                })
+              }}
+            >
+              <Text>Cancel</Text>
+            </Button>
+          </View>
         break;
       default:
-        return <Text>Appointment Declined</Text>
+        return <Text style={{textAlign: 'center', paddingBottom: 5}}>Appointment Declined</Text>
     }
   }
 
@@ -353,20 +359,20 @@ export default class RequestsPage extends Component {
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
-        <Label>Request From: {item.customer_name}</Label>
-        <Label>Pharma Rep: Samantha</Label>
-        <Text>{item.event_name}</Text>
-        <Item style={{ width: 200 }}>
+        <Text style={{paddingBottom: 5}}>Request From: {item.customer_name}</Text>
+        <Text style={{paddingBottom: 5}}>Pharma Rep: Samantha</Text>
+        <Text style={{paddingBottom: 5}}>{item.event_name}</Text>
+        <Item style={{ width: 240 }}>
           <Icon active name='ios-time' />
-          <Text style={{ textAlign: 'center' }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm a')}-{moment(item.event_end).format('MMMM Do YYYY, h:mm a')}</Text>
+          <Text style={{ textAlign: 'left', paddingBottom: 5 }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm a')} - {moment(item.event_end).format('MMMM Do YYYY, h:mm a')}</Text>
         </Item>
         <Item style={{ width: 200 }}>
           <Icon active name='ios-navigate' />
-          <Text style={{ textAlign: 'center' }}>{item.event_location}</Text>
+          <Text style={{ textAlign: 'center', paddingBottom: 5 }}>{item.event_location}</Text>
         </Item>
         {/* {console.log('item', item)}
         <Icon active name='ios-filing' /> */}
-        <View >{this.renderSwitch(item)}</View>
+        <View>{this.renderSwitch(item)}</View>
       </View>
     )
   }
