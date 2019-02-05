@@ -107,14 +107,15 @@ export default class RequestsPage extends Component {
             <Icon name="arrow-back" style={{ color: "rgb(84, 157, 191)" }} onPress={() => { Actions.pop() }}/>
           </Left>
           <Body>
-            <Text>Requests</Text>
+            <Text style={styles.headerRequests}>Requests</Text>
           </Body>
           <Right>
-            <Button
-              onPress={() => { this.viewAppointments() }}
-            >
-              <Text>Calendar</Text>
-            </Button>
+            {(this.state.isLookingForAppointment)
+              ? <Button onPress={() => { this.viewAppointments() }}>
+                  <Text>Calendar</Text>
+                </Button>
+              : <Text style={styles.repsyHeader}>REPSY</Text>
+            }
           </Right>
         </Header>
         {
@@ -279,6 +280,7 @@ export default class RequestsPage extends Component {
       case 'tentative':
         return <View style={styles.view}>
           <Button
+            transparent
             id='confirm'
             style={[styles.button], {marginRight: 20, marginTop: 5}}
             buttonTextStyle={{ color: "#008000" }}
@@ -299,9 +301,10 @@ export default class RequestsPage extends Component {
             }
             }
           >
-            <Text>Confirm</Text>
+            <Text style={styles.buttonText}>Confirm</Text>
           </Button>
           <Button
+            transparent
             style={{marginTop: 5}}
             onPress={() => {
               // this will update a booking to a new status
@@ -323,13 +326,14 @@ export default class RequestsPage extends Component {
             }
             }
           >
-            <Text>Decline</Text>
+            <Text style={styles.buttonText}>Decline</Text>
           </Button>
         </View>
         break;
       case 'confirmed':
         return <View style={styles.view}>
             <Button
+              transparent
               style={{marginTop: 5}}
               onPress={() => {
                 // this will update a booking to a new status
@@ -346,12 +350,13 @@ export default class RequestsPage extends Component {
                 })
               }}
             >
-              <Text>Cancel</Text>
+              <Text
+                style={styles.buttonText}>Cancel</Text>
             </Button>
           </View>
         break;
       default:
-        return <Text style={{textAlign: 'center', paddingBottom: 5}}>Appointment Declined</Text>
+        return <Text style={{textAlign: 'center', marginBottom: 5, marginTop: 5, color: 'rgb(84, 157, 191)'}}>Appointment Declined</Text>
     }
   }
 
@@ -359,16 +364,16 @@ export default class RequestsPage extends Component {
   renderItem(item) {
     return (
       <View style={[styles.item, { height: item.height }]}>
-        <Text style={{paddingBottom: 5}}>Request From: {item.customer_name}</Text>
-        <Text style={{paddingBottom: 5}}>Pharma Rep: Samantha</Text>
-        <Text style={{paddingBottom: 5}}>{item.event_name}</Text>
+        <Text style={{paddingBottom: 5, alignSelf: 'center', fontSize: 18, fontWeight: 'bold'}}>Request From: {item.customer_name}</Text>
+        <Text style={{paddingBottom: 5, alignSelf: 'center', color: 'rgb(84, 157, 191)'}}>Pharma Rep: Samantha</Text>
+        <Text style={{marginBottom: 5, marginTop: 12, alignSelf: 'center'}}>{item.event_name}</Text>
         <Item style={{ width: 240 }}>
           <Icon active name='ios-time' />
-          <Text style={{ textAlign: 'left', paddingBottom: 5 }}>{moment(item.event_start).format('MMMM Do YYYY, h:mm a')} - {moment(item.event_end).format('MMMM Do YYYY, h:mm a')}</Text>
+          <Text style={{ textAlign: 'left', paddingBottom: 5 }}>{moment(item.event_start).format('MMM Do, h:mm a')} - {moment(item.event_end).format('h:mm a')}</Text>
         </Item>
         <Item style={{ width: 200 }}>
           <Icon active name='ios-navigate' />
-          <Text style={{ textAlign: 'center', paddingBottom: 5 }}>{item.event_location}</Text>
+          <Text style={{ textAlign: 'center', marginBottom: 5, marginTop: 15 }}>{item.event_location}</Text>
         </Item>
         {/* {console.log('item', item)}
         <Icon active name='ios-filing' /> */}
@@ -380,7 +385,7 @@ export default class RequestsPage extends Component {
   renderEmptyData(item) {
     return (
       <View style={styles.emptyDate}>
-        <Text>No Events Today!</Text>
+        <Text style={styles.noEvent}>No Events Today!</Text>
         <Button onPress={() => this.requestAppointment()} title="Create New Request" />
       </View>
     )
@@ -395,6 +400,15 @@ export default class RequestsPage extends Component {
 } // End of componenet
 
 const styles = StyleSheet.create({
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
+  headerRequests: {
+    fontSize: 18,
+    letterSpacing: 1,
+  },
   item: {
     backgroundColor: 'white',
     flex: 1,
@@ -402,6 +416,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight: 10,
     marginTop: 17,
+    borderWidth: 1,
+    borderColor: 'rgb(167, 169, 170)',
   },
   emptyDate: {
     height: 15,
@@ -410,6 +426,10 @@ const styles = StyleSheet.create({
   },
   button: {
     color: 'red',
+  },
+  buttonText: {
+    fontSize: 16,
+    letterSpacing: 1,
   },
   container: {
     flex: 1,
@@ -428,5 +448,9 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 20
+  },
+  noEvent: {
+    marginRight: '3%',
+    fontSize: 16,
   }
 })
