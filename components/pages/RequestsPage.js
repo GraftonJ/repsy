@@ -13,17 +13,17 @@ import {
   Platform,
   StyleSheet,
   View,
-  Text,
   Dimensions,
-  Button,
   DatePickerIOS
 } from 'react-native'
 import {
   Container,
+  Button,
   Header,
   Content,
   Footer,
   Left,
+  Text,
   Right,
   Body,
   Toast,
@@ -94,7 +94,7 @@ export default class RequestsPage extends Component {
   //     })
   //   }
   // }
-  
+
   // shouldComponentUpdate(nextProps, nextState) {
   //   console.log(this.state, nextState)
   //   if (nextState.calendarBookings !== this.state.calendarBookings) {
@@ -127,7 +127,9 @@ export default class RequestsPage extends Component {
           </Body>
           <Right>
             <Button
-              onPress={() => { this.viewAppointments() }} title='Appointments'>
+              onPress={() => { this.viewAppointments() }}
+            >
+              <Text>Appointments</Text>
             </Button>
           </Right>
         </Header>
@@ -189,8 +191,15 @@ export default class RequestsPage extends Component {
       <Footer>
           {
             (this.state.isLookingForAppointment)
-              ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request" />
-              : <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+              ? <Button
+                onPress={() => this.createNewBookingRequest()}
+                ><Text>Submit New Request</Text>
+              </Button>
+              : <Button
+                onPress={() => this.requestAppointment()}
+                >
+                  <Text>Create New Request</Text>
+                </Button>
           }
       </Footer>
       </Container>
@@ -226,12 +235,12 @@ export default class RequestsPage extends Component {
   // Set Current Date to State from Request Booking Form
   setDate(newDate) {
     this.setState({
-      chosenDate: newDate, 
+      chosenDate: newDate,
       bookingRequest: {
         ...this.state.bookingRequest,
         start: moment(newDate).format(),
         end: moment(newDate).add(1, 'hour').format()
-      }  
+      }
     })
   }
 
