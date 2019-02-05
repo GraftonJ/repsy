@@ -14,7 +14,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions,
   Button,
   DatePickerIOS
 } from 'react-native'
@@ -86,22 +85,6 @@ export default class RequestsPage extends Component {
     })
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.calendarBookings !== this.state.calendarBookings) {
-  //     getBookings()
-  //     this.setState({
-  //       calendarBookings: this.state.calendarBookings
-  //     })
-  //   }
-  // }
-  
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(this.state, nextState)
-  //   if (nextState.calendarBookings !== this.state.calendarBookings) {
-  //     return true
-  //   }
-  // }
-
   componentWillUnmount() {
     //disconnect from store notifications
     this.unsubscribe()
@@ -126,9 +109,12 @@ export default class RequestsPage extends Component {
             <Text>Requests</Text>
           </Body>
           <Right>
-            <Button
-              onPress={() => { this.viewAppointments() }} title='Appointments'>
-            </Button>
+            {(this.state.isLookingForAppointment)
+              ? <Button
+                  onPress={() => { this.viewAppointments() }} title='Calendar'>
+                </Button>
+              : <View></View>
+            }
           </Right>
         </Header>
         {
@@ -182,15 +168,14 @@ export default class RequestsPage extends Component {
               selected={new Date()}
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
-              theme={{ agendaKnobColor: 'grey' }}
+              theme={{ agendaKnobColor: 'grey', dotColor: '#00adf5'}}
               renderEmptyData={this.renderEmptyData.bind(this)}
             />
         }
       <Footer>
-          {
-            (this.state.isLookingForAppointment)
-              ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request" />
-              : <Button onPress={() => this.requestAppointment()} title="Create New Request" />
+          {(this.state.isLookingForAppointment)
+            ? <Button onPress={() => this.createNewBookingRequest()} title="Submit New Request" />
+            : <Button onPress={() => this.requestAppointment()} title="Create New Request" />
           }
       </Footer>
       </Container>
