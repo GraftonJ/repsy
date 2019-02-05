@@ -86,22 +86,6 @@ export default class RequestsPage extends Component {
     })
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.calendarBookings !== this.state.calendarBookings) {
-  //     getBookings()
-  //     this.setState({
-  //       calendarBookings: this.state.calendarBookings
-  //     })
-  //   }
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(this.state, nextState)
-  //   if (nextState.calendarBookings !== this.state.calendarBookings) {
-  //     return true
-  //   }
-  // }
-
   componentWillUnmount() {
     //disconnect from store notifications
     this.unsubscribe()
@@ -184,7 +168,7 @@ export default class RequestsPage extends Component {
               selected={new Date()}
               renderItem={this.renderItem.bind(this)}
               rowHasChanged={this.rowHasChanged.bind(this)}
-              theme={{ agendaKnobColor: 'grey' }}
+              theme={{ agendaKnobColor: 'grey', dotColor: '#00adf5'}}
               renderEmptyData={this.renderEmptyData.bind(this)}
             />
         }
