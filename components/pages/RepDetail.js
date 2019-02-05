@@ -60,7 +60,7 @@ export default class RepDetail extends Component {
   }
   this.setDate = this.setDate.bind(this)
 }
-  // Request New Appointment 
+  // Request New Appointment
   requestAppointment = () => {
     this.setState({
       isLookingForAppointment: true,
@@ -103,7 +103,7 @@ componentWillUnmount(){
         <Spinner color='red' style={styles.spinner}/>
       )
     }
-    
+
     else {
       return (
         <StyleProvider style={getTheme(platform)}>
@@ -124,6 +124,7 @@ componentWillUnmount(){
               <Text style={{fontSize: 12, textAlign: 'center'}}>({reps[desired_info.repIdx].generic_name})</Text>
             </Body>
             <Right>
+              <Text style={styles.repsyHeader}>REPSY</Text>
             </Right>
           </Header>
             {(this.state.isLookingForAppointment)
@@ -155,10 +156,10 @@ componentWillUnmount(){
                     </View>
                   </Item>
                 </Form>
-              </Content> 
+              </Content>
               : <Content>
                   <Image
-                    style={{width: '100%', height: 300}}
+                    style={styles.image}
                     source={{uri: `${reps[desired_info.repIdx].reps_photo}`}}
                   />
                   <Text style={styles.repName}>
@@ -167,12 +168,10 @@ componentWillUnmount(){
                   <Text style={styles.companyName}>
                     Representative for {reps[desired_info.repIdx].company}
                   </Text>
-                  <Text style={styles.pharma}>
-                    Expertise including {reps[desired_info.repIdx].brand_name} ({reps[desired_info.repIdx].generic_name})
-                  </Text>
                   <Text style={styles.credentials}>
-                    Summary
+                    Credentials
                   </Text>
+                  <Text style={styles.underline}>_____________</Text>
                   <Text style={styles.credentialsContent}>
                     {reps[desired_info.repIdx].credentials}
                   </Text>
@@ -240,28 +239,67 @@ const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
+  repsyHeader: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 20,
+    color: 'rgb(96, 29, 16)'
+  },
+  image: {
+    width: '98%',
+    height: 350,
+    marginTop: '1%',
+    marginBottom: '5%',
+    borderWidth: 1,
+    borderColor: 'rgb(96, 29, 16)',
+    alignSelf: 'center',
+  },
     repName: {
-      fontSize: 30,
-      marginLeft: 10,
-      textAlign: 'center'
+      fontFamily: 'Helvetica-Bold',
+      fontSize: 33,
+      letterSpacing: 2,
+      alignSelf: 'center',
+      textShadowColor: 'rgba(0, 0, 0, 0.75)',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 2,
     },
     companyName: {
-      marginLeft: 15,
-      textAlign: 'center'
+      alignSelf: 'center',
+      fontFamily: 'Hoefler Text',
+      fontSize: 22,
+      color: 'rgb(84, 157, 191)',
+      marginBottom: '2%',
+      textShadowColor: 'rgba(189, 191, 193, 0.75)',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 1,
     },
     pharma: {
-      marginLeft: 15,
-      textAlign: 'center'
+      alignSelf: 'center',
     },
     credentials: {
-      marginLeft: 10,
-      marginTop: 10,
-      fontSize: 30,
-      textAlign: 'center'
+      fontFamily: 'Helvetica-Bold',
+      fontSize: 25,
+      letterSpacing: 1,
+      alignSelf: 'center',
+      marginTop: '5%',
+      textShadowColor: 'rgba(0, 0, 0, 0.75)',
+      textShadowOffset: {width: -1, height: 1},
+      textShadowRadius: 1,
+    },
+    underline: {
+      color: 'rgb(96, 29, 16)',
+      alignSelf: 'center',
+      marginBottom: '2%',
+      marginTop: -20,
+      fontSize: 20,
+
     },
     credentialsContent: {
-      marginLeft: 15,
-      marginRight: 15,
+      fontFamily: 'Hoefler Text',
+      fontSize: 18,
+      alignSelf: 'center',
+      marginLeft: '4%',
+      marginRight: '4%',
+      marginBottom: '5%',
     },
     buttonContainer: {
       flexDirection: "row",
@@ -283,7 +321,7 @@ const styles = StyleSheet.create({
       fontFamily: 'Helvetica',
       fontSize: 18,
       fontWeight: 'bold',
-      textAlign: 'center'
+      textAlign: 'center',
     },
     item: {
       marginTop: 20

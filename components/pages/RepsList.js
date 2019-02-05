@@ -119,7 +119,7 @@ const width = Dimensions.get('window').width
 // Put styles in here to format the page
 const styles = StyleSheet.create({
     spinner: {
-      height: height *.8,
+      height: height * .7,
     },
     repsyHeader: {
       fontFamily: 'Helvetica-Bold',

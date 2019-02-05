@@ -44,10 +44,10 @@ export default class App extends Component {
           <Scene key="Homepage" component={Homepage} />
           <Scene key="RepsList" component={RepsList}  />
           <Scene key="Loginpage" component={Loginpage} />
-          <Scene key="ConditionsPage" component={ConditionsPage}  initial/>
+          <Scene key="ConditionsPage" component={ConditionsPage} initial />
           <Scene key="MedicationsPage" component={MedicationsPage} />
           <Scene key="ConditionsLibrary" component={ConditionsLibrary} />
-          <Scene key="ClinicalData" component={ClinicalData}  />
+          <Scene key="ClinicalData" component={ClinicalData} />
           <Scene key="RequestsPage" component={RequestsPage} />
           <Scene key="SelectedMedication" component={SelectedMedication} />
           <Scene key="MedsLibrary" component={MedsLibrary} />
