@@ -1,6 +1,6 @@
 // React Native and Native modules for page
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Alert, Platform, StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Footer, Button, Item, Icon, Input, Text, List, ListItem, Spinner, StyleProvider } from 'native-base'
 
@@ -44,7 +44,7 @@ export default class ConditionsLibrary extends Component {
   }
 
   // * *********************************** * //
-  onPressButton = (condition) => {
+  async onPressButton(condition) {
     console.log('onPressButton()');
     store.setState({
       desired_info: {
@@ -52,7 +52,18 @@ export default class ConditionsLibrary extends Component {
         condition_name: condition,
       }
     });
-    Actions.ConditionsPage()
+    this.checkCondition()
+  }
+
+  // * *********************************** * //
+  checkCondition = () => {
+    let currentCondition = store.getState().desired_info.condition_name
+    console.log(currentCondition)
+    if(currentCondition === "Breast Cancer" || currentCondition === "Prostate Cancer" || currentCondition === "Lung Cancer") {
+      Actions.ConditionsPage()
+    } else {
+      Alert.alert("This condition is not supported yet.")
+    }
   }
 
   // * *********************************** * //
