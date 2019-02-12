@@ -88,17 +88,26 @@ The clincial data at the top pulls information directly from the manufacturer. I
 <br>
 <img src="screenshots/screen014.png" alt="login" width="300"/>
 
-![Example](screenshots/screen06.png)
+## Sales Representatives
 
-![Example](screenshots/screen07.png)
+When viewing information about a particular treatment, doctors have the option to click a "Sales Representative" button at the bottom of the screen. When they click this button, they will be taken to a list of potential sales reps in their area. 
 
+"Sales Representative" button on the bottom of the screen
+<br>
+<img src="screenshots/screen013.png" alt="login" width="300"/>
 
-## Login/out
+Clicking the button takes the doctor to a list of sales reps:
+<br>
+<img src="screenshots/screen015.png" alt="login" width="300"/>
 
-Basic user management screens.
+Clicking a sales representative takes the doctor to the reps profile where they can read more about that rep. If they want to speak with the representative, they can schedule a meeting by clicking "Schedule Appointment":
+<br>
+<img src="screenshots/screen016.png" alt="login" width="300"/>
 
-![Example](screenshots/screen08.png)
+To schedule an appointment, the doctor enters their information, what they want to speak about, and selects a time:
+<br>
+<img src="screenshots/screen004.png" alt="login" width="300"/>
 
-![Example](screenshots/screen09.png)
-
-![Example](screenshots/screen10.png)
+When the doctor submits the request, an email is sent to the doctor and the sales representative who has the option to accept or decline. The appointment gets placed on both parties calendars:
+<br>
+<img src="screenshots/screen004.png" alt="login" width="300"/>
