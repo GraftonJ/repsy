@@ -44,15 +44,32 @@ The first time a doctor logs in, the homepage will be empty. The doctor can pin 
 <img src="screenshots/screen006.png" alt="home" width="300"/>
 
 Scrolling list of conditions for the doctor's specialty
+
 <br>
 <img src="screenshots/screen007.png" alt="login" width="300"/>
 
+Once a doctor selects a condition from the list, in this case Breast Cancer, it is saved to their homepage until they delete it by clicking the trash icon.
 
-## Reviews
+<br>
+<img src="screenshots/screen008.png" alt="login" width="300"/>
 
-If the user is logged in they may tap to leave a rating and comments.
 
-![Example](screenshots/screen05.png)
+## Conditions & Treatments
+
+A doctor can view information about all conditions their specialty treats by clicking "Conditions" in the footer menu. Clicking any of the conditions from the list brings up a list of pharmaceuticals used to treat that condition.
+
+<br>
+<img src="screenshots/screen009.png" alt="login" width="300"/>
+
+By clicking "Treatments" from the footer menu, a doctor can view a list of pharmaceuticals used to treat any condition covered by his/her specialty. The doctor can filter this list by brand name or generic name.
+
+Generic name list:
+<br>
+<img src="screenshots/screen010.png" alt="login" width="300"/>
+
+Brand name list:
+<br>
+<img src="screenshots/screen004.png" alt="login" width="300"/>
 
 
 ## Check-in
