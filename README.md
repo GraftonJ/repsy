@@ -9,14 +9,15 @@ REPSY was built with React Native and supports IOS and Android.  The app uses a 
 ## Login
 
 The Login screen allows users with an account to login.
-<img src="screenshots/screen001.png" alt="login" width="200"/>
+<br>
+<img src="screenshots/screen001.png" alt="login" width="300"/>
 
 
-## Results
+## Create Account
 
-The Results screen is a scrollable list of restaurants with average ratings from other app users (1 to 5 tennis balls) and the number of users who have checked-in to the location.
-
-![Example](screenshots/screen002.png)
+To create an account, the user must choose if they are creating a doctor account or a sales representative account. They are taken to the appropriate form based on their selection
+<br>
+<img src="screenshots/screen002.png" alt="drrep" width="300"/>
 
 
 ## Details
