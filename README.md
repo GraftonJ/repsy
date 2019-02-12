@@ -69,12 +69,24 @@ Generic name list:
 
 Brand name list:
 <br>
-<img src="screenshots/screen004.png" alt="login" width="300"/>
+<img src="screenshots/screen011.png" alt="login" width="300"/>
 
 
-## Check-in
+## Treatments for a Particular Conditions
 
-If the user is logged in they may check-in to a restaurant based on their current location.  In this example the two restaurants are very close to each other so the app lists both choices.
+A doctor can click a particular treatment from the homepage or the footer menu list to view treatments for that condition. Clicking a treatment advances to a screen that gives the doctor access to clinical information about that treatment as well as the ability to find a sales representative for more information
+
+List of treatments for Breast Cancer:
+<br>
+<img src="screenshots/screen012.png" alt="login" width="300"/>
+
+Screen after clicking Kadcyla:
+<br>
+<img src="screenshots/screen013.png" alt="login" width="300"/>
+
+The clincial data at the top pulls information directly from the manufacturer. In this case, clicking "Dosing" opens a screen with the most up to date and accurate dosing information for the treatment.
+<br>
+<img src="screenshots/screen014.png" alt="login" width="300"/>
 
 ![Example](screenshots/screen06.png)
 
