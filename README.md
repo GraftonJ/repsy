@@ -10,6 +10,7 @@ REPSY was built with React Native and supports IOS and Android.  The app uses a 
 
 The Login screen allows users with an account to login.
 <br>
+<br>
 <img src="screenshots/screen001.png" alt="login" width="300"/>
 
 
@@ -17,16 +18,34 @@ The Login screen allows users with an account to login.
 
 To create an account, the user must choose if they are creating a doctor account or a sales representative account. They are taken to the appropriate form based on their selection
 <br>
+<br>
 <img src="screenshots/screen002.png" alt="drrep" width="300"/>
 
+<br>
+<img src="screenshots/screen003.png" alt="login" width="300"/>
 
-## Details
+For a doctor account, the user must select a specialty. This will pull the correct information from the API once they login.
 
-Tapping a result leads to the Detail screen with more information on the restaurant and a link to the mobile device's default map.
+<br>
+<img src="screenshots/screen005.png" alt="login" width="300"/>
 
-![Example](screenshots/screen03.png)
+Sales reps create an account by providing personal info and information about their company
 
-![Example](screenshots/screen04.png)
+<br>
+<img src="screenshots/screen004.png" alt="login" width="300"/>
+
+
+## Homepage
+
+The first time a doctor logs in, the homepage will be empty. The doctor can pin conditions to their homepage by selecting from the list of conditions covered by their specialty (Oncology in this case).
+
+<br>
+<br>
+<img src="screenshots/screen006.png" alt="home" width="300"/>
+
+Scrolling list of conditions for the doctor's specialty
+<br>
+<img src="screenshots/screen007.png" alt="login" width="300"/>
 
 
 ## Reviews
