@@ -106,8 +106,8 @@ Clicking a sales representative takes the doctor to the reps profile where they 
 
 To schedule an appointment, the doctor enters their information, what they want to speak about, and selects a time:
 <br>
-<img src="screenshots/screen004.png" alt="login" width="300"/>
+<img src="screenshots/screen017.png" alt="login" width="300"/>
 
 When the doctor submits the request, an email is sent to the doctor and the sales representative who has the option to accept or decline. The appointment gets placed on both parties calendars:
 <br>
-<img src="screenshots/screen004.png" alt="login" width="300"/>
+<img src="screenshots/screen018.png" alt="login" width="300"/>
